@@ -1,10 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from '../Login/Login.module.scss';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 function Login() {
+  const TOTAL_SLIDES = 1;
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slideRef = useRef(null);
+
+  const NextSlide = () => {
+    if (currentSlide >= TOTAL_SLIDES) {
+      // 더 이상 넘어갈 슬라이드가 없으면
+      setCurrentSlide(0); // 1번째 사진으로 넘어갑니다.
+      // return;  // 클릭이 작동하지 않습니다.
+    } else {
+      setCurrentSlide(currentSlide + 1);
+    }
+  };
+  // Prev 버튼 클릭 시
+  const PrevSlide = () => {
+    if (currentSlide === 0) {
+      setCurrentSlide(TOTAL_SLIDES); // 마지막 사진으로 넘어갑니다.
+      // return;  // 클릭이 작동하지 않습니다.
+    } else {
+      setCurrentSlide(currentSlide - 1);
+    }
+  };
+
   const Button = styled.button`
     display: block;
     width: 100%;
@@ -46,7 +70,7 @@ function Login() {
                 <span>당신의 이야기를 세상에 선보이세요. </span>
               </div>
             </div>
-            {/* <div className={styles.sliderItem}>
+            <div className={styles.sliderItem}>
               <figure className={styles.sliderImg}>
                 <img
                   src={process.env.PUBLIC_URL + '/image/slider2.png'}
@@ -58,7 +82,11 @@ function Login() {
                 <span>작가를 구독하고, 새 글을 받아보세요.</span>
                 <span>당신에게 영감을 주는 작품을 추천합니다.</span>
               </div>
-            </div> */}
+            </div>
+          </div>
+          <div className={styles.buttonBox}>
+            <FaAngleLeft className={styles.arrowLeft} />
+            <FaAngleRight className={styles.arrowRight} />
           </div>
         </div>
         <div className={styles.login}>
