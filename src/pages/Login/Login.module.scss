@@ -10,28 +10,86 @@
 }
 
 .loginModal {
+  display: flex;
   position: absolute;
   z-index: 99;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  width: calc(500px - 40px);
-  height: calc(620px - 40px);
-  padding: 20px 45px;
+  width: 1000px;
+  height: 620px;
+  overflow: hidden;
   border-radius: 15px;
-  background-color: #f8f8f8;
+  background-color: #fff;
+}
+
+.sliderBox {
+  position: relative;
+  width: 50%;
+  padding: 20px 45px;
+}
+.logo {
+  position: absolute;
+  left: 100px;
+  top: 80px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  img {
+    width: 100%;
+  }
+}
+
+.sliderContainer {
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  width: 100%;
+}
+
+.sliderItem {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  .sliderImg {
+    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
+
+  .title {
+    padding: 20px 0;
+    font-size: 27px;
+  }
+
+  .cont {
+    font-weight: 100;
+    color: #999;
+    span {
+      line-height: 1.5;
+      display: block;
+      font-size: 15px;
+    }
+  }
 }
 
 .login {
   position: relative;
-  width: 100%;
+  width: 50%;
+  height: 100%;
+  padding: 20px 45px;
+  background: #f8f8f8;
 }
 
 .close {
   position: absolute;
   display: block;
-  top: 20px;
+  top: 15px;
   right: 15px;
   width: 30px;
   height: 30px;

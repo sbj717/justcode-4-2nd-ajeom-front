@@ -5,32 +5,6 @@ import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 
 function Login() {
-  const [modal, setModal] = useState(false);
-  const closeModal = () => {
-    setModal(!modal);
-  };
-  // const LoginWrapper = styled.section`
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   width: 100%;
-  //   height: 100vh;
-  //   background-color: black;
-  //   opacity: 0.2;
-  // `;
-
-  // const LoginModal = styled.section`
-  //   position: absolute;
-  //   top: 50%;
-  //   left: 50%;
-  //   transform: translate(-50%, -50%);
-  //   dislay: flex;
-  //   width: 1018px;
-  //   height: 620px;
-  //   border-radius: 15px;
-  //   background-color: #fff;
-  // `;
-
   const Button = styled.button`
     display: block;
     width: 100%;
@@ -51,8 +25,44 @@ function Login() {
     <>
       <section className={styles.loginWrapper} />
       <section className={styles.loginModal}>
-        <IoMdClose className={styles.close} onClick={closeModal} />
+        <div className={styles.sliderBox}>
+          <Link to="/" className={styles.logo}>
+            <img
+              src={process.env.PUBLIC_URL + '/image/ajeom_logo.png'}
+              alt="logo"
+            />
+          </Link>
+          <div className={styles.sliderContainer}>
+            <div className={styles.sliderItem}>
+              <figure className={styles.sliderImg}>
+                <img
+                  src={process.env.PUBLIC_URL + '/image/slider1.png'}
+                  alt="sliderImage"
+                />
+              </figure>
+              <div className={styles.title}>아점 작가로 데뷔하세요.</div>
+              <div className={styles.cont}>
+                <span>진솔한 에세이부터 업계 전문 지식까지, </span>
+                <span>당신의 이야기를 세상에 선보이세요. </span>
+              </div>
+            </div>
+            {/* <div className={styles.sliderItem}>
+              <figure className={styles.sliderImg}>
+                <img
+                  src={process.env.PUBLIC_URL + '/image/slider2.png'}
+                  alt="sliderImage"
+                />
+              </figure>
+              <div className={styles.title}>글로 만나는 작가의 경험</div>
+              <div className={styles.cont}>
+                <span>작가를 구독하고, 새 글을 받아보세요.</span>
+                <span>당신에게 영감을 주는 작품을 추천합니다.</span>
+              </div>
+            </div> */}
+          </div>
+        </div>
         <div className={styles.login}>
+          <IoMdClose className={styles.close} />
           <div className={styles.kakaologinBox}>
             <span>아점 시작하기</span>
             <Button kakao>
