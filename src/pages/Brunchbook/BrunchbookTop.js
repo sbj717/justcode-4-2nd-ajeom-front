@@ -26,7 +26,7 @@ function BrunchbookTop() {
   const [buttonColor, setButtonColor] = useState(['#d9d9d9', '#d9d9d9']);
 
   useEffect(() => {
-    fetch('/data/brunch.json')
+    fetch('/data/brunchbook_data.json')
       .then(res => res.json())
       .then(res => {
         setBookInfo(res);
