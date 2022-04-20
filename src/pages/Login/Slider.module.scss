@@ -1,0 +1,12 @@
+.buttonBox {
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  gap: 20px;
+
+  .arrowLeft,
+  .arrowRight {
+    display: block;
+    cursor: pointer;
+  }
+}
