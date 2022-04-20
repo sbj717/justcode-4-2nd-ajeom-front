@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function Request() {
+  const [valueLength, setValueLength] = useState(0);
+  const [preventBtn, setPreventBtn] = useState(false);
+  const [changeForm, setChangeForm] = useState(false);
+
+  const countText = e => {
+    setValueLength(e.target.value.length);
+  };
+
+  const nextForm = () => {
+    if (valueLength === 0) {
+      setPreventBtn(true);
+    } else if (valueLength > 0) {
+      setChangeForm(true);
+    }
+  };
+
+  const formSubmit = e => {
+    e.preventDefault();
+    alert('작가 신청이 완료되었습니다.');
+  };
+
   return (
     <BgColor>
       <SideTitleWrapper>
@@ -14,6 +35,71 @@ function Request() {
         <VerticalLine />
         <SideTitleRotate>작가신청서</SideTitleRotate>
       </SideTitleWrapper>
+
+      {changeForm || (
+        <FormWrapper>
+          <FormStage>01. 작가소개</FormStage>
+          <FormTitle>작가님이 궁금해요.</FormTitle>
+          <FormTextWrapper>
+            <FormText>
+              작가님이 누구인지 이해하고 앞으로 브런치에서 어떤 활동을
+              보여주실지
+              <br />
+              기대할 수 있도록 알려주세요.
+            </FormText>
+            <FormTextLength>{valueLength}/300</FormTextLength>
+          </FormTextWrapper>
+          <FormInput
+            required
+            onChange={countText}
+            row="2"
+            placeholder={
+              preventBtn
+                ? '자기 소개가 입력되지 않았습니다.&#13;작가님에 대해 알려주세요.'
+                : `브런치 활동 계획을 입력해주세요.`
+            }
+            preventBtn={preventBtn}
+          />
+          <FormBtn onClick={nextForm}>다음</FormBtn>
+        </FormWrapper>
+      )}
+
+      {changeForm && (
+        <FormWrapper>
+          <FormStage>02. 자료첨부</FormStage>
+
+          <FormSubWrapper>
+            <section>
+              <FormTitle>
+                내 서랍 속에 저장! <br />
+                이제 꺼내주세요.
+              </FormTitle>
+              <FormTextWrapper>
+                <FormText>
+                  '작가의 서랍'에 저장해둔 글 <br />
+                  또는 외부에 작성한 게시글 주소를 첨부해주세요.
+                  <br />
+                  선정 검토 시 가장 중요한 자료가 됩니다.
+                </FormText>
+              </FormTextWrapper>
+            </section>
+
+            <SaveBoxWrapper>
+              <SaveTitle>브런치 저장글</SaveTitle>
+              <SaveBox>
+                <input
+                  type="checkbox"
+                  name="save"
+                  value="안녕하세요"
+                  style={{ zoom: '1.5', marginRight: '0.3rem' }}
+                />
+                안녕하세요.
+              </SaveBox>
+            </SaveBoxWrapper>
+          </FormSubWrapper>
+          <FormBtn onClick={formSubmit}>다음</FormBtn>
+        </FormWrapper>
+      )}
     </BgColor>
   );
 }
@@ -27,12 +113,14 @@ const BgColor = styled.article`
 
 const SideTitleWrapper = styled.section`
   padding: 2rem 0 0 2rem;
-  color: #666666;
-  font-family: 'Nanum Myeongjo';
 `;
 
 const SideTitle = styled.p`
   margin-bottom: 1rem;
+  color: #666666;
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
 `;
 
 const VerticalLine = styled.div`
@@ -44,6 +132,103 @@ const SideTitleRotate = styled.div`
   display: inline-block;
   transform: rotate(90deg);
   transform-origin: 0 100%;
+  color: #666666;
+  font-family: 'Nanum Myeongjo', serif;
+`;
+
+const FormWrapper = styled.section`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 17px 40px rgb(0 0 0 / 15%);
+  width: 700px;
+  padding: 40px;
+  background-color: #ffffff;
+`;
+
+const FormStage = styled.div`
+  color: #00c3bd;
+  font-weight: 300;
+  margin-bottom: 3rem;
+`;
+
+const FormSubWrapper = styled.article`
+  display: flex;
+`;
+
+const FormTitle = styled.p`
+  margin-bottom: 0.5rem;
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 2rem;
+  line-height: 2.5rem;
+`;
+
+const FormTextWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const FormText = styled.div`
+  color: #959595;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 200;
+  line-height: 1.5rem;
+`;
+
+const FormTextLength = styled.div`
+  color: #959595;
+  font-size: 0.9rem;
+  font-weight: 200;
+`;
+
+const FormInput = styled.textarea.attrs({
+  type: 'text',
+  maxLength: '300',
+})`
+  width: 620px;
+  height: 170px;
+  margin-bottom: 1rem;
+  border: solid 1px #e1e1e1;
+  padding: 12px 14px;
+  resize: none;
+
+  &::placeholder {
+    color: ${props => (props.preventBtn ? 'red' : '#e1e1e1')};
+    font-weight: 300;
+  }
+`;
+
+const FormBtn = styled.button`
+  border: 1px solid #00c3bd;
+  border-radius: 20px;
+  padding: 0.5rem 2rem;
+  background-color: #ffffff;
+  color: #00c3bd;
+  font-weight: 300;
+  cursor: pointer;
+  float: right;
+`;
+
+const SaveBoxWrapper = styled.section`
+  margin-left: 3rem;
+`;
+
+const SaveTitle = styled.p`
+  padding-bottom: 1rem;
+  color: #666666;
+  font-weight: 300;
+`;
+
+const SaveBox = styled.div`
+  padding-bottom: 0.2rem;
+  color: #666666;
+  font-weight: 200;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
 `;
 
 export default Request;
