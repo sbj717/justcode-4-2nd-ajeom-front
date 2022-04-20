@@ -14,11 +14,13 @@ function BrunchbookBottom() {
   const [exist, setExist] = useState(false);
   const [rise, setRise] = useState('20');
   const [fade, setFade] = useState('0');
+  const [delay, setDelay] = useState('2800');
 
   const bookListMotion = () => {
     setExist(true);
     setRise('0');
     setFade('100');
+    setDelay(null);
   };
 
   const useInterval = (callback, delay) => {
@@ -38,7 +40,7 @@ function BrunchbookBottom() {
     }, [delay]);
   };
 
-  useInterval(bookListMotion, 3000);
+  useInterval(bookListMotion, delay);
 
   return (
     <BookBottomContainer

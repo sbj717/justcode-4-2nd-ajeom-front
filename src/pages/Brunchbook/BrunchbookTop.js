@@ -182,7 +182,6 @@ function BrunchbookTop() {
                     <img src={bookInfo.userimage_url} alt="" />
                   </div>
                   <h3>{bookInfo.username}</h3>
-                  <p>아티스트</p>
                   <p className="userDescription">{bookInfo.user_description}</p>
                 </div>
               </BookPageTwo>
@@ -388,7 +387,7 @@ const BookPageTwoWrapper = styled.div`
   height: 450px;
   margin-right: 2px;
   transform: translate(-500px, 30px);
-  transition: ease 0.8s;
+  transition: ease 0.7s;
   z-index: 7;
 `;
 
@@ -434,14 +433,14 @@ const BookPageTwo = styled.div`
       font-weight: 100;
     }
     .userDescription {
-      padding-top: 30px;
+      padding-top: 15px;
     }
   }
 `;
 
 const BookReleaseDateWrapper = styled.div`
   transform: translate(-530px, 40px);
-  transition: ease 1s;
+  transition: ease 0.8s;
   z-index: 6;
 `;
 
