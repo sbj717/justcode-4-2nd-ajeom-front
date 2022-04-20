@@ -211,9 +211,10 @@ export default BrunchbookTop;
 const BrunchbookTopWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #f8f8f8;
+  background-color: transparent;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 600px;
 `;
 
@@ -221,14 +222,14 @@ const BrunchbookTopCarousel = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  width: 1920px;
+  width: 1200px;
   position: relative;
 `;
 
 const BrunchbookTopButton = styled.div`
   position: absolute;
   top: -40px;
-  left: 1360px;
+  left: 1000px;
   button {
     font-size: 27px;
     font-weight: 100;

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import BrunchbookTop from './pages/Brunchbook/BrunchbookTop';
+import Brunchbook from './pages/Brunchbook/Brunchbook';
 import Main from './pages/Main/Main';
 
 function Router() {
@@ -7,7 +7,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/main" element={<Main />} />
-        <Route path="" element={<BrunchbookTop />} />
+        <Route path="/book" element={<Brunchbook />} />
       </Routes>
     </BrowserRouter>
   );
