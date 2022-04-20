@@ -1,0 +1,75 @@
+$green: #2ecac5;
+.section {
+  position: relative;
+  width: 700px;
+  height: 100vh;
+  margin: 0 auto;
+  color: #333;
+  padding-top: 35px;
+}
+
+.top {
+  width: 100%;
+  height: 320px;
+  background: #f8f8f8;
+}
+
+.ImageBox {
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+  }
+}
+
+.profileBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+  .name {
+    font-weight: 100;
+    font-size: 28px;
+  }
+
+  .writeBox {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .writeBtn {
+    display: block;
+    border: 1px solid $green;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: $green;
+    cursor: pointer;
+  }
+  .edit {
+    display: block;
+    width: 30px;
+    font-size: 25px;
+    color: #ddd;
+    cursor: pointer;
+  }
+}
+
+.editBox {
+  position: absolute;
+  right: 10px;
+  top: 50px;
+  display: block;
+  padding: 15px 100px;
+  border: 1px solid #ddd;
+  color: #959595;
+  cursor: pointer;
+  display: block;
+}
