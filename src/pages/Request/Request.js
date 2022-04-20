@@ -49,13 +49,13 @@ function Request() {
             </FormText>
             <FormTextLength>{valueLength}/300</FormTextLength>
           </FormTextWrapper>
-          <FormInput
+          <FormTextArea
             required
             onChange={countText}
             row="2"
             placeholder={
               preventBtn
-                ? '자기 소개가 입력되지 않았습니다.&#13;작가님에 대해 알려주세요.'
+                ? `자기 소개가 입력되지 않았습니다. 작가님에 대해 알려주세요.`
                 : `브런치 활동 계획을 입력해주세요.`
             }
             preventBtn={preventBtn}
@@ -93,7 +93,7 @@ function Request() {
                   value="안녕하세요"
                   style={{ zoom: '1.5', marginRight: '0.3rem' }}
                 />
-                안녕하세요.
+                행복한 하루였다.
               </SaveBox>
             </SaveBoxWrapper>
           </FormSubWrapper>
@@ -184,7 +184,7 @@ const FormTextLength = styled.div`
   font-weight: 200;
 `;
 
-const FormInput = styled.textarea.attrs({
+const FormTextArea = styled.textarea.attrs({
   type: 'text',
   maxLength: '300',
 })`
@@ -213,7 +213,11 @@ const FormBtn = styled.button`
 `;
 
 const SaveBoxWrapper = styled.section`
+  max-width: 17rem;
   margin-left: 3rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const SaveTitle = styled.p`
