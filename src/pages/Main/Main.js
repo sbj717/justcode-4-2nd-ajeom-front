@@ -1,7 +1,8 @@
 import React from 'react';
+import Header from '../components/Header/Header';
 
 function Main() {
-  return <div>아점 --</div>;
+  return <Header />;
 }
 
 export default Main;
