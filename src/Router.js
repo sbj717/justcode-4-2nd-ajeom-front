@@ -15,6 +15,7 @@ function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/kakao" element={<Auth />} />
         <Route path="/list" element={<List />} />
+        <Route path="/book" element={<Brunchbook />} />
       </Routes>
     </BrowserRouter>
   );
