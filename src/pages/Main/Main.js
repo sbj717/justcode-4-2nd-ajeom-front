@@ -1,7 +1,8 @@
 import React from 'react';
+import AjeomIntro from './AjeomIntro/AjeomIntro';
 
 function Main() {
-  return <div>아점 --</div>;
+  return <AjeomIntro />;
 }
 
 export default Main;
