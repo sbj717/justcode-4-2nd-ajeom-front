@@ -8,6 +8,7 @@ function Profile() {
   const showEditBox = () => {
     setEdit(!edit);
   };
+
   return (
     <>
       <div className={styles.cover} />
