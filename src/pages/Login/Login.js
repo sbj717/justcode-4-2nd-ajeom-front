@@ -4,16 +4,19 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import Slider from './Slider';
+import { KAKAO_AUTH_URL } from './OAuth';
 function Login() {
-  const Button = styled.button`
+  const Button = styled.a`
     display: block;
     width: 100%;
-    padding: 15px;
+    padding: 20px 0;
     border-radius: 12px;
     outline: none;
     border: none;
+    text-align: center;
     font-size: 16px;
     color: #333;
+    text-decoration: none;
     background-color: ${props => (props.kakao ? '#fee500' : '#fff')};
     cursor: pointer;
     img {
@@ -34,7 +37,7 @@ function Login() {
             <IoMdClose className={styles.close} />
             <div className={styles.kakaologinBox}>
               <span>아점 시작하기</span>
-              <Button kakao>
+              <Button href={KAKAO_AUTH_URL} kakao>
                 <img
                   src={process.env.PUBLIC_URL + '/image/kakaotalk.png'}
                   alt=""
