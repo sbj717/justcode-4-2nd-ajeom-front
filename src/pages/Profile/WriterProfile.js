@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes } from 'react-router-dom';
 import styles from '../Profile/WriterProfile.module.scss';
 import WriterTags from './WriterTags';
 function WriterProfile() {
