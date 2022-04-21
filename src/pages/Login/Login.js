@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from '../Login/Login.module.scss';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -6,7 +6,6 @@ import { IoMdClose } from 'react-icons/io';
 import Slider from './Slider';
 import { KAKAO_AUTH_URL } from './OAuth';
 
-const { Kakao } = window;
 function Login() {
   const Button = styled.a`
     display: block;
