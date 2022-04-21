@@ -6,7 +6,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/main" element={<Main />} />
+        <Route path="" element={<Main />} />
         <Route path="/book" element={<Brunchbook />} />
       </Routes>
     </BrowserRouter>

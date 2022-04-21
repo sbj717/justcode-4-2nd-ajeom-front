@@ -19,4 +19,5 @@ const BrunchbookWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background: linear-gradient(#f8f8f8, white);
+  margin-bottom: 100px;
 `;
