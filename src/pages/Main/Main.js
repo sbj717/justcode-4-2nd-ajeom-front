@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import ProfileBookLayout from '../Profile/Brunchbook/ProfileBookLayout';
 import Carousel from './Carousel/Carousel';
 
 function Main() {
   return (
     <MainOneWrapper>
       <Carousel />
+      <ProfileBookLayout />
     </MainOneWrapper>
   );
 }
@@ -14,7 +16,8 @@ export default Main;
 
 const MainOneWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100vw;
   overflow: hidden;
 `;
