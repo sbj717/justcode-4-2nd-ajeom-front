@@ -21,7 +21,7 @@ function Detail() {
   });
 
   const [writerLists, setWriterLists] = useState({
-    recommendedWriter: [{ id: 0, profileImg: '', writer: '' }],
+    recommendedWriter: [{ id: 0, profileImg: '', writer: '', description: '' }],
   });
 
   const fillteredWriter = writerLists.recommendedWriter.filter(
@@ -75,10 +75,31 @@ function Detail() {
       <WriterWrapper>
         <WriterSubWrapper>
           {fillteredWriter.map(data => (
-            <WriterName key={data.id}>{data.writer}</WriterName>
+            <>
+              <ProfileWrapper key={data.id}>
+                <WriterName>{data.writer}</WriterName>
+                <WriterImg src={data.profileImg} />
+              </ProfileWrapper>
+              <WriterDesc>{data.description}</WriterDesc>
+            </>
           ))}
+          <BtnWrapper>
+            <Proposition>제안하기</Proposition>
+            <Subscription>구독하기</Subscription>
+          </BtnWrapper>
         </WriterSubWrapper>
       </WriterWrapper>
+
+      <NavBottom>
+        <NavWrapper>
+          <Prev>작가의 이전글</Prev>
+          <PrevPost>안녕하세요</PrevPost>
+        </NavWrapper>
+        <NavWrapper>
+          <NextPost>반갑습니다</NextPost>
+          <Next>작가의 다음글</Next>
+        </NavWrapper>
+      </NavBottom>
     </>
   );
 }
@@ -106,6 +127,7 @@ const DetailTitle = styled.h1`
   font-size: 2.5rem;
   line-height: 3rem;
   margin-top: 15rem;
+  z-index: 1;
 `;
 
 const DetailSubTitle = styled.div`
@@ -140,7 +162,8 @@ const Ajeombody = styled.div`
 
 const KeywordBtnWrapper = styled.div`
   display: flex;
-  margin-bottom: 4rem;
+  margin: 7rem 0 4rem 0;
+  z-index: 2;
 `;
 
 const Keyword = styled.button`
@@ -152,6 +175,7 @@ const Keyword = styled.button`
   border-radius: 1rem;
   font-size: 0.8rem;
   font-weight: 200;
+  z-index: 2;
   cursor: pointer;
 `;
 
@@ -160,17 +184,95 @@ const WriterWrapper = styled.section`
   justify-content: center;
   background-color: #fbfbfb;
   color: #333333;
-  height: 10rem;
 `;
 
 const WriterSubWrapper = styled.div`
   width: 700px;
-  font-weight: 300;
-  margin-top: 2.5rem;
+  font-weight: 200;
+  margin-bottom: 2rem;
+`;
+
+const ProfileWrapper = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  bottom: 20%;
 `;
 
 const WriterName = styled.p`
-  font-size: 2rem;
+  font-size: 1.8rem;
+  z-index: 2;
+`;
+
+const WriterImg = styled.img`
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+`;
+
+const WriterDesc = styled.p`
+  color: #959595;
+  line-height: 1.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+`;
+
+const BtnWrapper = styled.section`
+  float: right;
+  margin-bottom: 2rem;
+`;
+
+const Proposition = styled.button`
+  width: 5rem;
+  border: 1px solid #bbb;
+  border-radius: 3rem;
+  color: #666;
+  background: #fff;
+  padding: 0.4rem 0;
+  font-weight: 200;
+  margin-left: 0.7rem;
+`;
+
+const Subscription = styled(Proposition)`
+  border: 1px solid #00c3bd;
+  color: #00c3bd;
+`;
+
+const NavBottom = styled.section`
+  position: sticky;
+  bottom: 0;
+  padding: 1.4rem 0;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const NavWrapper = styled.section`
+  display: flex;
+  align-items: center;
+  color: #333333;
+  font-weight: 200;
+`;
+
+const Prev = styled.div`
+  color: #959595;
+  font-size: 0.8rem;
+  margin-left: 3rem;
+`;
+
+const PrevPost = styled.div`
+  color: #333333;
+  margin-left: 1rem;
+`;
+
+const NextPost = styled(PrevPost)`
+  margin-right: 1rem;
+`;
+
+const Next = styled(Prev)`
+  margin: 0 3rem 0 0;
 `;
 
 export default Detail;
