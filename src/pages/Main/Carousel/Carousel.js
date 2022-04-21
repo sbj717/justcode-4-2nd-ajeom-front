@@ -64,16 +64,7 @@ function Carousel() {
   };
 
   return (
-    <CarouselWrapper>
-      <CarouselContainer
-        style={{ transform: `translateX(${slideDistance}px)` }}
-      >
-        <Slide1 />
-        <Slide2 />
-        <Slide3 />
-        <Slide4 />
-        <Slide5 />
-      </CarouselContainer>
+    <TotalWrapper>
       {buttonVisible[0] && (
         <LeftButtonWrapper>
           <button onClick={leftButtonClick}>
@@ -88,42 +79,48 @@ function Carousel() {
           </button>
         </RightButtonWrapper>
       )}
-      <CarouselNav>
-        <button className={buttonDeco[0]} onClick={goToSlideOne}>
-          01
-        </button>
-        <button className={buttonDeco[1]} onClick={goToSlideTwo}>
-          02
-        </button>
-        <button className={buttonDeco[2]} onClick={goToSlideThree}>
-          03
-        </button>
-        <button className={buttonDeco[3]} onClick={goToSlideFour}>
-          04
-        </button>
-        <button className={buttonDeco[4]} onClick={goToSlideFive}>
-          05
-        </button>
-      </CarouselNav>
-    </CarouselWrapper>
+      <CarouselWrapper>
+        <CarouselContainer
+          style={{ transform: `translateX(${slideDistance}px)` }}
+        >
+          <Slide1 />
+          <Slide2 />
+          <Slide3 />
+          <Slide4 />
+          <Slide5 />
+        </CarouselContainer>
+
+        <CarouselNav>
+          <button className={buttonDeco[0]} onClick={goToSlideOne}>
+            01
+          </button>
+          <button className={buttonDeco[1]} onClick={goToSlideTwo}>
+            02
+          </button>
+          <button className={buttonDeco[2]} onClick={goToSlideThree}>
+            03
+          </button>
+          <button className={buttonDeco[3]} onClick={goToSlideFour}>
+            04
+          </button>
+          <button className={buttonDeco[4]} onClick={goToSlideFive}>
+            05
+          </button>
+        </CarouselNav>
+      </CarouselWrapper>
+    </TotalWrapper>
   );
 }
 
 export default Carousel;
 
-const CarouselWrapper = styled.div`
-  width: 960px;
+const TotalWrapper = styled.div`
+  width: 100vw;
   height: 570px;
   display: flex;
+  justify-content: center;
   position: relative;
   margin: 50px 0px;
-`;
-
-const CarouselContainer = styled.div`
-  display: flex;
-  width: 4800px;
-  height: 520px;
-  transition: ease 0.5s;
 `;
 
 const LeftButtonWrapper = styled.div`
@@ -132,6 +129,7 @@ const LeftButtonWrapper = styled.div`
   position: absolute;
   top: 210px;
   left: 30px;
+  z-index: 2;
   button {
     width: 100px;
     height: 100px;
@@ -151,6 +149,7 @@ const RightButtonWrapper = styled.div`
   position: absolute;
   top: 210px;
   right: 30px;
+  z-index: 2;
   button {
     width: 100px;
     height: 100px;
@@ -162,6 +161,21 @@ const RightButtonWrapper = styled.div`
     opacity: 70%;
     cursor: pointer;
   }
+`;
+
+const CarouselWrapper = styled.div`
+  width: 960px;
+  height: 570px;
+  display: flex;
+  position: relative;
+  z-index: 1;
+`;
+
+const CarouselContainer = styled.div`
+  display: flex;
+  width: 4800px;
+  height: 520px;
+  transition: ease 0.5s;
 `;
 
 const CarouselNav = styled.div`
