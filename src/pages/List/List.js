@@ -3,21 +3,19 @@ import styled from 'styled-components';
 import ListCard from './ListCard';
 
 function List() {
+  const [test, setTest] = useState(0);
+
   const [keywordLists, setKeywordLists] = useState({
     keywordList: [{ id: 0, mainKeyword: [] }],
   });
 
-  const [postLists, setPostLists] = useState({
-    posts: [{ id: 0, postTitle: '', postText: '', writer: '', postImg: '' }],
-  });
+  const [postLists, setPostLists] = useState([]);
 
   const [writerLists, setWriterLists] = useState({
     recommendedWriter: [{ id: 0, profileImg: '', writer: '' }],
   });
 
   const target = useRef(null);
-  // const [itemList, setItemList] = useState([]);
-  // postLists.posts.slice(0, 4);
 
   useEffect(() => {
     fetch('/data/keywords.json')
@@ -31,40 +29,42 @@ function List() {
       .then(data => setWriterLists(data));
   }, []);
 
+  useEffect(() => {
+    if (test === 1) {
+      fetchData();
+    }
+  }, [test]);
+
   const fetchData = () => {
-    setTimeout(() => {
-      fetch('/data/listCard.json')
-        .then(res => res.json())
-        .then(data => {
-          setPostLists(data);
-          // setPostLists(itemList.posts.slice(0, 4));
-          // setPostLists(itemLists =>
-          //   itemLists.concat(itemList.posts.slice(0, 4))
-          // );
-        });
-    }, 2000);
+    fetch('/data/listCard.json')
+      .then(res => res.json())
+      .then(data => {
+        setPostLists(postLists.concat(data.posts));
+      });
+    setTest(0);
   };
 
   useEffect(() => {
     let observer;
     if (target.current) {
-      observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
+      observer = new IntersectionObserver(
+        () => {
+          setTest(1);
+        },
+        { threshold: 0.4 }
+      );
       observer.observe(target.current);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
+  }, []);
 
-  const handleObserver = async ([entry], observer) => {
-    if (entry.isIntersecting) {
-      observer.unobserve(entry.target);
-      fetchData();
-
-      observer.observe(entry.target);
-    }
-    // await new Promise(resolve => setTimeout(resolve, 2000));
-    // let Items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    // setItemList(itemLists => itemLists.concat(Items));
-  };
+  // const handleObserver = async ([entry], observer) => {
+  //   if (entry.isIntersecting) {
+  //     observer.unobserve(entry.target);
+  //     fetchData();
+  //     observer.observe(entry.target);
+  //   }
+  // };
 
   return (
     <>
@@ -79,7 +79,7 @@ function List() {
 
       <AllListsWrapper>
         <ListCardWrapper>
-          {postLists.posts.map(data => (
+          {postLists.map(data => (
             <ListCard key={data.id} posts={data} />
           ))}
         </ListCardWrapper>
@@ -93,16 +93,7 @@ function List() {
           ))}
         </WriterCardWrapper>
       </AllListsWrapper>
-      {/* <div className="App">
-        <ItemWrap>
-          {itemList.map((item, index) => (
-            <div className="Item" key={index}>
-              {index + 1}
-            </div>
-          ))}
-        </ItemWrap> */}
       <div ref={target} />
-      {/* </div> */}
     </>
   );
 }
@@ -179,27 +170,6 @@ const WriterName = styled.p`
   color: black;
   font-weight: 300;
   font-size: 0.8rem;
-`;
-
-const ItemWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-
-  .Item {
-    width: 350px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    background-color: #ffffff;
-    margin: 1rem;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border-radius: 6px;
-  }
 `;
 
 export default List;
