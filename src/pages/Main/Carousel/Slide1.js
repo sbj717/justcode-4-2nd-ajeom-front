@@ -171,7 +171,7 @@ const ArticleOne = styled.div`
     width: 230px;
     height: 324px;
     background-color: red;
-    border-radius: 5px;
+    border-radius: 4px 8px 8px 4px;
     z-index: 3;
     position: relative;
     overflow: hidden;
