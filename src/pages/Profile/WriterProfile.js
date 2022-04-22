@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../Profile/WriterProfile.module.scss';
 import WriterTags from './WriterTags';
 function WriterProfile() {
-  const [list, setLists] = useState({
+  const [lists, setLists] = useState({
     posts: [
       {
         id: '',
@@ -47,6 +47,8 @@ function WriterProfile() {
       });
   }, []);
 
+  console.log(lists.posts);
+
   const InfoBox = () => {
     return (
       <div
@@ -77,25 +79,19 @@ function WriterProfile() {
             : `${styles.articleBox}`
         }
       >
-        <div className={styles.article}>
-          <div className={styles.container}>
-            <div className={styles.textBox}>
-              <span className={styles.title}>코시국 남미 콜롬비아 출장기</span>
-              <p>
-                신경 쓸게 너무 많아 - 일상의 소중함을 더 없이 느꼈던 30시간
-                'Hola, como estas?' 올라올라, 반가운 스페인어 인사로 눈을 뜬 지
-                하루가 지났다. 오늘 아침 정신 차리고 보니, 정말 나 신경 쓸게
-                너무 많아 -
-              </p>
-            </div>
-            <div className={styles.imgBox}>
-              <img
-                src="https://mblogthumb-phinf.pstatic.net/MjAxOTA3MTRfODEg/MDAxNTYzMTEyNjcxMDM0.oXkLnZhEcHekYHqOVHM82fDYdhwb0dbvWVgb_UE-Amog.gG3QWmFe7k56OXaCHf5Jtnv0VSqJ_q_ljpseR5nzojkg.JPEG.studygir/tejuTyY_(25).jpg?type=w800"
-                alt="#"
-              />
+        {lists.posts.map(lists => (
+          <div className={styles.article} key={lists.id}>
+            <div className={styles.container}>
+              <div className={styles.textBox}>
+                <span className={styles.title}>{lists.postTitle}</span>
+                <p>{lists.postText}</p>
+              </div>
+              <div className={styles.imgBox}>
+                <img src={lists.postImg} alt="postImg" />
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     );
   };
