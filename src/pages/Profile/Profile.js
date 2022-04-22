@@ -5,10 +5,10 @@ import WriterProfile from './WriterProfile';
 
 function Profile() {
   const [edit, setEdit] = useState(false);
-
   const showEditBox = () => {
     setEdit(!edit);
   };
+
   return (
     <>
       <div className={styles.cover} />
