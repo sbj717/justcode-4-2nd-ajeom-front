@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from '../Login/Login.module.scss';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';

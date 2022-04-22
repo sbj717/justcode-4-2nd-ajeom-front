@@ -24,7 +24,7 @@ function Header() {
     <Wrapper show={showNav}>
       <LeftWrapper>
         <SidebarBtn>
-          <GrMenu size={30} onClick={openMemberNav} />
+          <GrMenu size={30} onClick={openGuestNav} />
         </SidebarBtn>
         <Logo>ajeom</Logo>
       </LeftWrapper>
@@ -45,7 +45,7 @@ const OutsideNav = styled.div`
   bottom: 0;
   right: 0;
   background-color: transparent;
-  z-index: 1;
+  z-index: -1;
 `;
 
 const Wrapper = styled.section`
@@ -53,6 +53,7 @@ const Wrapper = styled.section`
   padding: 15px 25px 0px 25px;
   justify-content: space-between;
   width: 100vw;
+  z-index: 1;
 `;
 
 const LeftWrapper = styled.div`

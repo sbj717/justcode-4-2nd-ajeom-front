@@ -6,7 +6,7 @@ function AjeomIntro() {
     <IntroWrapper>
       <IntroTextWrapper>
         <AjeomTitle>
-          글이 작품이 되는 공간, 브런치
+          글이 작품이 되는 공간, 아점
           <AjeomLogo
             alt="ajeom_logo"
             src="https://velog.velcdn.com/images/jhsol24/post/801b97b8-63fc-47b4-b4be-f90c84a17295/image.png"
