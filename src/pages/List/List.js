@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ListCard from './ListCard';
 
 function List() {
+  const [test, setTest] = useState(0);
+
   const [keywordLists, setKeywordLists] = useState({
     keywordList: [{ id: 0, mainKeyword: [] }],
   });
 
-  const [postLists, setPostLists] = useState({
-    posts: [{ id: 0, postTitle: '', postText: '', writer: '', postImg: '' }],
-  });
+  const [postLists, setPostLists] = useState([]);
 
   const [writerLists, setWriterLists] = useState({
     recommendedWriter: [{ id: 0, profileImg: '', writer: '' }],
   });
+
+  const target = useRef(null);
 
   useEffect(() => {
     fetch('/data/keywords.json')
@@ -22,16 +24,47 @@ function List() {
   }, []);
 
   useEffect(() => {
-    fetch('/data/listCard.json')
-      .then(res => res.json())
-      .then(data => setPostLists(data));
-  }, []);
-
-  useEffect(() => {
     fetch('/data/writer.json')
       .then(res => res.json())
       .then(data => setWriterLists(data));
   }, []);
+
+  useEffect(() => {
+    if (test === 1) {
+      fetchData();
+    }
+  }, [test]);
+
+  const fetchData = () => {
+    fetch('/data/listCard.json')
+      .then(res => res.json())
+      .then(data => {
+        setPostLists(postLists.concat(data.posts));
+      });
+    setTest(0);
+  };
+
+  useEffect(() => {
+    let observer;
+    if (target.current) {
+      observer = new IntersectionObserver(
+        () => {
+          setTest(1);
+        },
+        { threshold: 0.4 }
+      );
+      observer.observe(target.current);
+    }
+    return () => observer && observer.disconnect();
+  }, []);
+
+  // const handleObserver = async ([entry], observer) => {
+  //   if (entry.isIntersecting) {
+  //     observer.unobserve(entry.target);
+  //     fetchData();
+  //     observer.observe(entry.target);
+  //   }
+  // };
 
   return (
     <>
@@ -46,7 +79,7 @@ function List() {
 
       <AllListsWrapper>
         <ListCardWrapper>
-          {postLists.posts.map(data => (
+          {postLists.map(data => (
             <ListCard key={data.id} posts={data} />
           ))}
         </ListCardWrapper>
@@ -60,6 +93,7 @@ function List() {
           ))}
         </WriterCardWrapper>
       </AllListsWrapper>
+      <div ref={target} />
     </>
   );
 }
