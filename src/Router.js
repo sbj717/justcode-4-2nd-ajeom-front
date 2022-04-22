@@ -6,7 +6,7 @@ import Footer from './pages/components/Footer/Footer';
 import Login from './pages/Login/Login';
 import List from './pages/List/List';
 import Auth from './pages/Login/Auth';
-
+import Write from './pages/PostEditor/Editor';
 function Router() {
   return (
     <BrowserRouter>
@@ -16,6 +16,7 @@ function Router() {
         <Route path="/oauth/kakao" element={<Auth />} />
         <Route path="/list" element={<List />} />
         <Route path="/book" element={<Brunchbook />} />
+        <Route path="/write" element={<Write />} />
       </Routes>
     </BrowserRouter>
   );
