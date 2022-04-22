@@ -5,12 +5,14 @@ import Profile from './pages/Profile/Profile';
 import Login from './pages/Login/Login';
 import List from './pages/List/List';
 import Auth from './pages/Login/Auth';
+import Request from './pages/Request/Request';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="" element={<Main />} />
+        <Route path="/request" element={<Request />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/kakao" element={<Auth />} />
