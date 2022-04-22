@@ -1,0 +1,28 @@
+{
+  "writerTags": [
+    {
+      "id": "1",
+      "keyword": "IT"
+    },
+    {
+      "id": "2",
+      "keyword": "일상에세이"
+    },
+    {
+      "id": "3",
+      "keyword": "REACT"
+    },
+    {
+      "id": "4",
+      "keyword": "Javascript"
+    },
+    {
+      "id": "5",
+      "keyword": "HTML"
+    },
+    {
+      "id": "6",
+      "keyword": "CSS"
+    }
+  ]
+}
