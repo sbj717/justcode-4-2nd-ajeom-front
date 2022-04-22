@@ -6,7 +6,7 @@ function Auth(props) {
   const [userToken, setUserToken] = useState({});
   const code = new URL(window.location.href).searchParams.get('code');
   // const KAKAO_INITAL = 'b2833402170a7a9f3747f0904a054d8e';
-  const KAKAO_INITAL = '407ccf3a53942a0a9a43fa86a6e8590f';
+  const KAKAOINIT = '407ccf3a53942a0a9a43fa86a6e8590f';
   const navigate = useNavigate;
 
   const bodyData = {
@@ -31,7 +31,8 @@ function Auth(props) {
     })
       .then(res => res.json())
       .then(data => {
-        // (data);
+        console.log(data);
+        // Kakao.init(KAKAOINIT);
         sendData(data);
       });
   }, [queryStringBody]);

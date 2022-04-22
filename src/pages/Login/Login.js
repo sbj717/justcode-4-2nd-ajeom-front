@@ -6,25 +6,7 @@ import { IoMdClose } from 'react-icons/io';
 import Slider from './Slider';
 import { KAKAO_AUTH_URL } from './OAuth';
 
-function Login() {
-  const Button = styled.a`
-    display: block;
-    width: 100%;
-    padding: 20px 0;
-    border-radius: 12px;
-    outline: none;
-    border: none;
-    text-align: center;
-    font-size: 16px;
-    color: #333;
-    text-decoration: none;
-    background-color: ${props => (props.kakao ? '#fee500' : '#fff')};
-    cursor: pointer;
-    img {
-      margin-right: 5px;
-    }
-  `;
-
+const Login = () => {
   return (
     <>
       <section className={styles.loginWrapper} />
@@ -59,6 +41,24 @@ function Login() {
       </section>
     </>
   );
-}
+};
 
 export default Login;
+
+const Button = styled.a`
+  display: block;
+  width: 100%;
+  padding: 20px 0;
+  border-radius: 12px;
+  outline: none;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  background-color: ${props => (props.kakao ? '#fee500' : '#fff')};
+  cursor: pointer;
+  img {
+    margin-right: 5px;
+  }
+`;
