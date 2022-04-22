@@ -255,11 +255,20 @@ function Editor() {
   }
   useEffect(() => {
     document.addEventListener('pointerup', e => {
-      if (
-        MainTextFieldRef.current.contains(e.target) ||
-        FontStyleToolBarRef.current.contains(e.target)
-      ) {
-        calModalPosition();
+      const selection = window.getSelection();
+      if (selection.type === 'Range') {
+        const range = selection.getRangeAt(0);
+
+        if (
+          MainTextFieldRef.current.contains(
+            range.commonAncestorContainer.parentElement
+          ) ||
+          FontStyleToolBarRef.current.contains(
+            range.commonAncestorContainer.parentElement
+          )
+        ) {
+          calModalPosition();
+        }
       } else {
         setModalOn(false);
       }
