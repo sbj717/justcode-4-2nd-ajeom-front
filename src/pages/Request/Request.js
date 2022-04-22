@@ -107,7 +107,7 @@ function Request() {
 const BgColor = styled.article`
   position: relative;
   min-width: 1000px;
-  min-height: 750px;
+  height: 100vh;
   background-color: #eaeaea;
 `;
 
