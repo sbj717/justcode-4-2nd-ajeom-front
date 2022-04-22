@@ -3,6 +3,7 @@ import Brunchbook from './pages/Brunchbook/Brunchbook';
 import Main from './pages/Main/Main';
 import Nav from './pages/components/Nav/Nav';
 import Footer from './pages/components/Footer/Footer';
+import Profile from './pages/Profile/Profile';
 import Login from './pages/Login/Login';
 import List from './pages/List/List';
 import Auth from './pages/Login/Auth';
@@ -12,6 +13,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="" element={<Main />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/kakao" element={<Auth />} />
         <Route path="/list" element={<List />} />
