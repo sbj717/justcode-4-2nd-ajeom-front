@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import ProfileBookLayout from '../Profile/Brunchbook/ProfileBookLayout';
+import Header from '../components/Header/Header';
+import AjeomIntro from './AjeomIntro/AjeomIntro';
 import Carousel from './Carousel/Carousel';
+import KeywordBaord from './KeywordBaord/KeywordBaord';
 
 function Main() {
   return (
     <MainOneWrapper>
+      <Header />
+      <AjeomIntro />
       <Carousel />
-      <ProfileBookLayout />
+      <KeywordBaord />
     </MainOneWrapper>
   );
 }
