@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import ProfileBookLayout from '../Profile/Brunchbook/ProfileBookLayout';
+import Header from '../components/Header/Header';
 import Carousel from './Carousel/Carousel';
 
 function Main() {
   return (
     <MainOneWrapper>
+      <Header />
       <Carousel />
-      <ProfileBookLayout />
     </MainOneWrapper>
   );
 }
