@@ -45,13 +45,14 @@ const OutsideNav = styled.div`
   bottom: 0;
   right: 0;
   background-color: transparent;
-  z-index: -1;
+  z-index: 1;
 `;
 
 const Wrapper = styled.section`
   display: flex;
   padding: 15px 25px 0px 25px;
   justify-content: space-between;
+  width: 100vw;
 `;
 
 const LeftWrapper = styled.div`
@@ -69,7 +70,7 @@ const Logo = styled.div`
 `;
 
 const SearchBtn = styled.div`
-  margin-top: 13px;
+  margin: 13px 30px 0 0;
   cursor: pointer;
 `;
 

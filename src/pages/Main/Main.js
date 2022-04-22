@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
-import ProfileBookLayout from '../Profile/Brunchbook/ProfileBookLayout';
 import Carousel from './Carousel/Carousel';
 
 function Main() {
@@ -9,7 +8,6 @@ function Main() {
     <MainOneWrapper>
       <Header />
       <Carousel />
-      <ProfileBookLayout />
     </MainOneWrapper>
   );
 }
