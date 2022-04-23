@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from '../Profile/Profile.module.scss';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import WriterProfile from './WriterProfile';
 
 function Profile() {
-  const [edit, setEdit] = useState(false);
-  const showEditBox = () => {
-    setEdit(!edit);
+  const ref = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isWriter, setIsWriter] = useState(true);
+
+  const clickModalOutside = e => {
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -26,18 +29,17 @@ function Profile() {
               <div className={styles.writeBtn}>글쓰기</div>
               <HiOutlineDotsVertical
                 className={styles.edit}
-                onClick={showEditBox}
+                onClick={clickModalOutside}
               />
-              <ul
-                className={styles.editBox}
-                style={{ display: edit ? 'block' : 'none' }}
-              >
-                <li>프로필수정</li>
-              </ul>
+              {isOpen && (
+                <ul className={styles.editBox}>
+                  <li>프로필수정</li>
+                </ul>
+              )}
             </div>
           </div>
+          <WriterProfile />
         </section>
-        <WriterProfile />
       </section>
     </>
   );

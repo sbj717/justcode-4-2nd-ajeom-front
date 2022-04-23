@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../Profile/WriterProfile.module.scss';
 import WriterTags from './WriterTags';
-function WriterProfile() {
+function WriterProfile({ handleEditProfile }) {
   const [lists, setLists] = useState({
     posts: [
       {
@@ -29,6 +29,10 @@ function WriterProfile() {
   };
 
   useEffect(() => {
+    handleMenu();
+  }, []);
+
+  useEffect(() => {
     fetch('http://localhost:3000/data/profile.json', {
       method: 'GET',
     })
@@ -47,9 +51,7 @@ function WriterProfile() {
       });
   }, []);
 
-  console.log(lists.posts);
-
-  const InfoBox = () => {
+  const InfoBox = handleEditProfile => {
     return (
       <div
         className={
@@ -106,26 +108,22 @@ function WriterProfile() {
         }
       >
         <div className={styles.container}>
-          {[1, 2, 3, 4].map(li => (
-            <div className={styles.bookContainer}>
-              <div className={styles.book}>
-                <span className={styles.bookLine} />
-                <div className={styles.titleBox}>
-                  보통의 서비스기획 PO 이야기
-                </div>
-                <div className={styles.imgBox}>
-                  <img
-                    src="https://images.unsplash.com/photo-1546874177-9e664107314e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80"
-                    alt="collection"
-                  />
-                </div>
-              </div>
-              <div className={styles.bottom}>
-                <div className={styles.brunch}>brunch book</div>
-                <span>보통의 서비스기획 PO 이야기</span>
+          <div className={styles.bookContainer}>
+            <div className={styles.book}>
+              <span className={styles.bookLine} />
+              <div className={styles.titleBox}>보통의 서비스기획 PO 이야기</div>
+              <div className={styles.imgBox}>
+                <img
+                  src="https://images.unsplash.com/photo-1546874177-9e664107314e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80"
+                  alt="collection"
+                />
               </div>
             </div>
-          ))}
+            <div className={styles.bottom}>
+              <div className={styles.brunch}>brunch book</div>
+              <span>보통의 서비스기획 PO 이야기</span>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -162,11 +160,10 @@ function WriterProfile() {
           }
           onClick={() => handleMenu(3)}
         >
-          북 브런치
+          브런치북
         </li>
       </ul>
-
-      <InfoBox />
+      <InfoBox handleEditProfile={handleEditProfile} />
       <ArticleBox />
       <CollectionBox />
     </section>

@@ -41,17 +41,11 @@ const Slider = () => {
 
   useEffect(() => {
     slideRef.current.style.transition = 'all 0.5s ease-in-out';
-    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 애니메이션을 만듭니다.
+    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
   }, [currentSlide]);
 
   return (
     <Container>
-      <Logo href="/">
-        <img
-          src={process.env.PUBLIC_URL + '/image/ajeom_logo.png'}
-          alt="logo"
-        />
-      </Logo>
       <SliderContainer ref={slideRef}>
         <Slide
           img={datas[0].img}
@@ -104,16 +98,4 @@ const Button = styled.button`
   justify-content: center;
   padding-top: 15px;
   gap: 20px;
-`;
-
-const Logo = styled.a`
-  position: absolute;
-  left: 100px;
-  top: 80px;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  img {
-    width: 100%;
-  }
 `;
