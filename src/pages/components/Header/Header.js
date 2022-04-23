@@ -52,8 +52,7 @@ const Wrapper = styled.section`
   display: flex;
   padding: 15px 25px 0px 25px;
   justify-content: space-between;
-  width: 100vw;
-  z-index: 1;
+  z-index: 10;
 `;
 
 const LeftWrapper = styled.div`
@@ -71,7 +70,9 @@ const Logo = styled.div`
 `;
 
 const SearchBtn = styled.div`
-  margin: 13px 30px 0 0;
+  position: absolute;
+  right: 30px;
+  margin-top: 13px;
   cursor: pointer;
 `;
 
