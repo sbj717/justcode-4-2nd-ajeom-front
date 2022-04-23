@@ -258,14 +258,9 @@ function Editor() {
       const selection = window.getSelection();
       if (selection.type === 'Range') {
         const range = selection.getRangeAt(0);
-
         if (
-          MainTextFieldRef.current.contains(
-            range.commonAncestorContainer.parentElement
-          ) ||
-          FontStyleToolBarRef.current.contains(
-            range.commonAncestorContainer.parentElement
-          )
+          MainTextFieldRef.current.contains(range.commonAncestorContainer) ||
+          FontStyleToolBarRef.current.contains(range.commonAncestorContainer)
         ) {
           calModalPosition();
         }
