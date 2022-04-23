@@ -5,7 +5,7 @@ import { GoSearch } from 'react-icons/go';
 import GuestNav from '../Nav/GuestNav';
 import MemberNav from '../Nav/MemberNav';
 
-function Header() {
+function Header({ detailPosition, detailTop }) {
   const [showNav, setShowNav] = useState('none');
 
   const openGuestNav = () => {
@@ -21,7 +21,10 @@ function Header() {
   };
 
   return (
-    <Wrapper show={showNav}>
+    <Wrapper
+      show={showNav}
+      style={{ position: detailPosition, top: detailTop }}
+    >
       <LeftWrapper>
         <SidebarBtn>
           <GrMenu size={30} onClick={openGuestNav} />
@@ -53,7 +56,7 @@ const Wrapper = styled.section`
   padding: 15px 25px 0px 25px;
   justify-content: space-between;
   width: 100vw;
-  z-index: 1;
+  z-index: 10;
 `;
 
 const LeftWrapper = styled.div`

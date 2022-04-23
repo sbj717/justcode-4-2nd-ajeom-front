@@ -10,9 +10,9 @@ function ListCard({ posts }) {
   };
 
   return (
-    <CardWrapper>
+    <CardWrapper onClick={clickPost}>
       <TextWrapper>
-        <CardTitle onClick={clickPost}>{posts.postTitle}</CardTitle>
+        <CardTitle>{posts.postTitle}</CardTitle>
         <CardText>{posts.postText}</CardText>
         <CardWriter>
           <By>by</By> {posts.writer}
@@ -32,6 +32,7 @@ const CardWrapper = styled.section`
   margin-bottom: 1rem;
   background-color: #ffffff;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
 `;
 
 const TextWrapper = styled.div`
