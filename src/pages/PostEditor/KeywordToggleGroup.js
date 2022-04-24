@@ -1,25 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import KeywordToggle from './KeywordToggle';
-let KeywordCase = styled.div`
-  width: 100%;
-`;
-
-let KeywordButton = styled.button`
-  border-radius: 20px;
-  padding: 0.3rem 1.3rem;
-  font-weight: 300;
-  cursor: pointer;
-  font-size: 13px;
-  margin-right: 7px;
-  margin-bottom: 7px;
-  border: 1.3px solid ${props => (props.checked ? '#00c3bd' : '#bbbbbb')};
-  background-color: ${props => (props.checked ? '#00c3bd' : '#FFFFFF')};
-  color: ${props => (props.checked ? '#FFFFFF' : '#bbbbbb')};
-`;
 
 function KeywordToggleGroup(props) {
   const [keywordList, setKeywordList] = useState([]);
+
   useEffect(() => {
     fetch('/data/keywordList.json', {
       method: 'GET',
@@ -32,11 +17,12 @@ function KeywordToggleGroup(props) {
 
   return (
     <>
-      <KeywordCase>
+      <KeywordWrapper>
         {keywordList.map(c => {
           return (
             <KeywordToggle
-              key={c.key}
+              key={c.id}
+              id={c.id}
               keywordName={c.Name}
               addKeyword={props.addKeyword}
               delKeyword={props.delKeyword}
@@ -44,9 +30,12 @@ function KeywordToggleGroup(props) {
             ></KeywordToggle>
           );
         })}
-      </KeywordCase>
+      </KeywordWrapper>
     </>
   );
 }
 
 export default KeywordToggleGroup;
+const KeywordWrapper = styled.div`
+  width: 100%;
+`;

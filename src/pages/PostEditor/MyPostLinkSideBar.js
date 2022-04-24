@@ -1,17 +1,90 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import PostCard from './PostCard';
-let Case = styled.div`
+
+function MyPostLinkSideBar(props) {
+  const [reloadSw, setReloadSw] = useState(0);
+  const [postList, setPostList] = useState([]);
+  const reloadSensorRef = useRef();
+
+  useEffect(() => {
+    if (reloadSw == 1) {
+      reloadData();
+    }
+  }, [reloadSw]);
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting == true) {
+          setReloadSw(1);
+        }
+      },
+      { threshold: [0.5] }
+    );
+
+    io.observe(reloadSensorRef.current);
+  }, []);
+
+  function reloadData() {
+    setLoadingText('불러오는 중');
+    setTimeout(() => {
+      setLoadingText('위로 스크롤해서 더 보기');
+    }, 800);
+    fetch('/data/PostList.json', {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        setPostList(postList.concat(data.PostList));
+        setReloadSw(0);
+      });
+  }
+  const [loadingText, setLoadingText] = useState('불러오는 중');
+
+  return (
+    <>
+      <FullScreenBlack
+        onClick={props.closeSideBar}
+        isSideBarOpen={props.isSideBarOpen}
+      ></FullScreenBlack>
+      <SideBarWrapper isSideBarOpen={props.isSideBarOpen}>
+        <TitleWrapper>나의 글</TitleWrapper>
+        <Wrapper>
+          {postList.map(c => {
+            return (
+              <PostCard
+                key={c.key}
+                Title={c.Title}
+                url="df.com"
+                Summary={c.Summary}
+                closeSideBar={props.closeSideBar}
+              ></PostCard>
+            );
+          })}
+          {props.isSideBarOpen ? <Space>{loadingText}</Space> : null}
+          <ReloadSensor ref={reloadSensorRef} />
+        </Wrapper>
+      </SideBarWrapper>
+    </>
+  );
+}
+
+export default MyPostLinkSideBar;
+
+const Wrapper = styled.div`
   overflow-y: scroll;
   scroll-behavior: smooth;
 `;
 
-let ReloadSensor = styled.div`
+const ReloadSensor = styled.div`
   height: 100px;
 `;
 
-let FullScreenBlack = styled.div`
+const FullScreenBlack = styled.div`
   transition: 1s;
+  left: 0;
+  top: 0;
   background-color: rgba(0, 0, 0, 0);
   visibility: hidden;
   ${props => {
@@ -28,7 +101,8 @@ let FullScreenBlack = styled.div`
   z-index: 5;
 `;
 
-let SideBarCase = styled.div`
+const SideBarWrapper = styled.div`
+  top: 0;
   display: flex;
   flex-direction: column;
   padding: 0 0 0 0;
@@ -42,94 +116,21 @@ let SideBarCase = styled.div`
     }
   }}
   position: fixed;
-
   width: 360px;
   height: 100%;
   background-color: rgb(250, 250, 250);
   z-index: 5;
 `;
-
-let TitleCase = styled.div`
+const TitleWrapper = styled.div`
   padding: 25px;
   font-weight: 100;
   font-size: 18x;
   border-bottom: 1px rgb(230, 230, 230) solid;
 `;
-let Space = styled.div`
+const Space = styled.div`
   height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: rgb(170, 170, 170);
 `;
-
-function MyPostLinkSideBar(props) {
-  const [keyhelper, setKeyhelper] = useState(1);
-  const [test, setTest] = useState(0);
-
-  const [postList, setPostList] = useState([]);
-  const ref = useRef();
-
-  useEffect(() => {
-    if (test == 1) {
-      reloadData();
-    }
-  }, [test]);
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting == true) {
-          setTest(1);
-        }
-      },
-      { threshold: [0.5] }
-    );
-
-    io.observe(ref.current);
-  }, []);
-
-  function reloadData() {
-    setTimeout(() => {
-      setLoadingText('위로 스크롤해서 더 보기');
-    }, 800);
-    fetch('/data/PostList.json', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        setPostList(postList.concat(data.PostList));
-        setTest(0);
-      });
-  }
-  const [loadingText, setLoadingText] = useState('불러오는 중');
-
-  return (
-    <>
-      <FullScreenBlack
-        onClick={props.closeSideBar}
-        isSideBarOpen={props.isSideBarOpen}
-      ></FullScreenBlack>
-      <SideBarCase isSideBarOpen={props.isSideBarOpen}>
-        <TitleCase>나의 글</TitleCase>
-        <Case>
-          {postList.map(c => {
-            return (
-              <PostCard
-                key={c.key}
-                Title={c.Title}
-                url="df.com"
-                Summary={c.Summary}
-                closeSideBar={props.closeSideBar}
-              ></PostCard>
-            );
-          })}
-          {props.isSideBarOpen ? <Space>{loadingText}</Space> : null}
-          <ReloadSensor ref={ref} />
-        </Case>
-      </SideBarCase>
-    </>
-  );
-}
-
-export default MyPostLinkSideBar;
