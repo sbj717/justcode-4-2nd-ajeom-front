@@ -1,30 +1,51 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Header from '../components/Header/Header';
 
 function Request() {
-  const [valueLength, setValueLength] = useState(0);
+  const [inputValue, setInputValue] = useState(0);
   const [preventBtn, setPreventBtn] = useState(false);
-  const [changeForm, setChangeForm] = useState(false);
+  const [formToggle, setFormToggle] = useState(1);
+  const navigate = useNavigate();
 
   const countText = e => {
-    setValueLength(e.target.value.length);
+    setInputValue(e.target.value.length);
   };
 
   const nextForm = () => {
-    if (valueLength === 0) {
+    if (inputValue === 0) {
       setPreventBtn(true);
-    } else if (valueLength > 0) {
-      setChangeForm(true);
+    } else if (inputValue > 0) {
+      setFormToggle(2);
     }
   };
 
   const formSubmit = e => {
     e.preventDefault();
     alert('작가 신청이 완료되었습니다.');
+    navigate('/');
+    // fetch('http://localhost:8000/author/', {
+    //   method: 'post',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     token: token,
+    //   },
+    //   body: JSON.stringify({
+    //     description : inputValue;
+    //   }),
+    // })
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     if (res.success) {
+    //       console.log('SUCCESS');
+    //     }
+    //   });
   };
 
   return (
     <BgColor>
+      <Header />
       <SideTitleWrapper>
         <SideTitle>
           브런치
@@ -36,10 +57,10 @@ function Request() {
         <SideTitleRotate>작가신청서</SideTitleRotate>
       </SideTitleWrapper>
 
-      {changeForm || (
+      {formToggle === 1 && (
         <FormWrapper>
           <FormStage>01. 작가소개</FormStage>
-          <FormTitle>작가님이 궁금해요.</FormTitle>
+          <FormTitle size="true">작가님이 궁금해요.</FormTitle>
           <FormTextWrapper>
             <FormText>
               작가님이 누구인지 이해하고 앞으로 브런치에서 어떤 활동을
@@ -47,7 +68,7 @@ function Request() {
               <br />
               기대할 수 있도록 알려주세요.
             </FormText>
-            <FormTextLength>{valueLength}/300</FormTextLength>
+            <FormTextLength>{inputValue}/300</FormTextLength>
           </FormTextWrapper>
           <FormTextArea
             required
@@ -64,13 +85,13 @@ function Request() {
         </FormWrapper>
       )}
 
-      {changeForm && (
+      {formToggle === 2 && (
         <FormWrapper>
           <FormStage>02. 자료첨부</FormStage>
 
           <FormSubWrapper>
             <section>
-              <FormTitle>
+              <FormTitle size="true">
                 내 서랍 속에 저장! <br />
                 이제 꺼내주세요.
               </FormTitle>
@@ -97,7 +118,11 @@ function Request() {
               </SaveBox>
             </SaveBoxWrapper>
           </FormSubWrapper>
-          <FormBtn onClick={formSubmit}>다음</FormBtn>
+
+          <FormTitle size="false">
+            작가님을 대표하는 키워드를 골라주세요.
+          </FormTitle>
+          <FormSubmitBtn onClick={formSubmit}>다음</FormSubmitBtn>
         </FormWrapper>
       )}
     </BgColor>
@@ -112,7 +137,7 @@ const BgColor = styled.article`
 `;
 
 const SideTitleWrapper = styled.section`
-  padding: 2rem 0 0 2rem;
+  padding: 6rem 0 0 2rem;
 `;
 
 const SideTitle = styled.p`
@@ -155,12 +180,13 @@ const FormStage = styled.div`
 
 const FormSubWrapper = styled.article`
   display: flex;
+  margin-bottom: 1rem;
 `;
 
 const FormTitle = styled.p`
   margin-bottom: 0.5rem;
   font-family: 'Nanum Myeongjo', serif;
-  font-size: 2rem;
+  font-size: ${props => (props.size === 'true' ? '2rem' : '1.2rem')};
   line-height: 2.5rem;
 `;
 
@@ -194,9 +220,8 @@ const FormTextArea = styled.textarea.attrs({
   border: solid 1px #e1e1e1;
   padding: 12px 14px;
   resize: none;
-
   &::placeholder {
-    color: ${props => (props.preventBtn ? 'red' : '#e1e1e1')};
+    color: ${props => (props.preventBtn ? 'red' : '#959595')};
     font-weight: 300;
   }
 `;
@@ -234,5 +259,7 @@ const SaveBox = styled.div`
   display: flex;
   align-items: center;
 `;
+
+const FormSubmitBtn = styled(FormBtn)``;
 
 export default Request;
