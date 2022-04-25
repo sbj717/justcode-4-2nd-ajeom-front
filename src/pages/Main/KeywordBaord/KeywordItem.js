@@ -15,8 +15,8 @@ function KeywordItem() {
   return (
     <>
       {keywordLists.keywordList[0].mainKeyword.map(data => (
-        <ItemWrap>
-          <ItemText key={data.id}>{data.keyword}</ItemText>
+        <ItemWrap key={data.id}>
+          <ItemText>{data.keyword}</ItemText>
         </ItemWrap>
       ))}
     </>
@@ -28,8 +28,8 @@ const ItemWrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 12.5%;
-  padding: 0 2.5%;
   height: 120px;
+  padding: 0 2.5%;
   text-align: center;
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
@@ -47,10 +47,6 @@ const ItemWrap = styled.div`
 `;
 
 const ItemText = styled.div`
-  /* position: absolute;
-  top: 45%;
-  right: 0;
-  left: 0; */
   word-wrap: break-word;
 `;
 
