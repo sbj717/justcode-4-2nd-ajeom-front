@@ -9,10 +9,6 @@ function KeywordBaord() {
       <BoardDesc>키워드로 분류된 다양한 글 모음</BoardDesc>
       <Board>
         <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
       </Board>
     </KeywordBoardWrapper>
   );
