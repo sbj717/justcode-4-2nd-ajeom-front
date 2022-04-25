@@ -1,38 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Login from '../../Login/Login';
 
 function GuestNav({ showNav }) {
+  const [login, setLogin] = useState(false);
   return (
-    <NavWrapper guestNav={showNav === 'guestNav'}>
-      <StartWrapper>
-        <Logo
-          alt="ajeom_logo"
-          src="https://velog.velcdn.com/images/jhsol24/post/801b97b8-63fc-47b4-b4be-f90c84a17295/image.png"
-        />
-        <Slogan>
-          You can make anything <br /> by coding
-        </Slogan>
-        <SloganWriter>- J.J.Cho -</SloganWriter>
-        <StartService>아점 시작하기</StartService>
-      </StartWrapper>
-      <ServiceWrapper>
-        <MenuWrapper>
-          <Menu>아점 홈</Menu>
-          <Menu>아점 나우</Menu>
-          <Menu>아점 책방</Menu>
-        </MenuWrapper>
-        <WriterSupport>
-          <WriterSupportLogo
+    <>
+      <Login />
+      <NavWrapper guestNav={showNav === 'guestNav'}>
+        <StartWrapper>
+          <Logo
             alt="ajeom_logo"
             src="https://velog.velcdn.com/images/jhsol24/post/801b97b8-63fc-47b4-b4be-f90c84a17295/image.png"
           />
-          <WriterSupportText>
-            작가-지원 <br /> 프로젝트 보러가기
-          </WriterSupportText>
-        </WriterSupport>
-        <FindUser>계정을 잊어버리셨나요?</FindUser>
-      </ServiceWrapper>
-    </NavWrapper>
+          <Slogan>
+            You can make anything <br /> by coding
+          </Slogan>
+          <SloganWriter>- J.J.Cho -</SloganWriter>
+          <StartService>아점 시작하기</StartService>
+        </StartWrapper>
+        <ServiceWrapper>
+          <MenuWrapper>
+            <Menu>아점 홈</Menu>
+            <Menu>아점 나우</Menu>
+            <Menu>아점 책방</Menu>
+          </MenuWrapper>
+          <WriterSupport>
+            <WriterSupportLogo
+              alt="ajeom_logo"
+              src="https://velog.velcdn.com/images/jhsol24/post/801b97b8-63fc-47b4-b4be-f90c84a17295/image.png"
+            />
+            <WriterSupportText>
+              작가-지원 <br /> 프로젝트 보러가기
+            </WriterSupportText>
+          </WriterSupport>
+          <FindUser>계정을 잊어버리셨나요?</FindUser>
+        </ServiceWrapper>
+      </NavWrapper>
+    </>
   );
 }
 

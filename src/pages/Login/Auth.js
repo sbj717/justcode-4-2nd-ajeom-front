@@ -3,9 +3,7 @@ import { CLIENT_SECRET, REST_API_KEY, REDIRECT_URI } from './OAuth';
 import { useNavigate } from 'react-router-dom';
 function Auth(props) {
   const { Kakao } = window;
-  const [userToken, setUserToken] = useState({});
   const code = new URL(window.location.href).searchParams.get('code');
-  // const KAKAO_INITAL = 'b2833402170a7a9f3747f0904a054d8e';
   const KAKAOINIT = '407ccf3a53942a0a9a43fa86a6e8590f';
   const navigate = useNavigate;
 
@@ -16,6 +14,8 @@ function Auth(props) {
     code: code,
     client_secret: CLIENT_SECRET,
   };
+
+  const ACCESS_TOKEN = '-RRb91NspOLOUpdd0g1Mua_NHPfr6ZbAPu786wo9dRkAAAGAXuGL0A';
 
   const queryStringBody = Object.keys(bodyData)
     .map(k => encodeURIComponent(k) + '=' + encodeURI(bodyData[k]))
@@ -28,17 +28,17 @@ function Auth(props) {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       },
       body: queryStringBody,
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        // Kakao.init(KAKAOINIT);
-        sendData(data);
-      });
+    });
   }, [queryStringBody]);
 
+  useEffect(() => {
+    fetch('/v1/user/access_token_info', {
+      method: 'GET',
+    });
+  }, []);
+
   const sendData = async data => {
-    await fetch('/', {
+    await fetch('http://localhost:8000/user/login', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
 

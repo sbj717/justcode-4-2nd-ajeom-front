@@ -1,15 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../Profile/Profile.module.scss';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import WriterProfile from './WriterProfile';
-
+const { Kakao } = window;
 function Profile() {
-  const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [user_id, setUserId] = useState();
+  const [nickname, setNickname] = useState();
+  const [profileImage, setProfileImage] = useState();
   const [isWriter, setIsWriter] = useState(true);
 
   const clickModalOutside = e => {
     setIsOpen(!isOpen);
+  };
+
+  const [editProfile, setEditProfile] = useState(false);
+  const handleEditProfile = () => {
+    setEditProfile(!editProfile);
   };
 
   return (
@@ -18,10 +25,7 @@ function Profile() {
       <section className={styles.container}>
         <section className={styles.top}>
           <div className={styles.ImageBox}>
-            <img
-              src="https://mblogthumb-phinf.pstatic.net/MjAxOTA3MTRfODEg/MDAxNTYzMTEyNjcxMDM0.oXkLnZhEcHekYHqOVHM82fDYdhwb0dbvWVgb_UE-Amog.gG3QWmFe7k56OXaCHf5Jtnv0VSqJ_q_ljpseR5nzojkg.JPEG.studygir/tejuTyY_(25).jpg?type=w800"
-              alt=""
-            />
+            <img src="" alt="profileImg" />
           </div>
           <div className={styles.profileBox}>
             <div className={styles.name}>김밍밍</div>
@@ -33,12 +37,12 @@ function Profile() {
               />
               {isOpen && (
                 <ul className={styles.editBox}>
-                  <li>프로필수정</li>
+                  <li onClick={handleEditProfile}>프로필수정</li>
                 </ul>
               )}
             </div>
           </div>
-          <WriterProfile />
+          <WriterProfile onClick={handleEditProfile} />
         </section>
       </section>
     </>

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../Profile/WriterProfile.module.scss';
 import WriterTags from './WriterTags';
-function WriterProfile({ handleEditProfile }) {
+function WriterProfile() {
+  const [toggle, setToggle] = useState(1);
+  const [writer, setWriter] = useState(false);
+
   const [lists, setLists] = useState({
     posts: [
       {
@@ -22,18 +25,17 @@ function WriterProfile({ handleEditProfile }) {
       },
     ],
   });
-  const [toggle, setToggle] = useState(1);
 
   const handleMenu = index => {
     setToggle(index);
   };
 
   useEffect(() => {
-    handleMenu();
+    handleMenu(1);
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:3000/data/profile.json', {
+    fetch('http://localhost:3000/data/profileTags.json', {
       method: 'GET',
     })
       .then(res => res.json())
@@ -51,7 +53,7 @@ function WriterProfile({ handleEditProfile }) {
       });
   }, []);
 
-  const InfoBox = handleEditProfile => {
+  const InfoBox = () => {
     return (
       <div
         className={
@@ -130,43 +132,45 @@ function WriterProfile({ handleEditProfile }) {
   };
 
   return (
-    <section className={styles.writerContainer}>
-      <ul className={styles.menu}>
-        <li
-          className={
-            toggle === 1
-              ? `${styles.menuTab} ${styles.active}`
-              : `${styles.menuTab}`
-          }
-          onClick={() => handleMenu(1)}
-        >
-          작가소개
-        </li>
-        <li
-          className={
-            toggle === 2
-              ? `${styles.menuTab} ${styles.active}`
-              : `${styles.menuTab}`
-          }
-          onClick={() => handleMenu(2)}
-        >
-          글
-        </li>
-        <li
-          className={
-            toggle === 3
-              ? `${styles.menuTab} ${styles.active}`
-              : `${styles.menuTab}`
-          }
-          onClick={() => handleMenu(3)}
-        >
-          브런치북
-        </li>
-      </ul>
-      <InfoBox handleEditProfile={handleEditProfile} />
-      <ArticleBox />
-      <CollectionBox />
-    </section>
+    !writer && (
+      <section className={styles.writerContainer}>
+        <ul className={styles.menu}>
+          <li
+            className={
+              toggle === 1
+                ? `${styles.menuTab} ${styles.active}`
+                : `${styles.menuTab}`
+            }
+            onClick={() => handleMenu(1)}
+          >
+            작가소개
+          </li>
+          <li
+            className={
+              toggle === 2
+                ? `${styles.menuTab} ${styles.active}`
+                : `${styles.menuTab}`
+            }
+            onClick={() => handleMenu(2)}
+          >
+            글
+          </li>
+          <li
+            className={
+              toggle === 3
+                ? `${styles.menuTab} ${styles.active}`
+                : `${styles.menuTab}`
+            }
+            onClick={() => handleMenu(3)}
+          >
+            브런치북
+          </li>
+        </ul>
+        <InfoBox />
+        <ArticleBox />
+        <CollectionBox />
+      </section>
+    )
   );
 }
 

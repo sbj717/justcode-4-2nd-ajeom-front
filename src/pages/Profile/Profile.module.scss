@@ -73,4 +73,9 @@ $green: #2ecac5;
   cursor: pointer;
   display: block;
   background-color: #fff;
+
+  &:hover {
+    background: #f8f8f8;
+    color: #333;
+  }
 }

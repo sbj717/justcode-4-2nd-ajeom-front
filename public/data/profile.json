@@ -1,28 +1,18 @@
-{
-  "writerTags": [
-    {
-      "id": "1",
-      "keyword": "IT"
-    },
-    {
-      "id": "2",
-      "keyword": "일상에세이"
-    },
-    {
-      "id": "3",
-      "keyword": "REACT"
-    },
-    {
-      "id": "4",
-      "keyword": "Javascript"
-    },
-    {
-      "id": "5",
-      "keyword": "HTML"
-    },
-    {
-      "id": "6",
-      "keyword": "CSS"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "email": "ajeom@ajeom.com",
+    "username": "김아점",
+    "is_author": true,
+    "description": "안녕하세요! 기술 블로그를 적는 김아점 입니다!",
+    "profile_img_url": "https://mblogthumb-phinf.pstatic.net/MjAxOTA3MTRfODEg/MDAxNTYzMTEyNjcxMDM0.oXkLnZhEcHekYHqOVHM82fDYdhwb0dbvWVgb_UE-Amog.gG3QWmFe7k56OXaCHf5Jtnv0VSqJ_q_ljpseR5nzojkg.JPEG.studygir/tejuTyY_(25).jpg?type=w800"
+  },
+  {
+    "id": 2,
+    "email": "jeonshim@ajeom.com",
+    "username": "김점심",
+    "is_author": false,
+    "description": "안녕하세요! 기술 블로그를 적는 김점심 입니다!",
+    "profile_img_url": "https://mblogthumb-phinf.pstatic.net/MjAxOTA3MTRfODEg/MDAxNTYzMTEyNjcxMDM0.oXkLnZhEcHekYHqOVHM82fDYdhwb0dbvWVgb_UE-Amog.gG3QWmFe7k56OXaCHf5Jtnv0VSqJ_q_ljpseR5nzojkg.JPEG.studygir/tejuTyY_(25).jpg?type=w800"
+  }
+]
