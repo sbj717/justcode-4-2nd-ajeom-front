@@ -47,8 +47,6 @@ function WriterProfile() {
       });
   }, []);
 
-  console.log(lists.posts);
-
   const InfoBox = () => {
     return (
       <div
@@ -107,7 +105,7 @@ function WriterProfile() {
       >
         <div className={styles.container}>
           {[1, 2, 3, 4].map(li => (
-            <div className={styles.bookContainer}>
+            <div className={styles.bookContainer} key={li.id}>
               <div className={styles.book}>
                 <span className={styles.bookLine} />
                 <div className={styles.titleBox}>

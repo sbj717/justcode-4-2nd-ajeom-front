@@ -121,7 +121,7 @@ const SearchBtn = styled.div`
 // `;
 
 // const Progressbar = styled.div`
-//   /* width: 100%; */
+//   width: 0;
 //   height: ${props => (props.navStyle ? '0.3rem' : '0')};
 //   background-color: ${props => (props.navStyle ? 'black' : 'white')};
 // `;
