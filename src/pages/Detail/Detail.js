@@ -4,37 +4,23 @@ import Header from '../components/Header/Header';
 import style from './AjeomBody.module.scss';
 
 function Detail() {
-  const MainTextFieldRef = useRef(null);
-  const [postLists, setPostLists] = useState({
-    posts: [
-      {
-        id: 0,
-        postTitle: '',
-        postSubTitle: '',
-        postText: '',
-        writer: '',
-        postImg: '',
-        thumbnailUrl: '',
-      },
-    ],
-  });
-
+  const [postLists, setPostLists] = useState([]);
   const [keywordLists, setKeywordLists] = useState({
     keywordList: [{ id: 0, mainKeyword: [] }],
   });
-
   const [writerLists, setWriterLists] = useState({
     recommendedWriter: [{ id: 0, profileImg: '', writer: '', description: '' }],
   });
-
   const fillteredWriter = writerLists.recommendedWriter.filter(
     el => el.id === 1
   );
 
+  const MainTextFieldRef = useRef(null);
+
   useEffect(() => {
     fetch('/data/detail.json')
       .then(res => res.json())
-      .then(data => setPostLists(data));
+      .then(data => setPostLists(data.posts));
   }, []);
 
   useEffect(() => {
@@ -56,17 +42,19 @@ function Detail() {
 
   return (
     <>
-      {postLists.posts.map(data => (
+      <Header />
+      {postLists.map(data => (
         <ThumbnailWrapper key={data.id} thumbnailUrl={data.thumbnailUrl}>
-          <Header detailPosition="absolute" detailTop="0" />
-          <DetailTitle>
-            {data.postTitle}
-            <DetailSubTitle>{data.postSubTitle}</DetailSubTitle>
-            <DetailWriter>
-              <By>by</By>
-              {data.writer}
-            </DetailWriter>
-          </DetailTitle>
+          <TitleWrapper>
+            <DetailTitle>
+              {data.postTitle}
+              <DetailSubTitle>{data.postSubTitle}</DetailSubTitle>
+              <DetailWriter>
+                <By>by</By>
+                {data.writer}
+              </DetailWriter>
+            </DetailTitle>
+          </TitleWrapper>
         </ThumbnailWrapper>
       ))}
 
@@ -115,20 +103,24 @@ function Detail() {
   );
 }
 
-const ThumbnailWrapper = styled.section`
+const TitleWrapper = styled.section`
   position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  z-index: 90;
+`;
+
+const ThumbnailWrapper = styled.section`
+  position: relative;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
     url(${props => props.thumbnailUrl});
   background-repeat: no-repeat; //이미지 크기가 기준보다 더 작을 때라도 반복하지 않는다.
   background-size: cover; //지정한 요소를 다 덮도록 배경이미지를 확대/축소
   background-position: center center; //이미지의 정가운데를 표시
   background-attachment: fixed;
-  width: 100%;
   height: 33rem;
-  z-index: -2;
+  z-index: -10;
 `;
 
 const DetailTitle = styled.h1`
@@ -151,6 +143,7 @@ const DetailSubTitle = styled.div`
 `;
 
 const DetailWriter = styled(DetailSubTitle)`
+  position: relative;
   font-size: 0.8rem;
   padding-top: 3rem;
   z-index: -1;
@@ -169,7 +162,7 @@ const MainBody = styled.section`
 
 const BodyWrapper = styled.section`
   width: 700px;
-  padding-top: 3rem;
+  padding-top: 4rem;
 `;
 
 const KeywordBtnWrapper = styled.div`

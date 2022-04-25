@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-function ListCard({ posts }) {
+function PostList({ posts }) {
   const navigate = useNavigate();
 
   const clickPost = () => {
@@ -85,4 +85,4 @@ const CardImg = styled.img`
   width: 8rem;
 `;
 
-export default ListCard;
+export default PostList;

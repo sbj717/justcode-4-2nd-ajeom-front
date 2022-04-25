@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import ListCard from './ListCard';
 import Header from '../components/Header/Header';
+import PostList from './PostList';
+import KeywordList from './KeywordList';
+import WriterList from './WriterList';
+import Spinner from './Spinner';
 
 function List() {
   const [keywordLists, setKeywordLists] = useState({
     keywordList: [{ id: 0, mainKeyword: [] }],
   });
-
   const [postLists, setPostLists] = useState([]);
-
   const [writerLists, setWriterLists] = useState({
     recommendedWriter: [{ id: 0, profileImg: '', writer: '' }],
   });
@@ -41,7 +42,7 @@ function List() {
         .then(data => {
           setPostLists(postLists.concat(data.posts));
         });
-    }, 500);
+    }, 700);
   };
 
   useEffect(() => {
@@ -55,9 +56,7 @@ function List() {
 
   const handleObserver = async ([entry], observer) => {
     if (entry.isIntersecting) {
-      observer.unobserve(entry.target);
       await fetchData();
-      observer.observe(entry.target);
     }
   };
 
@@ -68,7 +67,7 @@ function List() {
         <MainKeyword>IT 트렌드</MainKeyword>
         <KeywordBtnWrapper>
           {keywordLists.keywordList[0].mainKeyword.map(data => (
-            <Keyword key={data.id}>{data.keyword}</Keyword>
+            <KeywordList key={data.id} data={data} />
           ))}
         </KeywordBtnWrapper>
       </KeywordWrapper>
@@ -76,17 +75,17 @@ function List() {
       <AllListsWrapper>
         <ListCardWrapper>
           {postLists.map(data => (
-            <ListCard key={data.id} posts={data} />
+            <PostList key={data.id} posts={data} />
           ))}
+          <SpinnerWrapper>
+            <Spinner />
+          </SpinnerWrapper>
         </ListCardWrapper>
 
         <WriterCardWrapper>
           <WriterCardTitle>추천작가</WriterCardTitle>
           {writerLists.recommendedWriter.map(data => (
-            <WriterWrapper key={data.id}>
-              <WriterImg src={data.profileImg} />
-              <WriterName>{data.writer}</WriterName>
-            </WriterWrapper>
+            <WriterList key={data.id} data={data} />
           ))}
         </WriterCardWrapper>
       </AllListsWrapper>
@@ -99,7 +98,7 @@ const KeywordWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 1.5rem 0;
+  padding: 3.5rem 0 1.5rem 0;
   border-bottom: 1px solid #d1d1d1;
 `;
 
@@ -111,18 +110,6 @@ const MainKeyword = styled.p`
 
 const KeywordBtnWrapper = styled.div`
   display: flex;
-`;
-
-const Keyword = styled.button`
-  margin: 0 0.5rem;
-  padding: 0.2rem 0.7rem;
-  color: #959595;
-  background-color: #fff;
-  border: 1px solid #d1d1d1;
-  border-radius: 1rem;
-  font-size: 0.8rem;
-  font-weight: 200;
-  cursor: pointer;
 `;
 
 const AllListsWrapper = styled.section`
@@ -164,23 +151,9 @@ const WriterCardTitle = styled.p`
   padding-left: 0.2rem;
 `;
 
-const WriterWrapper = styled.div`
+const SpinnerWrapper = styled.div`
   display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-const WriterImg = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-  margin: 0.3rem 0.5rem;
-  border-radius: 50%;
-`;
-
-const WriterName = styled.p`
-  color: black;
-  font-weight: 300;
-  font-size: 0.8rem;
+  justify-content: center;
 `;
 
 export default List;
