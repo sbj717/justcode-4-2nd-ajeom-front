@@ -13,22 +13,6 @@ function KeywordBaord() {
         <KeywordItem />
         <KeywordItem />
         <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
-        <KeywordItem />
       </Board>
     </KeywordBoardWrapper>
   );
@@ -59,8 +43,9 @@ const Board = styled.div`
   display: flex;
   width: 960px;
   flex-wrap: wrap;
-  background-color: aliceblue;
   margin: 46px auto 0;
+  border-top: 1px solid #eee;
+  border-left: 1px solid #eee;
 `;
 
 export default KeywordBaord;
