@@ -87,8 +87,9 @@ function Header() {
             ajeom
           </Logo>
         </LeftWrapper>
-        <GuestNav showNav={showNav} />
+        <GuestNav className="guest" showNav={showNav} />
         <MemberNav
+          className="member"
           showNav={showNav}
           userInfo={userInfo}
           refreshLogOut={refreshLogOut}
@@ -114,7 +115,7 @@ const OutsideNav = styled.div`
   bottom: 0;
   right: 0;
   background-color: transparent;
-  z-index: 50;
+  z-index: 1;
 `;
 
 const Wrapper = styled.section`
@@ -123,11 +124,15 @@ const Wrapper = styled.section`
   padding: 7px 25px 14px 25px;
   justify-content: space-between;
   width: 100%;
-  z-index: 100;
+  /* z-index: 10; */
   background-color: ${props => (props.navStyle ? 'white' : 'transparent')};
   border-bottom: ${props => (props.navStyle ? '1px solid #d1d1d1' : 'none')};
   opacity: ${props => (props.navStyle ? 0.9 : 1)};
   transition: all ease 0.5s;
+  .guest,
+  .member {
+    /* z-index: 10; */
+  }
 `;
 
 const LeftWrapper = styled.div`
