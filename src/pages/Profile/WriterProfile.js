@@ -30,10 +30,6 @@ function WriterProfile() {
     setToggle(index);
   };
 
-  const handleAnimation = () => {
-    setTimeout(() => {}, 1000);
-  };
-
   useEffect(() => {
     handleMenu(1);
   }, []);
