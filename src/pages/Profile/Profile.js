@@ -1,39 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../Profile/Profile.module.scss';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import WriterProfile from './WriterProfile';
+import Header from '../components/Header/Header';
 
 function Profile() {
-  const [edit, setEdit] = useState(false);
-  const showEditBox = () => {
-    setEdit(!edit);
+  const [isOpen, setIsOpen] = useState(false);
+  const [profileData, setProfileData] = useState([]);
+  useEffect(() => {
+    fetch('/data/profile.json')
+      .then(res => res.json())
+      .then(data => {
+        setProfileData(data);
+      });
+  }, []);
+  console.log(profileData);
+
+  const clickModalOutside = e => {
+    setIsOpen(!isOpen);
+  };
+
+  const [editProfile, setEditProfile] = useState(false);
+  const handleEditProfile = () => {
+    setEditProfile(!editProfile);
   };
 
   return (
     <>
+      <Header />
       <div className={styles.cover} />
       <section className={styles.container}>
         <section className={styles.top}>
           <div className={styles.ImageBox}>
-            <img
-              src="https://mblogthumb-phinf.pstatic.net/MjAxOTA3MTRfODEg/MDAxNTYzMTEyNjcxMDM0.oXkLnZhEcHekYHqOVHM82fDYdhwb0dbvWVgb_UE-Amog.gG3QWmFe7k56OXaCHf5Jtnv0VSqJ_q_ljpseR5nzojkg.JPEG.studygir/tejuTyY_(25).jpg?type=w800"
-              alt=""
-            />
+            <img src="" alt="profileImg" />
           </div>
           <div className={styles.profileBox}>
-            <div className={styles.name}>김밍밍</div>
+            {profileData[0] !== undefined && (
+              <div className={styles.name}>{profileData[0].username}</div>
+            )}
             <div className={styles.writeBox}>
               <div className={styles.writeBtn}>글쓰기</div>
               <HiOutlineDotsVertical
                 className={styles.edit}
-                onClick={showEditBox}
+                onClick={clickModalOutside}
               />
-              <ul
-                className={styles.editBox}
-                style={{ display: edit ? 'block' : 'none' }}
-              >
-                <li>프로필수정</li>
-              </ul>
+              {isOpen && (
+                <ul className={styles.editBox}>
+                  <li onClick={handleEditProfile}>프로필수정</li>
+                </ul>
+              )}
             </div>
           </div>
         </section>
