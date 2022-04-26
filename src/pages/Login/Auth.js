@@ -5,7 +5,7 @@ function Auth(props) {
   const { Kakao } = window;
   const code = new URL(window.location.href).searchParams.get('code');
   const KAKAOINIT = '407ccf3a53942a0a9a43fa86a6e8590f';
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const bodyData = {
     grant_type: 'authorization_code',
@@ -14,8 +14,6 @@ function Auth(props) {
     code: code,
     client_secret: CLIENT_SECRET,
   };
-
-  const ACCESS_TOKEN = '-RRb91NspOLOUpdd0g1Mua_NHPfr6ZbAPu786wo9dRkAAAGAXuGL0A';
 
   const queryStringBody = Object.keys(bodyData)
     .map(k => encodeURIComponent(k) + '=' + encodeURI(bodyData[k]))
@@ -28,14 +26,13 @@ function Auth(props) {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       },
       body: queryStringBody,
-    });
-  }, [queryStringBody]);
-
-  useEffect(() => {
-    fetch('/v1/user/access_token_info', {
-      method: 'GET',
-    });
-  }, []);
+    })
+      .then(res => res.json())
+      .then(data => {
+        Kakao.init(KAKAOINIT);
+        sendData(data);
+      });
+  }, [Kakao, queryStringBody]);
 
   const sendData = async data => {
     await fetch('http://localhost:8000/user/login', {
@@ -43,7 +40,13 @@ function Auth(props) {
       headers: { 'Content-Type': 'application/json' },
 
       body: JSON.stringify(data),
-    }).then(res => res.json());
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.token) return;
+        localStorage.setItem('token', res.token);
+        navigate('/');
+      });
   };
   return null;
 }

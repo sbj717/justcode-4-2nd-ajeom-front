@@ -7,10 +7,25 @@ import GuestNav from '../Nav/GuestNav';
 import MemberNav from '../Nav/MemberNav';
 
 function Header() {
-  const [showNav, setShowNav] = useState('none');
+  const [showNav, setShowNav] = useState('');
   const [navScrollY, setNavScrollY] = useState(0);
   const [navStyle, setNavStyle] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    token ? setShowNav('memberNone') : setShowNav('guestNone');
+
+    fetch('http://localhost:8000/user/myProfile', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
+      .then(res => res.json())
+      .then(data => setUserInfo(data));
+  }, []);
+
+  console.log('header', userInfo);
 
   const openGuestNav = () => {
     setShowNav('guestNav');
@@ -19,9 +34,24 @@ function Header() {
   const openMemberNav = () => {
     setShowNav('memberNav');
   };
+  const openNav = () => {
+    if (showNav === 'guestNone') {
+      openGuestNav();
+    } else if (showNav === 'memberNone') {
+      openMemberNav();
+    }
+  };
 
   const closeNav = () => {
-    setShowNav('none');
+    if (showNav === 'guestNav') {
+      setShowNav('guestNone');
+    } else if (showNav === 'memberNav') {
+      setShowNav('memberNone');
+    }
+  };
+
+  const refreshLogOut = () => {
+    window.location.reload();
   };
 
   const changeNavStyle = () => {
@@ -49,7 +79,7 @@ function Header() {
       <Wrapper show={showNav} navStyle={navStyle}>
         <LeftWrapper>
           <SidebarBtn>
-            <GrMenu size={30} onClick={openGuestNav} />
+            <GrMenu size={30} onClick={openNav} />
           </SidebarBtn>
           <Logo
             onClick={() => {
@@ -60,11 +90,17 @@ function Header() {
           </Logo>
         </LeftWrapper>
         <GuestNav showNav={showNav} />
-        <MemberNav showNav={showNav} />
+        <MemberNav
+          showNav={showNav}
+          userInfo={userInfo}
+          refreshLogOut={refreshLogOut}
+        />
         <SearchBtn>
           <GoSearch size={21} />
         </SearchBtn>
-        {showNav !== 'none' && <OutsideNav onClick={closeNav} />}
+        {showNav !== ('guestNone' || 'memberNone') && (
+          <OutsideNav onClick={closeNav} />
+        )}
       </Wrapper>
       {/* <ProgressbarWrapper navStyle={navStyle}>
         <Progressbar navStyle={navStyle} />

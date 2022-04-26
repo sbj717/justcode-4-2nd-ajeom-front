@@ -6,13 +6,14 @@ import { IoMdClose } from 'react-icons/io';
 import Slider from './Slider';
 import { KAKAO_AUTH_URL } from './OAuth';
 
-const Login = () => {
+const Login = loginModal => {
   const modalRef = useRef(null);
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(loginModal);
 
   const clickOutsideModal = async e => {
-    if (modal && (!modalRef.current || !modalRef.current.contains(e.target))) {
+    if (!modal && (!modalRef.current || !modalRef.current.contains(e.target))) {
       await setModal(false);
+      await closeBtn();
     }
   };
 

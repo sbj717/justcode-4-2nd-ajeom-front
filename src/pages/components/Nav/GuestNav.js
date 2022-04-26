@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Login from '../../Login/Login';
 
 function GuestNav({ showNav }) {
-  const [login, setLogin] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+  const loginPopUp = () => {
+    setLoginModal(!loginModal);
+  };
   return (
     <>
-      <Login />
+      {loginModal && <Login LoginModal={loginModal} />}
       <NavWrapper guestNav={showNav === 'guestNav'}>
         <StartWrapper>
           <Logo
@@ -17,13 +21,19 @@ function GuestNav({ showNav }) {
             You can make anything <br /> by coding
           </Slogan>
           <SloganWriter>- J.J.Cho -</SloganWriter>
-          <StartService>아점 시작하기</StartService>
+          <StartService onClick={loginPopUp}>아점 시작하기</StartService>
         </StartWrapper>
         <ServiceWrapper>
           <MenuWrapper>
-            <Menu>아점 홈</Menu>
-            <Menu>아점 나우</Menu>
-            <Menu>아점 책방</Menu>
+            <Menu>
+              <Link to="/"> 아점 홈</Link>
+            </Menu>
+            <Menu>
+              <Link to="/list"> 아점 나우</Link>
+            </Menu>
+            <Menu>
+              <Link to="/book">아점 책방</Link>
+            </Menu>
           </MenuWrapper>
           <WriterSupport>
             <WriterSupportLogo
@@ -143,6 +153,13 @@ const Menu = styled.li`
     }
     &:after {
       background-color: #00c3be;
+    }
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+      color: #00c3be;
     }
   }
 `;

@@ -30,12 +30,16 @@ function WriterProfile() {
     setToggle(index);
   };
 
+  const handleAnimation = () => {
+    setTimeout(() => {}, 1000);
+  };
+
   useEffect(() => {
     handleMenu(1);
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:3000/data/profileTags.json', {
+    fetch('data/profileTags.json', {
       method: 'GET',
     })
       .then(res => res.json())
@@ -44,7 +48,7 @@ function WriterProfile() {
       });
   }, []);
   useEffect(() => {
-    fetch('http://localhost:3000/data/listCard.json', {
+    fetch('/data/listCard.json', {
       method: 'GET',
     })
       .then(res => res.json())

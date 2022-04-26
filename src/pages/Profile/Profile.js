@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import styles from '../Profile/Profile.module.scss';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import WriterProfile from './WriterProfile';
-const { Kakao } = window;
+import Header from '../components/Header/Header';
+
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
-  const [user_id, setUserId] = useState();
-  const [nickname, setNickname] = useState();
-  const [profileImage, setProfileImage] = useState();
-  const [isWriter, setIsWriter] = useState(true);
+  const [profileData, setProfileData] = useState([]);
+  useEffect(() => {
+    fetch('/data/profile.json')
+      .then(res => res.json())
+      .then(data => {
+        setProfileData(data);
+      });
+  }, []);
+  console.log(profileData);
 
   const clickModalOutside = e => {
     setIsOpen(!isOpen);
@@ -21,6 +27,7 @@ function Profile() {
 
   return (
     <>
+      <Header />
       <div className={styles.cover} />
       <section className={styles.container}>
         <section className={styles.top}>
@@ -28,7 +35,9 @@ function Profile() {
             <img src="" alt="profileImg" />
           </div>
           <div className={styles.profileBox}>
-            <div className={styles.name}>김밍밍</div>
+            {profileData[0] !== undefined && (
+              <div className={styles.name}>{profileData[0].username}</div>
+            )}
             <div className={styles.writeBox}>
               <div className={styles.writeBtn}>글쓰기</div>
               <HiOutlineDotsVertical
@@ -42,8 +51,8 @@ function Profile() {
               )}
             </div>
           </div>
-          <WriterProfile onClick={handleEditProfile} />
         </section>
+        <WriterProfile />
       </section>
     </>
   );
