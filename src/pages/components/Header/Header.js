@@ -25,8 +25,6 @@ function Header() {
       .then(data => setUserInfo(data));
   }, []);
 
-  console.log('header', userInfo);
-
   const openGuestNav = () => {
     setShowNav('guestNav');
   };

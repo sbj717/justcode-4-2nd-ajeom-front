@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { CLIENT_SECRET, REST_API_KEY, REDIRECT_URI } from './OAuth';
+import React, { useEffect } from 'react';
+import {
+  CLIENT_SECRET,
+  REST_API_KEY,
+  REDIRECT_URI,
+  KAKAOINIT,
+} from '../../../src/config';
 import { useNavigate } from 'react-router-dom';
 function Auth(props) {
   const { Kakao } = window;
   const code = new URL(window.location.href).searchParams.get('code');
-  const KAKAOINIT = '407ccf3a53942a0a9a43fa86a6e8590f';
   const navigate = useNavigate();
 
   const bodyData = {

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import Slider from './Slider';
-import { KAKAO_AUTH_URL } from './OAuth';
+import { KAKAO_AUTH_URL } from '../../../src/config';
 
 const Login = loginModal => {
   const modalRef = useRef(null);
