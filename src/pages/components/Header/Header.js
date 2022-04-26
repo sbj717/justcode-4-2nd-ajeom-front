@@ -123,6 +123,10 @@ const Wrapper = styled.section`
   display: flex;
   padding: 7px 25px 14px 25px;
   justify-content: space-between;
+<<<<<<< HEAD
+  width: 100vw;
+  z-index: 10;
+=======
   width: 100%;
   /* z-index: 10; */
   background-color: ${props => (props.navStyle ? 'white' : 'transparent')};
@@ -133,6 +137,7 @@ const Wrapper = styled.section`
   .member {
     /* z-index: 10; */
   }
+>>>>>>> develop
 `;
 
 const LeftWrapper = styled.div`
