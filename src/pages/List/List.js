@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import ListCard from './ListCard';
+import styled, { keyframes } from 'styled-components';
+import Header from '../components/Header/Header';
+import PostList from './PostList';
+import KeywordList from './KeywordList';
+import WriterList from './WriterList';
+import Spinner from './Spinner';
 
 function List() {
-  const [test, setTest] = useState(0);
-
   const [keywordLists, setKeywordLists] = useState({
     keywordList: [{ id: 0, mainKeyword: [] }],
   });
-
   const [postLists, setPostLists] = useState([]);
-
   const [writerLists, setWriterLists] = useState({
     recommendedWriter: [{ id: 0, profileImg: '', writer: '' }],
   });
@@ -30,41 +30,35 @@ function List() {
   }, []);
 
   useEffect(() => {
-    if (test === 1) {
-      fetchData();
-    }
-  }, [test]);
-
-  const fetchData = () => {
-    fetch('/data/listCard.json')
+    fetch('/data/ListCard.json')
       .then(res => res.json())
-      .then(data => {
-        setPostLists(postLists.concat(data.posts));
-      });
-    setTest(0);
+      .then(data => setPostLists(data.posts));
+  }, []);
+
+  const fetchData = async () => {
+    setTimeout(async () => {
+      await fetch('/data/listCard.json')
+        .then(res => res.json())
+        .then(data => {
+          setPostLists(postLists.concat(data.posts));
+        });
+    }, 700);
   };
 
   useEffect(() => {
     let observer;
     if (target.current) {
-      observer = new IntersectionObserver(
-        () => {
-          setTest(1);
-        },
-        { threshold: 0.4 }
-      );
+      observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
       observer.observe(target.current);
     }
     return () => observer && observer.disconnect();
-  }, []);
+  }, [postLists]);
 
-  // const handleObserver = async ([entry], observer) => {
-  //   if (entry.isIntersecting) {
-  //     observer.unobserve(entry.target);
-  //     fetchData();
-  //     observer.observe(entry.target);
-  //   }
-  // };
+  const handleObserver = async ([entry], observer) => {
+    if (entry.isIntersecting) {
+      await fetchData();
+    }
+  };
 
   return (
     <>
@@ -72,7 +66,7 @@ function List() {
         <MainKeyword>IT 트렌드</MainKeyword>
         <KeywordBtnWrapper>
           {keywordLists.keywordList[0].mainKeyword.map(data => (
-            <Keyword key={data.id}>{data.keyword}</Keyword>
+            <KeywordList key={data.id} data={data} />
           ))}
         </KeywordBtnWrapper>
       </KeywordWrapper>
@@ -80,20 +74,21 @@ function List() {
       <AllListsWrapper>
         <ListCardWrapper>
           {postLists.map(data => (
-            <ListCard key={data.id} posts={data} />
+            <PostList key={data.id} posts={data} />
           ))}
+          <SpinnerWrapper>
+            <Spinner />
+          </SpinnerWrapper>
         </ListCardWrapper>
+
         <WriterCardWrapper>
           <WriterCardTitle>추천작가</WriterCardTitle>
           {writerLists.recommendedWriter.map(data => (
-            <WriterWrapper key={data.id}>
-              <WriterImg src={data.profileImg} />
-              <WriterName>{data.writer}</WriterName>
-            </WriterWrapper>
+            <WriterList key={data.id} data={data} />
           ))}
         </WriterCardWrapper>
       </AllListsWrapper>
-      <div ref={target} />
+      <div ref={target} style={{ border: '1px solid rgba(0,0,0,0)' }} />
     </>
   );
 }
@@ -102,30 +97,18 @@ const KeywordWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 1.5rem;
+  padding: 3.5rem 0 1.5rem 0;
   border-bottom: 1px solid #d1d1d1;
 `;
 
 const MainKeyword = styled.p`
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   font-size: 2rem;
   font-weight: 200;
 `;
 
 const KeywordBtnWrapper = styled.div`
   display: flex;
-`;
-
-const Keyword = styled.button`
-  margin: 0 0.5rem;
-  padding: 0.2rem 0.7rem;
-  color: #959595;
-  background-color: #fff;
-  border: 1px solid #d1d1d1;
-  border-radius: 1rem;
-  font-size: 0.8rem;
-  font-weight: 200;
-  cursor: pointer;
 `;
 
 const AllListsWrapper = styled.section`
@@ -135,8 +118,20 @@ const AllListsWrapper = styled.section`
   background-color: #fbfbfb;
 `;
 
+const fadeIn = keyframes`
+from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: 0;
+    }
+`;
+
 const ListCardWrapper = styled.section`
   margin-right: 2rem;
+  animation: ${fadeIn} 0.5s ease-in-out;
 `;
 
 const WriterCardWrapper = styled.section`
@@ -144,6 +139,7 @@ const WriterCardWrapper = styled.section`
   height: 22rem;
   padding: 1rem;
   background-color: #ffffff;
+  animation: ${fadeIn} 0.7s ease-in-out;
 `;
 
 const WriterCardTitle = styled.p`
@@ -154,22 +150,9 @@ const WriterCardTitle = styled.p`
   padding-left: 0.2rem;
 `;
 
-const WriterWrapper = styled.div`
+const SpinnerWrapper = styled.div`
   display: flex;
-  align-items: center;
-`;
-
-const WriterImg = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-  margin: 0.3rem 0.5rem;
-  border-radius: 50%;
-`;
-
-const WriterName = styled.p`
-  color: black;
-  font-weight: 300;
-  font-size: 0.8rem;
+  justify-content: center;
 `;
 
 export default List;

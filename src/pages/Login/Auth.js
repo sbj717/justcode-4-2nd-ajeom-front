@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { CLIENT_SECRET, REST_API_KEY, REDIRECT_URI } from './OAuth';
+import React, { useEffect } from 'react';
+import {
+  CLIENT_SECRET,
+  REST_API_KEY,
+  REDIRECT_URI,
+  KAKAOINIT,
+} from '../../../src/config';
 import { useNavigate } from 'react-router-dom';
 function Auth(props) {
   const { Kakao } = window;
-  const [userToken, setUserToken] = useState({});
   const code = new URL(window.location.href).searchParams.get('code');
-  // const KAKAO_INITAL = 'b2833402170a7a9f3747f0904a054d8e';
-  const KAKAO_INITAL = '407ccf3a53942a0a9a43fa86a6e8590f';
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const bodyData = {
     grant_type: 'authorization_code',
@@ -31,18 +33,28 @@ function Auth(props) {
     })
       .then(res => res.json())
       .then(data => {
-        // (data);
+        Kakao.init(KAKAOINIT);
         sendData(data);
       });
-  }, [queryStringBody]);
+  }, [Kakao, queryStringBody]);
 
   const sendData = async data => {
+<<<<<<< HEAD
     await fetch('http://localhost:8000/user/signup', {
+=======
+    await fetch('http://localhost:8000/user/login', {
+>>>>>>> develop
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
 
       body: JSON.stringify(data),
-    }).then(res => res.json());
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.token) return;
+        localStorage.setItem('token', res.token);
+        navigate('/');
+      });
   };
   return null;
 }

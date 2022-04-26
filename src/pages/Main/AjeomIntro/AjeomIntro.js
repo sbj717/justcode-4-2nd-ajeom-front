@@ -32,6 +32,7 @@ const IntroWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 3.5rem;
 `;
 
 const IntroTextWrapper = styled.div`
