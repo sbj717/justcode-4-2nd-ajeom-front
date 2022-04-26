@@ -4,7 +4,7 @@ import style from './Editor.module.scss';
 import FontStyleToolBar from './FontStyleToolBar';
 import MyPostLinkSideBar from './MyPostLinkSideBar';
 import SideBar from './SideBar';
-import Header from './Header';
+
 import {
   BiImageAlt,
   BiImageAdd,
@@ -135,11 +135,10 @@ function Editor() {
 
   return (
     <>
-      <Header openSideBar={openSideBar} />
-
       <MyPostLinkSideBar
         isSideBarOpen={isMyPostLinkSidebarOpen}
         closeSideBar={closeSideBar}
+        setToolBarOn={setToolBarOn}
       ></MyPostLinkSideBar>
       <SideBar
         isSideBarOpen={isSideBarOpen}
@@ -216,12 +215,43 @@ function Editor() {
             <BiMapPin className={style.noButton} size="30" />
           </MainToolbox>
         </MainTextFieldWrapper>
+        <PublishButtonBox>
+          <PublishButton mainColor={'#aaaaaa'} onClick={openSideBar}>
+            저장
+          </PublishButton>
+          <PublishButton mainColor={'#00c3bd'} onClick={openSideBar}>
+            발행
+          </PublishButton>
+        </PublishButtonBox>
       </BottomWrapper>
     </>
   );
 }
 
 export default Editor;
+
+const PublishButton = styled.button`
+  font-size: 13px;
+  border: 1.3px solid
+    ${props => {
+      return props.mainColor;
+    }};
+  border-radius: 20px;
+  padding: 0.3rem 1.5rem;
+  margin-top: 30px;
+  background-color: #ffffff;
+  color: ${props => {
+    return props.mainColor;
+  }};
+  font-weight: 300;
+  cursor: pointer;
+  float: right;
+`;
+const PublishButtonBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 170px;
+`;
 
 const TopWrapper = styled.div`
   transition: 1s;
@@ -342,7 +372,7 @@ const BottomWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 30px 0 150px 0;
+  padding: 30px 0 80px 0;
   border: red 0px solid;
 `;
 
@@ -356,7 +386,7 @@ const MainTextFieldWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 30px 0 150px 0;
+  padding: 30px 0 70px 0;
 `;
 
 const MainTextField = styled.div`

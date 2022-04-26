@@ -54,11 +54,13 @@ function MyPostLinkSideBar(props) {
           {postList.map(c => {
             return (
               <PostCard
+                setToolBarOn={props.setToolBarOn}
                 key={c.key}
                 Title={c.Title}
                 url="df.com"
                 Summary={c.Summary}
                 closeSideBar={props.closeSideBar}
+                post_thumbnail_url={c.post_thumbnail_url}
               ></PostCard>
             );
           })}
