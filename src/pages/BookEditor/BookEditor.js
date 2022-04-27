@@ -2,9 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BrunchbookTop from './BrunchbookTop';
 import BrunchbookBottom from './BrunchbookBottom';
-
+import { useNavigate } from 'react-router-dom';
 import BookSideBar from './BookSideBar';
 function BookEditor() {
+  const navigate = useNavigate();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [postList, setPostList] = useState([]);
   const [BrunchbookTopRef, setBrunchbookTopRef] = useState({
@@ -45,7 +46,8 @@ function BookEditor() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        navigate(`/book/${data.bookId}`);
+        window.scrollTo(0, 0);
       });
   }
   function openSideBar() {

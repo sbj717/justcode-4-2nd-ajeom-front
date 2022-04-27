@@ -4,7 +4,7 @@ import style from './Editor.module.scss';
 import FontStyleToolBar from './FontStyleToolBar';
 import MyPostLinkSideBar from './MyPostLinkSideBar';
 import SideBar from './SideBar';
-
+import { useNavigate } from 'react-router-dom';
 import {
   BiImageAlt,
   BiImageAdd,
@@ -18,6 +18,7 @@ import {
 } from 'react-icons/bi';
 
 function Editor() {
+  const navigate = useNavigate();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isMyPostLinkSidebarOpen, setIsMyPostLinkSidebarOpen] = useState(false);
   const [backgroundUrl, setBackgroundUrl] = useState('');
@@ -67,7 +68,8 @@ function Editor() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        navigate(`/post/${data.post_id}`);
+        window.scrollTo(0, 0);
       });
   }
 
@@ -211,7 +213,7 @@ function Editor() {
         </TopToolsWrapper>
         <TopTitleWrapper>
           <TilteField
-            autofocus
+            autoFocus
             ref={TilteTextFieldRef}
             backgroundUrl={backgroundUrl}
             contentEditable="true"
