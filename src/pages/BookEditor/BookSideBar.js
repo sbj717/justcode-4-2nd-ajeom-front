@@ -207,6 +207,7 @@ const SelectedPostNum = styled.div`
 `;
 
 function BookSideBar(props) {
+  const [offset, setOffset] = useState(1);
   const [reloadSw, setReloadSw] = useState(0);
   const [postList, setPostList] = useState([]);
   const [selectedPostList, setSelectedPostList] = useState([]);
@@ -241,20 +242,25 @@ function BookSideBar(props) {
   }, []);
 
   function reloadData() {
+    const token = localStorage.getItem('token');
+
     setLoadingText('불러오는 중');
     setTimeout(() => {
       setLoadingText('위로 스크롤해서 더 보기');
     }, 800);
     setTimeout(() => {
-      fetch('/data/PostList.json', {
+      fetch(`http://localhost:8000/write?offset=${offset}&limit=${10}`, {
         method: 'GET',
+        headers: { 'Content-Type': 'application/json', token: token },
       })
         .then(res => res.json())
         .then(data => {
+          console.log(data);
           setPostList(postList.concat(data.PostList));
           setReloadSw(0);
         });
     }, 200);
+    setOffset(offset + 1);
   }
   const [loadingText, setLoadingText] = useState('불러오는 중');
 
@@ -361,8 +367,8 @@ function BookSideBar(props) {
           {postList.map(c => {
             return (
               <PostCard
-                key={c.key}
-                id={c.key}
+                key={c.id}
+                id={c.id}
                 Title={c.Title}
                 url="df.com"
                 Summary={c.Summary}
