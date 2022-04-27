@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { VscBell } from 'react-icons/vsc';
 
@@ -12,12 +13,20 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
     <NavWrapper memberNav={showNav === 'memberNav'}>
       <ProfileWrapper>
         <VscBell className="notification" />
-        <ProfileImg alt="ajeom_logo" src={profile_img_url} />
+        <ProfileImg
+          onClick={useNavigate('/')}
+          alt="ajeom_logo"
+          src={profile_img_url}
+        />
         <Username>{nickname}</Username>
-        <UserUrl>ajeom.co.kr/@jjcho</UserUrl>
+        <UserUrl>ajeom.co.kr/@ajeom</UserUrl>
         <ButtonWrapper>
-          <WriteBtn>글쓰기</WriteBtn>
-          <ApplyAuthor>작가 신청</ApplyAuthor>
+          <WriteBtn>
+            <Link to="/write">글쓰기</Link>
+          </WriteBtn>
+          <ApplyAuthor>
+            <Link to="/request">작가 신청</Link>
+          </ApplyAuthor>
         </ButtonWrapper>
       </ProfileWrapper>
       <ServiceWrapper>
@@ -25,11 +34,21 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu>내 아점</Menu>
           <Menu>작가의 서랍</Menu>
           <Contour />
-          <Menu>아점 홈</Menu>
-          <Menu>아점 나우</Menu>
-          <Menu>아점 책방</Menu>
-          <Menu>글 읽는 서재</Menu>
-          <Menu>피드</Menu>
+          <Menu>
+            <Link to="/">아점 홈</Link>
+          </Menu>
+          <Menu>
+            <Link to="/list"> 아점 나우</Link>
+          </Menu>
+          <Menu>
+            <Link to="/book"> 아점 책방</Link>
+          </Menu>
+          <Menu>
+            <Link to="/"> 글 읽는 서재</Link>
+          </Menu>
+          <Menu>
+            <Link to="/">피드</Link>
+          </Menu>
         </MenuWrapper>
         <WriterSupport>
           <WriterSupportLogo
@@ -116,6 +135,10 @@ const WriteBtn = styled.button`
   color: #00c3bd;
   background-color: #fff;
   cursor: pointer;
+  a {
+    text-decoration: none;
+    color: #00c3bd;
+  }
 `;
 
 const ApplyAuthor = styled(WriteBtn)``;
@@ -165,6 +188,13 @@ const Menu = styled.li`
     }
     &:after {
       background-color: #00c3be;
+    }
+  }
+  a {
+    text-decoration: none;
+    color: #000;
+    &:hover {
+      color: #00c3be;
     }
   }
 `;

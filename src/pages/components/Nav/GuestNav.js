@@ -158,7 +158,7 @@ const Menu = styled.li`
   }
   a {
     text-decoration: none;
-    color: inherit;
+    color: #000;
     &:hover {
       color: #00c3be;
     }
