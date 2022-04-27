@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function BrunchbookCard({ card }) {
@@ -17,14 +18,20 @@ function BrunchbookCard({ card }) {
     setSummary(newSummary);
   }, [card.post_summary, card.sequence]);
 
+  const navigate = useNavigate();
+
+  const goToPost = () => {
+    navigate(`/detail/${card.id}`);
+  };
+
   return (
     <CardContainer>
       <CardIndex>{chapter}</CardIndex>
       <CardBody>
-        <CardTitle>{card.post_title}</CardTitle>
-        <CardSummary>{summary}</CardSummary>
+        <CardTitle onClick={goToPost}>{card.post_title}</CardTitle>
+        <CardSummary onClick={goToPost}>{summary}</CardSummary>
       </CardBody>
-      <CardThumbnail>
+      <CardThumbnail onClick={goToPost}>
         <img src={card.post_thumbnail_url} alt="" />
       </CardThumbnail>
     </CardContainer>
@@ -62,6 +69,7 @@ const CardTitle = styled.h2`
   font-size: 20px;
   font-weight: 300;
   margin-bottom: 5px;
+  cursor: pointer;
 `;
 
 const CardSummary = styled.p`
@@ -71,6 +79,7 @@ const CardSummary = styled.p`
   letter-spacing: -1px;
   line-height: 19px;
   color: gray;
+  cursor: pointer;
 `;
 
 const CardThumbnail = styled.div`
@@ -79,6 +88,7 @@ const CardThumbnail = styled.div`
   overflow: hidden;
   margin-left: 50px;
   margin: 25px 0px;
+  cursor: pointer;
   img {
     width: 160px;
   }
