@@ -1,30 +1,35 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 function RecommendedWriter() {
   const [writerList, setWriterList] = useState([]);
 
   useEffect(() => {
-    fetch('/data/profile.json')
+    fetch('http://localhost:8000/user/authorList', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then(res => res.json())
-      .then(data => setWriterList(data));
+      .then(data => setWriterList(data.authorList));
   }, []);
+
+  const writerListLimit = writerList.slice(0, 6);
 
   return (
     <RecommendedWriterWrapper>
       <BoardTitle>AJEOM WRITERS</BoardTitle>
       <BoardDesc>아점 추천 작가</BoardDesc>
       <Board>
-        {writerList.map(i => {
-          return (
-            <Card>
-              <CardButton></CardButton>
-              <ImageBox imageUrl={i.profile_img_url}></ImageBox>
-              <CardTitle>{i.username}</CardTitle>
-              <CardBody>{i.description}</CardBody>
-            </Card>
-          );
-        })}
+        {writerListLimit.map(i => (
+          <Card key={i.id}>
+            <CardButton />
+            <ImageBox imageUrl={i.profile_img_url} />
+            <CardTitle>{i.nickname}</CardTitle>
+            <CardBody>{i.description}</CardBody>
+          </Card>
+        ))}
       </Board>
     </RecommendedWriterWrapper>
   );
@@ -84,7 +89,8 @@ const BoardDesc = styled.div`
 `;
 const Board = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 30px;
   width: 960px;
   flex-wrap: wrap;
   padding-top: 30px;

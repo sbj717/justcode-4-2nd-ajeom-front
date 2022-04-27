@@ -8,7 +8,6 @@ import MemberNav from '../Nav/MemberNav';
 
 function Header() {
   const [showNav, setShowNav] = useState('');
-  const [navScrollY, setNavScrollY] = useState(0);
   const [navStyle, setNavStyle] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
@@ -55,11 +54,9 @@ function Header() {
   //scrollY에 따라 header의 style 변경
   useEffect(() => {
     const changeNavStyle = () => {
-      if (navScrollY > 530) {
-        setNavScrollY(window.scrollY);
+      if (window.scrollY > 530) {
         setNavStyle(true);
       } else {
-        setNavScrollY(window.scrollY);
         setNavStyle(false);
       }
     };
@@ -123,14 +120,14 @@ const Wrapper = styled.section`
 =======
 >>>>>>> develop
   width: 100%;
-  /* z-index: 10; */
+  z-index: 10;
   background-color: ${props => (props.navStyle ? 'white' : 'transparent')};
   border-bottom: ${props => (props.navStyle ? '1px solid #d1d1d1' : 'none')};
   opacity: ${props => (props.navStyle ? 0.9 : 1)};
   transition: all ease 0.5s;
   .guest,
   .member {
-    /* z-index: 10; */
+    z-index: 10;
   }
 `;
 

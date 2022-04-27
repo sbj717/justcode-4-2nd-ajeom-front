@@ -35,6 +35,7 @@ function Auth() {
       .then(data => {
         console.log(data);
         Kakao.init(KAKAOINIT);
+        console.log(data);
         sendData(data);
       });
   }, [Kakao, queryStringBody]);
