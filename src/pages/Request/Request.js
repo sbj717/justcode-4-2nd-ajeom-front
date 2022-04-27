@@ -4,43 +4,44 @@ import styled from 'styled-components';
 import Header from '../components/Header/Header';
 
 function Request() {
+  const token = localStorage.getItem('token');
   const [inputValue, setInputValue] = useState(0);
   const [preventBtn, setPreventBtn] = useState(false);
   const [formToggle, setFormToggle] = useState(1);
   const navigate = useNavigate();
 
   const countText = e => {
-    setInputValue(e.target.value.length);
+    setInputValue(e.target.value);
   };
 
   const nextForm = () => {
-    if (inputValue === 0) {
+    if (inputValue.length === 0) {
       setPreventBtn(true);
-    } else if (inputValue > 0) {
+    } else if (inputValue.length > 0) {
       setFormToggle(2);
     }
   };
 
   const formSubmit = e => {
-    e.preventDefault();
+    // e.preventDefault();
     alert('작가 신청이 완료되었습니다.');
+    fetch('http://localhost:8000/user/authorRequest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token: token,
+      },
+      body: JSON.stringify({
+        description: inputValue,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          console.log('SUCCESS');
+        }
+      });
     navigate('/');
-    // fetch('http://localhost:8000/author/', {
-    //   method: 'post',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     token: token,
-    //   },
-    //   body: JSON.stringify({
-    //     description : inputValue;
-    //   }),
-    // })
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     if (res.success) {
-    //       console.log('SUCCESS');
-    //     }
-    //   });
   };
 
   return (
@@ -68,7 +69,7 @@ function Request() {
               <br />
               기대할 수 있도록 알려주세요.
             </FormText>
-            <FormTextLength>{inputValue}/300</FormTextLength>
+            <FormTextLength>{inputValue.length}/300</FormTextLength>
           </FormTextWrapper>
           <FormTextArea
             required
@@ -166,6 +167,7 @@ const FormWrapper = styled.section`
   width: 700px;
   padding: 40px;
   background-color: #ffffff;
+  z-index: 50;
 `;
 
 const FormStage = styled.div`

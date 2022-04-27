@@ -63,6 +63,7 @@ function List() {
 
   return (
     <>
+      <Header />
       <KeywordWrapper>
         <MainKeyword>IT 트렌드</MainKeyword>
         <KeywordBtnWrapper>
