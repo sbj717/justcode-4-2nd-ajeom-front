@@ -116,7 +116,7 @@ const PostCardBody = styled.div`
 
 const MakeLinkButton = styled.button`
   cursor: pointer;
-  transition: 0.5s;
+  transition: background-color 0.5s, box-shadow 0.5s;
   z-index: 6;
   border: 0 solid;
   background-color: rgba(0, 0, 0, 0);

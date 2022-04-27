@@ -154,7 +154,6 @@ const ThumbnailCase = styled.div`
   height: 70px;
   ${props => {
     if (props.backgroundUrl.length > 0) {
-      console.log(props.backgroundUrl);
       return css`
         background-image: url(${props.backgroundUrl});
         background-repeat: no-repeat;
@@ -165,8 +164,7 @@ const ThumbnailCase = styled.div`
   }}
 `;
 const MakeLinkButton = styled.button`
-  cursor: pointer;
-  transition: 0.5s;
+  transition: background-color 0.5s, box-shadow 0.5s;
   z-index: 6;
   border: 0 solid;
   background-color: rgba(0, 0, 0, 0);
@@ -188,7 +186,7 @@ const SelectedPostWrapper = styled.div`
   border-right: 1px rgb(230, 230, 230) solid;
 `;
 const SelectedPostDropZone = styled.div`
-  transition: 0.5s;
+  transition: border-top 0.5s, border-bottom 0.5s;
   border-top: transparent 0px solid;
   border-bottom: transparent 0px solid;
   width: 100%;
@@ -247,14 +245,16 @@ function BookSideBar(props) {
     setTimeout(() => {
       setLoadingText('위로 스크롤해서 더 보기');
     }, 800);
-    fetch('/data/PostList.json', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        setPostList(postList.concat(data.PostList));
-        setReloadSw(0);
-      });
+    setTimeout(() => {
+      fetch('/data/PostList.json', {
+        method: 'GET',
+      })
+        .then(res => res.json())
+        .then(data => {
+          setPostList(postList.concat(data.PostList));
+          setReloadSw(0);
+        });
+    }, 200);
   }
   const [loadingText, setLoadingText] = useState('불러오는 중');
 
@@ -287,7 +287,7 @@ function BookSideBar(props) {
             });
           }}
         />
-        <PostListWrapper>
+        <PostListWrapper isSideBarOpen={props.isSideBarOpen}>
           <PostListWrapperTitle>목차</PostListWrapperTitle>
           <PostListContainer
             selectedPostListLength={selectedPostList.length}
@@ -392,12 +392,19 @@ const PostListWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 800px;
-
+  transition: margin-top 0.3s;
   margin-right: 360px;
-  margin-top: 60px;
+  margin-top: -300px;
   margin-bottom: 60px;
   background-color: white;
   border-radius: 5px;
+  ${props => {
+    if (props.isSideBarOpen) {
+      return css`
+        margin-top: 60px;
+      `;
+    }
+  }}
 `;
 const PostListWrapperTitle = styled.div`
   font-size: 20px;
@@ -413,7 +420,7 @@ const PostListContainer = styled.div`
   flex-direction: column;
   width: 700px;
   margin: 30px 0;
-  transition: 0.5s;
+  transition: padding 0.5s, border 0.5s, background-color 0.5s;
   padding: 150px 0;
 
   border: 1px rgb(230, 230, 230) solid;
@@ -454,18 +461,17 @@ const FullScreenBlack = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  transition: 0.3s;
+
   left: 0;
   top: 0;
   opacity: 0;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.5);
   visibility: hidden;
   ${props => {
     if (props.isSideBarOpen) {
       return css`
         visibility: visible;
         opacity: 1;
-        background-color: rgba(0, 0, 0, 0.5);
       `;
     }
   }}
@@ -487,7 +493,7 @@ const SideBarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 0 0 0;
-  transition: 0.5s;
+  transition: right 0.4s;
   right: -360px;
   ${props => {
     if (props.isSideBarOpen) {
