@@ -45,7 +45,11 @@ function Editor() {
     } else if (MainTextFieldRef.current.innerText < 15) {
       alert('본문을 15자 이상 입력하세요.');
       return;
+    } else if (selectedKeywordList.length == 0) {
+      alert('키워드를 1개 이상 선택하세요.');
+      return;
     }
+
     const token = localStorage.getItem('token');
 
     fetch('http://localhost:8000/write', {
@@ -54,11 +58,11 @@ function Editor() {
       body: JSON.stringify({
         title: TilteTextFieldRef.current.innerText,
         body: MainTextFieldRef.current.innerHTML,
-        summary: MainTextFieldRef.current.innerText,
+        summary: MainTextFieldRef.current.innerText.substr(0, 200),
         subtitle: SubTilteTextFieldRef.current.innerText,
         isPublished: 1,
         thumbnailUrl: backgroundUrl,
-        keywordIdList: [1, 2, 3, 4],
+        keywordIdList: selectedKeywordList,
       }),
     })
       .then(res => res.json())

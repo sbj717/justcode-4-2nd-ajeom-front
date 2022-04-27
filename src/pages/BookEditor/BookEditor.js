@@ -14,8 +14,8 @@ function BookEditor() {
   });
 
   function PublishBook() {
-    if (BrunchbookTopRef.title.current.innerText.length < 5) {
-      alert('제목을 5자 이상 입력하세요.');
+    if (BrunchbookTopRef.title.current.innerText.length < 2) {
+      alert('제목을 2자 이상 입력하세요.');
       return;
     } else if (BrunchbookTopRef.bookcover_url.length == 0) {
       alert('북 커버 이미지를 설정하세요.');

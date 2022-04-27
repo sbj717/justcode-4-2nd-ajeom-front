@@ -6,12 +6,12 @@ function KeywordToggleGroup(props) {
   const [keywordList, setKeywordList] = useState([]);
 
   useEffect(() => {
-    fetch('/data/keywordList.json', {
+    fetch('http://localhost:8000/keyword', {
       method: 'GET',
     })
       .then(res => res.json())
       .then(data => {
-        setKeywordList(data.KeywordList);
+        setKeywordList(data.keywords);
       });
   }, []);
 
@@ -23,7 +23,7 @@ function KeywordToggleGroup(props) {
             <KeywordToggle
               key={c.id}
               id={c.id}
-              keywordName={c.Name}
+              keywordName={c.name}
               addKeyword={props.addKeyword}
               delKeyword={props.delKeyword}
               selectedKeywordCount={props.selectedKeywordCount}
