@@ -118,10 +118,6 @@ function Request() {
               </SaveBox>
             </SaveBoxWrapper>
           </FormSubWrapper>
-
-          <FormTitle size="false">
-            작가님을 대표하는 키워드를 골라주세요.
-          </FormTitle>
           <FormSubmitBtn onClick={formSubmit}>다음</FormSubmitBtn>
         </FormWrapper>
       )}
