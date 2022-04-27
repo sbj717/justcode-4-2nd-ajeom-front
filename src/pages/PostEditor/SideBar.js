@@ -87,7 +87,7 @@ const FullScreenBlack = styled.div`
 const SideBarWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 40px 30px 40px 40px;
+  padding: 40px 40px 40px 40px;
   transition: 0.5s;
   right: -360px;
   ${props => {
