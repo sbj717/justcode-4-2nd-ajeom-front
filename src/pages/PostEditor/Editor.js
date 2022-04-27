@@ -32,6 +32,41 @@ function Editor() {
   const SubTilteTextFieldRef = useRef();
   const TopWrapperRef = useRef();
 
+  function PublishPost() {
+    if (TilteTextFieldRef.current.innerText.length < 2) {
+      alert('제목을 2자 이상 입력하세요.');
+      return;
+    } else if (SubTilteTextFieldRef.current.innerText < 2) {
+      alert('소제목을 2자 이상 입력하세요.');
+      return;
+    } else if (backgroundUrl.length == 0) {
+      alert('타이틀 이미지를 설정하세요.');
+      return;
+    } else if (MainTextFieldRef.current.innerText < 15) {
+      alert('본문을 15자 이상 입력하세요.');
+      return;
+    }
+    const token = localStorage.getItem('token');
+
+    fetch('http://localhost:8000/write', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', token: token },
+      body: JSON.stringify({
+        title: TilteTextFieldRef.current.innerText,
+        body: MainTextFieldRef.current.innerHTML,
+        summary: MainTextFieldRef.current.innerText,
+        subtitle: SubTilteTextFieldRef.current.innerText,
+        isPublished: 1,
+        thumbnailUrl: backgroundUrl,
+        keywordIdList: [1, 2, 3, 4],
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  }
+
   function calToolBarPosition() {
     const selection = window.getSelection();
     if (selection.type === 'Range') {
@@ -145,6 +180,7 @@ function Editor() {
         closeSideBar={closeSideBar}
         selectedKeywordList={selectedKeywordList}
         setSelectedKeywordList={setSelectedKeywordList}
+        PublishPost={PublishPost}
       ></SideBar>
       <FontStyleToolBar
         ToolBarPosition={ToolBarPosition}
@@ -216,11 +252,8 @@ function Editor() {
           </MainToolbox>
         </MainTextFieldWrapper>
         <PublishButtonBox>
-          <PublishButton mainColor={'#aaaaaa'} onClick={openSideBar}>
-            저장
-          </PublishButton>
           <PublishButton mainColor={'#00c3bd'} onClick={openSideBar}>
-            발행
+            완료
           </PublishButton>
         </PublishButtonBox>
       </BottomWrapper>
@@ -237,7 +270,7 @@ const PublishButton = styled.button`
       return props.mainColor;
     }};
   border-radius: 20px;
-  padding: 0.3rem 1.5rem;
+  padding: 0.3rem 2.5rem;
   margin-top: 30px;
   background-color: #ffffff;
   color: ${props => {

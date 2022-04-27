@@ -40,8 +40,8 @@ function SideBar(props, ref) {
       />
       <SideBarWrapper isSideBarOpen={props.isSideBarOpen}>
         <ButtonWrapper>
-          <CompleteButton>완료</CompleteButton>
-          <CancelButton onClick={props.closeSideBar}>취소</CancelButton>
+          <CompleteButton onClick={props.PublishPost}>발행</CompleteButton>
+          <CancelButton>저장</CancelButton>
         </ButtonWrapper>
         <KeywordTitleWrapper>
           키워드 선택
