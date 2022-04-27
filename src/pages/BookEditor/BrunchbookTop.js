@@ -2,11 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
 import { BiCamera } from 'react-icons/bi';
-function BrunchbookTop() {
+function BrunchbookTop(props) {
+  const titleRef = useRef();
+  const descriptionRef = useRef();
+
   const [bookcover_url, setBookcover_url] = useState('');
-  const [releaseDate, setReleaseDate] = useState([]);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [delay, setDelay] = useState(700);
+
   const [coordinate, setCoordinate] = useState([
     '-170',
     '-170',
@@ -14,38 +15,14 @@ function BrunchbookTop() {
     '-170',
     '-170',
   ]);
-  const [caseDisplay, setCaseDisplay] = useState([
-    true,
-    true,
-    false,
-    false,
-    false,
-  ]);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [buttonColor, setButtonColor] = useState(['#d9d9d9', '#d9d9d9']);
 
-  const BrunchbookMotion = () => {
-    setCaseDisplay([false, true, true, true, true]);
-  };
-
-  const useInterval = (callback, delay) => {
-    const savedCallback = useRef();
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  };
-
-  useInterval(BrunchbookMotion, delay);
+  useEffect(() => {
+    props.setBrunchbookTopRef({
+      title: titleRef,
+      bookcover_url: '',
+      description: descriptionRef,
+    });
+  }, []);
 
   return (
     <BrunchbookTopWrapper>
@@ -64,6 +41,7 @@ function BrunchbookTop() {
             <span className="creaseOne" />
             <span className="creaseTwo" />
             <TitleField
+              ref={titleRef}
               contentEditable="true"
               placeholder={`제목을
                 입력하세요`}
@@ -76,6 +54,11 @@ function BrunchbookTop() {
                 let url = prompt('이미지 URL을 입력하세요', '');
                 if (url) {
                   if (url.length > 0) {
+                    props.setBrunchbookTopRef({
+                      title: titleRef,
+                      bookcover_url: url,
+                      description: descriptionRef,
+                    });
                     setBookcover_url(url);
                   }
                 }
@@ -90,6 +73,7 @@ function BrunchbookTop() {
             <BookPageOne>
               <h4>브런치북 소개</h4>
               <DescriptionField
+                ref={descriptionRef}
                 contentEditable="true"
                 placeholder="브런치북 소개를 입력하세요"
                 spellCheck="false"

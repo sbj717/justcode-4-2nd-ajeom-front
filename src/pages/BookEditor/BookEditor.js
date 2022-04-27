@@ -7,6 +7,30 @@ import BookSideBar from './BookSideBar';
 function BookEditor() {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [postList, setPostList] = useState([]);
+  const [BrunchbookTopRef, setBrunchbookTopRef] = useState({
+    title: '',
+    bookcover_url: '',
+    description: '',
+  });
+
+  function PublishBook() {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    fetch('http://localhost:8000/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', token: token },
+      body: JSON.stringify({
+        title: BrunchbookTopRef.title.current.innerText,
+        bookcover_url: BrunchbookTopRef.bookcover_url,
+        description: BrunchbookTopRef.description.current.innerText,
+        postIdList: [1, 2, 3, 4],
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  }
   function openSideBar() {
     setIsSideBarOpen(true);
   }
@@ -21,7 +45,7 @@ function BookEditor() {
         setPostList={setPostList}
       />
       <BrunchbookWrapper>
-        <BrunchbookTop />
+        <BrunchbookTop setBrunchbookTopRef={setBrunchbookTopRef} />
         <PublishButton mainColor={'#aaaaaa'} onClick={openSideBar}>
           목차 편집
         </PublishButton>
@@ -29,7 +53,7 @@ function BookEditor() {
         <BrunchbookBottom postList={postList} />
 
         {postList.length > 0 ? (
-          <PublishButton mainColor={'#00c3bd'} onClick={openSideBar}>
+          <PublishButton mainColor={'#00c3bd'} onClick={PublishBook}>
             발행
           </PublishButton>
         ) : null}
