@@ -6,7 +6,7 @@ import {
   KAKAOINIT,
 } from '../../../src/config';
 import { useNavigate } from 'react-router-dom';
-function Auth(props) {
+function Auth() {
   const { Kakao } = window;
   const code = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ function Auth(props) {
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         Kakao.init(KAKAOINIT);
         sendData(data);
       });
@@ -41,7 +42,6 @@ function Auth(props) {
     await fetch('http://localhost:8000/user/login', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-
       body: JSON.stringify(data),
     })
       .then(res => res.json())

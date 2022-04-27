@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Login from '../../Login/Login';
 
 function GuestNav({ showNav }) {
+  const navigate = useNavigate();
   const [loginModal, setLoginModal] = useState(false);
+
   const loginPopUp = () => {
     setLoginModal(!loginModal);
   };
@@ -25,14 +27,26 @@ function GuestNav({ showNav }) {
         </StartWrapper>
         <ServiceWrapper>
           <MenuWrapper>
-            <Menu>
-              <Link to="/"> 아점 홈</Link>
+            <Menu
+              onClick={() => {
+                navigate('/');
+              }}
+            >
+              아점 홈
             </Menu>
-            <Menu>
-              <Link to="/list"> 아점 나우</Link>
+            <Menu
+              onClick={() => {
+                navigate('/');
+              }}
+            >
+              아점 나우
             </Menu>
-            <Menu>
-              <Link to="/book">아점 책방</Link>
+            <Menu
+              onClick={() => {
+                navigate('/book');
+              }}
+            >
+              아점 책방
             </Menu>
           </MenuWrapper>
           <WriterSupport>

@@ -32,21 +32,6 @@ $lightgray: #959595;
     border-top: 1px solid black;
   }
 }
-.InfoBox {
-  display: none;
-  .container {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
-    p {
-      font-size: 12px;
-    }
-    span {
-      font-size: 14px;
-    }
-  }
-}
 
 .articleBox {
   display: none;
@@ -168,4 +153,9 @@ $lightgray: #959595;
     opacity: 1;
     transform: 0;
   }
+}
+
+.spinnerWrapper {
+  display: flex;
+  justify-content: center;
 }

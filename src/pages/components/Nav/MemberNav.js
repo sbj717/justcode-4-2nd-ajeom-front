@@ -9,17 +9,30 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
     localStorage.clear();
     await refreshLogOut();
   };
+
+  const navigate = useNavigate();
+  const goToProfile = () => {
+    navigate('/profile');
+  };
   return (
     <NavWrapper memberNav={showNav === 'memberNav'}>
       <ProfileWrapper>
         <VscBell className="notification" />
-        <ProfileImg
-          onClick={useNavigate('/')}
-          alt="ajeom_logo"
-          src={profile_img_url}
-        />
+        {profile_img_url ? (
+          <ProfileImg
+            onClick={goToProfile}
+            alt="ajeom_logo"
+            src={profile_img_url}
+          />
+        ) : (
+          <ProfileImg
+            onClick={goToProfile}
+            alt="ajeom_logo"
+            src="/image/ajeom_logo.png"
+          />
+        )}
         <Username>{nickname}</Username>
-        <UserUrl>ajeom.co.kr/@ajeom</UserUrl>
+        <UserUrl>ajeom.co.kr/@{nickname}</UserUrl>
         <ButtonWrapper>
           <WriteBtn>
             <Link to="/write">글쓰기</Link>
@@ -31,23 +44,49 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
       </ProfileWrapper>
       <ServiceWrapper>
         <MenuWrapper>
-          <Menu>내 아점</Menu>
+          <Menu
+            onClick={() => {
+              navigate('/profile');
+            }}
+          >
+            내 아점
+          </Menu>
           <Menu>작가의 서랍</Menu>
           <Contour />
-          <Menu>
-            <Link to="/">아점 홈</Link>
+          <Menu
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            아점 홈
           </Menu>
-          <Menu>
-            <Link to="/list"> 아점 나우</Link>
+          <Menu
+            onClick={() => {
+              navigate('/list');
+            }}
+          >
+            아점 나우
           </Menu>
-          <Menu>
-            <Link to="/book"> 아점 책방</Link>
+          <Menu
+            onClick={() => {
+              navigate('/book');
+            }}
+          >
+            아점 책방
           </Menu>
-          <Menu>
-            <Link to="/"> 글 읽는 서재</Link>
+          <Menu
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            글 읽는 서재
           </Menu>
-          <Menu>
-            <Link to="/">피드</Link>
+          <Menu
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            피드
           </Menu>
         </MenuWrapper>
         <WriterSupport>

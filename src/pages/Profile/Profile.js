@@ -6,15 +6,19 @@ import Header from '../components/Header/Header';
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
-  const [profileData, setProfileData] = useState([]);
+  const [profileData, setProfileData] = useState({});
   useEffect(() => {
-    fetch('/data/profile.json')
+    const token = localStorage.getItem('token');
+
+    fetch('http://localhost:8000/user/myProfile', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
       .then(res => res.json())
       .then(data => {
         setProfileData(data);
       });
   }, []);
-  console.log(profileData);
 
   const clickModalOutside = e => {
     setIsOpen(!isOpen);
@@ -32,12 +36,14 @@ function Profile() {
       <section className={styles.container}>
         <section className={styles.top}>
           <div className={styles.ImageBox}>
-            <img src="" alt="profileImg" />
+            {profileData.profile_img_url ? (
+              <img src={profileData.profile_img_url} alt="profileImg" />
+            ) : (
+              <img src="/image/ajeom_logo.png" alt="profileImg" />
+            )}
           </div>
           <div className={styles.profileBox}>
-            {profileData[0] !== undefined && (
-              <div className={styles.name}>{profileData[0].username}</div>
-            )}
+            <div className={styles.name}>{profileData.nickname}</div>
             <div className={styles.writeBox}>
               <div className={styles.writeBtn}>글쓰기</div>
               <HiOutlineDotsVertical
@@ -52,7 +58,7 @@ function Profile() {
             </div>
           </div>
         </section>
-        <WriterProfile />
+        <WriterProfile profileData={profileData} />
       </section>
     </>
   );
