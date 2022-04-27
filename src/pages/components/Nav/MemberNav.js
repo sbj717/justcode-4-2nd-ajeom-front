@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { VscBell } from 'react-icons/vsc';
 
-function MemberNav({ showNav }) {
+function MemberNav({ showNav, userInfo, refreshLogOut }) {
+  const { nickname, profile_img_url } = userInfo;
+  const handleLogOut = async () => {
+    localStorage.clear();
+    await refreshLogOut();
+  };
   return (
     <NavWrapper memberNav={showNav === 'memberNav'}>
       <ProfileWrapper>
         <VscBell className="notification" />
-        <ProfileImg
-          alt="ajeom_logo"
-          src="https://velog.velcdn.com/images/jhsol24/post/801b97b8-63fc-47b4-b4be-f90c84a17295/image.png"
-        />
-        <Username>재준님</Username>
+        <ProfileImg alt="ajeom_logo" src={profile_img_url} />
+        <Username>{nickname}</Username>
         <UserUrl>ajeom.co.kr/@jjcho</UserUrl>
         <ButtonWrapper>
           <WriteBtn>글쓰기</WriteBtn>
@@ -40,7 +42,7 @@ function MemberNav({ showNav }) {
         </WriterSupport>
         <UserButtonWrapper>
           <Setting>설정</Setting>
-          <Logout>로그아웃</Logout>
+          <Logout onClick={handleLogOut}>로그아웃</Logout>
         </UserButtonWrapper>
       </ServiceWrapper>
     </NavWrapper>
@@ -59,6 +61,7 @@ const NavWrapper = styled.section`
   border-right: 1px solid #e9e9e9;
   margin-left: ${props => (props.memberNav ? '0' : '-260px')};
   transition: all ease 0.5s;
+  z-index: 100;
   .notification {
     position: absolute;
     top: 18px;
@@ -79,6 +82,7 @@ const ProfileWrapper = styled.div`
 const ProfileImg = styled.img`
   margin: 50px 0 10px;
   width: 25%;
+  border-radius: 50%;
 `;
 const Username = styled.p`
   font-size: 15px;

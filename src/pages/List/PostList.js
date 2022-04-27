@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-function ListCard({ posts }) {
+function PostList({ posts }) {
   const navigate = useNavigate();
 
   const clickPost = () => {
@@ -10,9 +10,9 @@ function ListCard({ posts }) {
   };
 
   return (
-    <CardWrapper>
+    <CardWrapper onClick={clickPost}>
       <TextWrapper>
-        <CardTitle onClick={clickPost}>{posts.postTitle}</CardTitle>
+        <CardTitle>{posts.postTitle}</CardTitle>
         <CardText>{posts.postText}</CardText>
         <CardWriter>
           <By>by</By> {posts.writer}
@@ -32,6 +32,7 @@ const CardWrapper = styled.section`
   margin-bottom: 1rem;
   background-color: #ffffff;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
 `;
 
 const TextWrapper = styled.div`
@@ -84,4 +85,4 @@ const CardImg = styled.img`
   width: 8rem;
 `;
 
-export default ListCard;
+export default PostList;

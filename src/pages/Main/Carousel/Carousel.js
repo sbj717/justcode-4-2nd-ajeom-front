@@ -121,6 +121,7 @@ const TotalWrapper = styled.div`
   justify-content: center;
   position: relative;
   margin: 50px 0px;
+  z-index: 7;
 `;
 
 const LeftButtonWrapper = styled.div`

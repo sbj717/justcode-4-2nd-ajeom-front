@@ -5,7 +5,7 @@ import Slide from './Slide';
 
 const TOTAL_SLIDES = 1;
 
-function Slider() {
+const Slider = () => {
   const datas = [
     {
       img: process.env.PUBLIC_URL + '/image/slider1.png',
@@ -41,56 +41,11 @@ function Slider() {
 
   useEffect(() => {
     slideRef.current.style.transition = 'all 0.5s ease-in-out';
-    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 애니메이션을 만듭니다.
+    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
   }, [currentSlide]);
-
-  const Container = styled.div`
-    width: 50%;
-    overflow: hidden;
-  `;
-
-  const SliderContainer = styled.div`
-    width: 100%;
-    display: flex;
-    height: 90%;
-    gap: 5%;
-  `;
-
-  const ButtonBox = styled.div`
-    display: flex;
-    justify-content: center;
-  `;
-
-  const Button = styled.button`
-    outline: none;
-    border: none;
-    background: none;
-    display: flex;
-    justify-content: center;
-    padding-top: 15px;
-    gap: 20px;
-  `;
-
-  const Logo = styled.a`
-    position: absolute;
-    left: 100px;
-    top: 80px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    img {
-      width: 100%;
-    }
-  `;
 
   return (
     <Container>
-      <Logo href="/">
-        <img
-          src={process.env.PUBLIC_URL + '/image/ajeom_logo.png'}
-          alt="logo"
-        />
-      </Logo>
       <SliderContainer ref={slideRef}>
         <Slide
           img={datas[0].img}
@@ -115,6 +70,32 @@ function Slider() {
       </ButtonBox>
     </Container>
   );
-}
+};
 
 export default Slider;
+const Container = styled.div`
+  width: 50%;
+  overflow: hidden;
+`;
+
+const SliderContainer = styled.div`
+  width: 100%;
+  display: flex;
+  height: 90%;
+  gap: 5%;
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Button = styled.button`
+  outline: none;
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  gap: 20px;
+`;
