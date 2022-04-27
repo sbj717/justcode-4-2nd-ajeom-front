@@ -24,52 +24,46 @@ function Header() {
     setShowNav('none');
   };
 
-  const changeNavStyle = () => {
-    if (navScrollY > 530) {
-      setNavScrollY(window.scrollY);
-      setNavStyle(true);
-    } else {
-      setNavScrollY(window.scrollY);
-      setNavStyle(false);
-    }
-  };
-
+  //scrollY에 따라 header의 style 변경
   useEffect(() => {
-    const scrollListener = () => {
-      window.addEventListener('scroll', changeNavStyle);
+    const changeNavStyle = () => {
+      if (navScrollY > 530) {
+        setNavScrollY(window.scrollY);
+        setNavStyle(true);
+      } else {
+        setNavScrollY(window.scrollY);
+        setNavStyle(false);
+      }
     };
-    scrollListener();
+
+    window.addEventListener('scroll', changeNavStyle);
+
     return () => {
       window.removeEventListener('scroll', changeNavStyle);
     };
   });
 
   return (
-    <>
-      <Wrapper show={showNav} navStyle={navStyle}>
-        <LeftWrapper>
-          <SidebarBtn>
-            <GrMenu size={30} onClick={openGuestNav} />
-          </SidebarBtn>
-          <Logo
-            onClick={() => {
-              navigate('/');
-            }}
-          >
-            ajeom
-          </Logo>
-        </LeftWrapper>
-        <GuestNav showNav={showNav} />
-        <MemberNav showNav={showNav} />
-        <SearchBtn>
-          <GoSearch size={21} />
-        </SearchBtn>
-        {showNav !== 'none' && <OutsideNav onClick={closeNav} />}
-      </Wrapper>
-      {/* <ProgressbarWrapper navStyle={navStyle}>
-        <Progressbar navStyle={navStyle} />
-      </ProgressbarWrapper> */}
-    </>
+    <Wrapper show={showNav} navStyle={navStyle}>
+      <LeftWrapper>
+        <SidebarBtn>
+          <GrMenu size={30} onClick={openGuestNav} />
+        </SidebarBtn>
+        <Logo
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          ajeom
+        </Logo>
+      </LeftWrapper>
+      <GuestNav showNav={showNav} />
+      <MemberNav showNav={showNav} />
+      <SearchBtn>
+        <GoSearch size={21} />
+      </SearchBtn>
+      {showNav !== 'none' && <OutsideNav onClick={closeNav} />}
+    </Wrapper>
   );
 }
 
@@ -84,16 +78,16 @@ const OutsideNav = styled.div`
 `;
 
 const Wrapper = styled.section`
+  width: 100%;
   position: ${props => (props.navStyle ? 'fixed' : 'absolute')};
   display: flex;
-  padding: 7px 25px 14px 25px;
   justify-content: space-between;
-  width: 100%;
-  z-index: 100;
+  padding: 7px 25px 14px 25px;
   background-color: ${props => (props.navStyle ? 'white' : 'transparent')};
   border-bottom: ${props => (props.navStyle ? '1px solid #d1d1d1' : 'none')};
   opacity: ${props => (props.navStyle ? 0.9 : 1)};
   transition: all ease 0.5s;
+  z-index: 100;
 `;
 
 const LeftWrapper = styled.div`
@@ -115,15 +109,5 @@ const SearchBtn = styled.div`
   margin-top: 13px;
   cursor: pointer;
 `;
-
-// const ProgressbarWrapper = styled.section`
-//   height: ${props => (props.navStyle ? '0.3rem' : '0')};
-// `;
-
-// const Progressbar = styled.div`
-//   width: 0;
-//   height: ${props => (props.navStyle ? '0.3rem' : '0')};
-//   background-color: ${props => (props.navStyle ? 'black' : 'white')};
-// `;
 
 export default Header;

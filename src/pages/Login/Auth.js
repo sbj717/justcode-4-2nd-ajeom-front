@@ -37,7 +37,7 @@ function Auth(props) {
   }, [queryStringBody]);
 
   const sendData = async data => {
-    await fetch('/', {
+    await fetch('http://localhost:8000/user/login', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
 

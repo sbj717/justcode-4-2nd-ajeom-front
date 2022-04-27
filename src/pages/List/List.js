@@ -55,6 +55,7 @@ function List() {
   }, [postLists]);
 
   const handleObserver = async ([entry], observer) => {
+    console.log(entry);
     if (entry.isIntersecting) {
       await fetchData();
     }
