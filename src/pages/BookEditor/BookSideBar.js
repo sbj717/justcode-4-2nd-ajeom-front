@@ -341,6 +341,7 @@ function BookSideBar(props) {
                 list.map((item, index) => {
                   outList.push({
                     sequence: index + 1,
+                    post_id: item.Id,
                     post_title: item.Title,
                     post_summary: item.Summary,
                     post_thumbnail_url: item.post_thumbnail_url,

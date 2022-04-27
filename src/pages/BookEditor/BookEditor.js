@@ -14,8 +14,25 @@ function BookEditor() {
   });
 
   function PublishBook() {
+    if (BrunchbookTopRef.title.current.innerText.length < 5) {
+      alert('제목을 5자 이상 입력하세요.');
+      return;
+    } else if (BrunchbookTopRef.bookcover_url.length == 0) {
+      alert('북 커버 이미지를 설정하세요.');
+      return;
+    } else if (BrunchbookTopRef.description.current.innerText.length < 15) {
+      alert('브런치북 소개를 15자 이상 입력하세요.');
+      return;
+    }
+
+    let postIdList = [];
+
+    for (let i = 0; i < postList.length; i++) {
+      postIdList.push(postList[i].post_id);
+    }
+
     const token = localStorage.getItem('token');
-    console.log(token);
+
     fetch('http://localhost:8000/book', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', token: token },
@@ -23,7 +40,7 @@ function BookEditor() {
         title: BrunchbookTopRef.title.current.innerText,
         bookcover_url: BrunchbookTopRef.bookcover_url,
         description: BrunchbookTopRef.description.current.innerText,
-        postIdList: [1, 2, 3, 4],
+        postIdList: postIdList,
       }),
     })
       .then(res => res.json())
