@@ -34,16 +34,16 @@ function Editor() {
   const TopWrapperRef = useRef();
 
   function PublishPost() {
-    if (TilteTextFieldRef.current.innerText.length < 2) {
+    if (TilteTextFieldRef.current.textContent.length < 2) {
       alert('제목을 2자 이상 입력하세요.');
       return;
-    } else if (SubTilteTextFieldRef.current.innerText < 2) {
+    } else if (SubTilteTextFieldRef.current.textContent < 2) {
       alert('소제목을 2자 이상 입력하세요.');
       return;
     } else if (backgroundUrl.length == 0) {
       alert('타이틀 이미지를 설정하세요.');
       return;
-    } else if (MainTextFieldRef.current.innerText < 15) {
+    } else if (MainTextFieldRef.current.textContent < 15) {
       alert('본문을 15자 이상 입력하세요.');
       return;
     } else if (selectedKeywordList.length == 0) {
@@ -57,10 +57,10 @@ function Editor() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', token: token },
       body: JSON.stringify({
-        title: TilteTextFieldRef.current.innerText,
+        title: TilteTextFieldRef.current.textContent,
         body: MainTextFieldRef.current.innerHTML,
-        summary: MainTextFieldRef.current.innerText.substr(0, 200),
-        subtitle: SubTilteTextFieldRef.current.innerText,
+        summary: MainTextFieldRef.current.textContent.substr(0, 200),
+        subtitle: SubTilteTextFieldRef.current.textContent,
         isPublished: 1,
         thumbnailUrl: backgroundUrl,
         keywordIdList: selectedKeywordList,
@@ -68,6 +68,7 @@ function Editor() {
     })
       .then(res => res.json())
       .then(data => {
+        alert('글이 발행되었습니다.');
         navigate(`/post/${data.post_id}`);
         window.scrollTo(0, 0);
       });
@@ -99,6 +100,27 @@ function Editor() {
     });
     window.addEventListener('scroll', () => {
       setScrollYstate(window.scrollY);
+    });
+
+    TilteTextFieldRef.current.addEventListener('paste', function (event) {
+      event.preventDefault();
+      var pastedData = event.clipboardData || window.clipboardData;
+      var textData = pastedData.getData('Text');
+      window.document.execCommand('insertHTML', false, textData);
+    });
+
+    MainTextFieldRef.current.addEventListener('paste', function (event) {
+      event.preventDefault();
+      var pastedData = event.clipboardData || window.clipboardData;
+      var textData = pastedData.getData('Text');
+      window.document.execCommand('insertHTML', false, textData);
+    });
+
+    SubTilteTextFieldRef.current.addEventListener('paste', function (event) {
+      event.preventDefault();
+      var pastedData = event.clipboardData || window.clipboardData;
+      var textData = pastedData.getData('Text');
+      window.document.execCommand('insertHTML', false, textData);
     });
 
     document.addEventListener('pointerup', e => {

@@ -19,6 +19,20 @@ function BrunchbookTop(props) {
   ]);
 
   useEffect(() => {
+    titleRef.current.addEventListener('paste', function (event) {
+      event.preventDefault();
+      var pastedData = event.clipboardData || window.clipboardData;
+      var textData = pastedData.getData('Text');
+      window.document.execCommand('insertHTML', false, textData);
+    });
+
+    descriptionRef.current.addEventListener('paste', function (event) {
+      event.preventDefault();
+      var pastedData = event.clipboardData || window.clipboardData;
+      var textData = pastedData.getData('Text');
+      window.document.execCommand('insertHTML', false, textData);
+    });
+
     titleRef.current.focus();
     props.setBrunchbookTopRef({
       title: titleRef,

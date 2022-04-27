@@ -29,6 +29,7 @@ function BrunchbookTop(props) {
     fetch(`http://localhost:8000/book/${props.bookId}`)
       .then(res => res.json())
       .then(res => {
+        console.log(res);
         setBookInfo(res.bookInfo[0]);
         const newDate = bookInfo.created_at;
         const dateArr = (newDate + '').split(' ')[0].split('-');

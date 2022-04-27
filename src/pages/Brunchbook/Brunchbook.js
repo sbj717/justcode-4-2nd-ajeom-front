@@ -6,19 +6,8 @@ import { useParams } from 'react-router-dom';
 function Brunchbook() {
   const params = useParams();
 
-  function delbook() {
-    const token = localStorage.getItem('token');
-    console.log('delbook');
-    fetch(`http://localhost:8000/book/${params.id}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json', token: token },
-    })
-      .then(res => res.json())
-      .then(data => {});
-  }
-
   return (
-    <BrunchbookWrapper onClick={delbook}>
+    <BrunchbookWrapper>
       <BrunchbookTop bookId={params.id} />
       <BrunchbookBottom bookId={params.id} />
     </BrunchbookWrapper>
