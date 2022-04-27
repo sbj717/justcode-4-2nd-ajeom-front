@@ -34,6 +34,7 @@ function Auth(props) {
       .then(res => res.json())
       .then(data => {
         Kakao.init(KAKAOINIT);
+        console.log(data);
         sendData(data);
       });
   }, [Kakao, queryStringBody]);
