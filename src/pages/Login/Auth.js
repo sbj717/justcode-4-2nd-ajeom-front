@@ -39,11 +39,7 @@ function Auth(props) {
   }, [Kakao, queryStringBody]);
 
   const sendData = async data => {
-<<<<<<< HEAD
-    await fetch('http://localhost:8000/user/signup', {
-=======
     await fetch('http://localhost:8000/user/login', {
->>>>>>> develop
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
 
