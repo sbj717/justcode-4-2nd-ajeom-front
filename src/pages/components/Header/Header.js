@@ -121,6 +121,7 @@ const OutsideNav = styled.div`
 const Wrapper = styled.section`
   position: ${props => (props.navStyle ? 'fixed' : 'absolute')};
   display: flex;
+
   padding: 7px 25px 14px 25px;
   justify-content: space-between;
   width: 100%;
