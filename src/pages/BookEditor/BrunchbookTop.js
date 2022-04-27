@@ -6,7 +6,9 @@ function BrunchbookTop(props) {
   const titleRef = useRef();
   const descriptionRef = useRef();
 
-  const [bookcover_url, setBookcover_url] = useState('');
+  const [bookcover_url, setBookcover_url] = useState(
+    'https://papers.co/wallpaper/papers.co-si21-soft-blue-gray-gradation-blur-40-wallpaper.jpg'
+  );
 
   const [coordinate, setCoordinate] = useState([
     '-170',
@@ -17,6 +19,7 @@ function BrunchbookTop(props) {
   ]);
 
   useEffect(() => {
+    titleRef.current.focus();
     props.setBrunchbookTopRef({
       title: titleRef,
       bookcover_url: '',
@@ -33,11 +36,6 @@ function BrunchbookTop(props) {
             bookcover_url={bookcover_url}
             style={{ transform: `translateX(${coordinate[1]}px)` }}
           >
-            {bookcover_url.length > 0 ? (
-              <img src={bookcover_url} alt="" />
-            ) : (
-              <GraySolid></GraySolid>
-            )}
             <span className="creaseOne" />
             <span className="creaseTwo" />
             <TitleField
@@ -218,6 +216,23 @@ const BookCase = styled.div`
 `;
 
 const BookCover = styled.div`
+  transition: background-image 0.5s;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  ${props => {
+    if (props.bookcover_url.length > 0) {
+      return css`
+        opacity: 1;
+        background-image: url(${props.bookcover_url});
+      `;
+    } else {
+      return css`
+        background-image: url(${'https://papers.co/wallpaper/papers.co-si21-soft-blue-gray-gradation-blur-40-wallpaper.jpg'});
+      `;
+    }
+  }}
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -228,11 +243,11 @@ const BookCover = styled.div`
   padding: 30px;
   margin-right: 18px;
   border-radius: 5px;
-  box-shadow: 0px 10px 10px -10px lightgray;
+  box-shadow: 0px 10px 15px -10px #ccc;
   overflow: hidden;
   z-index: 9;
   transform: translate(160px, 10px);
-
+  opacity: 1;
   .creaseOne {
     background-color: black;
     width: 1px;
@@ -249,19 +264,7 @@ const BookCover = styled.div`
     opacity: 20%;
     left: 13px;
   }
-  img {
-    z-index: 0;
-    width: 600px;
-    transition: 1s;
-    opacity: 0;
-    ${props => {
-      if (props.bookcover_url.length > 0) {
-        return css`
-          opacity: 1;
-        `;
-      }
-    }}
-  }
+
   div {
     display: flex;
     flex-direction: column;
@@ -307,7 +310,7 @@ const BookPageOne = styled.div`
   padding: 30px;
   background-color: white;
   margin-right: 2px;
-  box-shadow: 0px 10px 10px -10px lightgray;
+  box-shadow: 0px 10px 15px -10px #ccc;
 
   h4 {
     font-size: 14px;

@@ -84,6 +84,7 @@ function Editor() {
   }
 
   useEffect(() => {
+    TilteTextFieldRef.current.focus();
     TilteTextFieldRef.current.addEventListener('keypress', evt => {
       if (evt.which === 13) {
         evt.preventDefault();
@@ -210,6 +211,7 @@ function Editor() {
         </TopToolsWrapper>
         <TopTitleWrapper>
           <TilteField
+            autofocus
             ref={TilteTextFieldRef}
             backgroundUrl={backgroundUrl}
             contentEditable="true"

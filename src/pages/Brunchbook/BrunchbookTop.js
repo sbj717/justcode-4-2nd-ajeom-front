@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { VscArrowLeft } from 'react-icons/vsc';
 import { VscArrowRight } from 'react-icons/vsc';
 
-function BrunchbookTop() {
+function BrunchbookTop(props) {
   const [bookInfo, setBookInfo] = useState({});
   const [releaseDate, setReleaseDate] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
@@ -26,10 +26,10 @@ function BrunchbookTop() {
   const [buttonColor, setButtonColor] = useState(['#d9d9d9', '#d9d9d9']);
 
   useEffect(() => {
-    fetch('/data/brunchbook_data.json')
+    fetch(`http://localhost:8000/book/${props.bookId}`)
       .then(res => res.json())
       .then(res => {
-        setBookInfo(res);
+        setBookInfo(res.bookInfo[0]);
         const newDate = bookInfo.created_at;
         const dateArr = (newDate + '').split(' ')[0].split('-');
         let months = [
@@ -145,8 +145,10 @@ function BrunchbookTop() {
               </BookCase>
             )}
           </BookCaseWrapper>
-          <BookCover style={{ transform: `translateX(${coordinate[1]}px)` }}>
-            <img src={bookInfo.bookcover_url} alt="" />
+          <BookCover
+            backgroundUrl={bookInfo.bookcover_url}
+            style={{ transform: `translateX(${coordinate[1]}px)` }}
+          >
             <span className="creaseOne" />
             <span className="creaseTwo" />
             <div>
@@ -296,11 +298,23 @@ const BookCover = styled.div`
   padding: 30px;
   margin-right: 18px;
   border-radius: 5px;
-  box-shadow: 0px 10px 10px -10px lightgray;
+  box-shadow: 0px 10px 15px -10px #ccc;
   overflow: hidden;
   z-index: 9;
   transform: translate(160px, 10px);
   transition: ease 0.5s;
+  background-image: url('');
+  ${props => {
+    if (props.backgroundUrl) {
+      return css`
+        background-image: url(${props.backgroundUrl});
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      `;
+    }
+  }}
+
   .creaseOne {
     background-color: black;
     width: 1px;
@@ -368,7 +382,7 @@ const BookPageOne = styled.div`
   padding: 30px;
   background-color: white;
   margin-right: 2px;
-  box-shadow: 0px 10px 10px -10px lightgray;
+  box-shadow: 0px 10px 15px -10px #ccc;
 
   h4 {
     font-size: 14px;
@@ -396,7 +410,7 @@ const BookPageTwo = styled.div`
   height: 450px;
   background-color: white;
   margin-right: 2px;
-  box-shadow: 0px 10px 10px -10px lightgray;
+  box-shadow: 0px 10px 15px -10px #ccc;
 
   .bookCoverWrapper {
     width: 320px;

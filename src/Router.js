@@ -22,7 +22,7 @@ function Router() {
         <Route path="/oauth/kakao" element={<Auth />} />
         <Route path="/list" element={<List />} />
         <Route path="/detail" element={<Detail />} />
-        <Route path="/book" element={<Brunchbook />} />
+        <Route path="/book/:id" element={<Brunchbook />} />
         <Route path="/write" element={<Write />} />
         <Route path="/bookeditor" element={<BookEditor />} />
         <Route path="/drawer" element={<Drawer />} />

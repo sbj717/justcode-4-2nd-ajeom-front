@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
+import styled, { css } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 function BrunchbookCard({ card }) {
   const [chapter, setChapter] = useState('');
   const [summary, setSummary] = useState('');
-
+  const navigate = useNavigate();
+  const onClickContainer = () => {
+    navigate(`/post/${card.id}`);
+    window.scrollTo(0, 0);
+  };
   useEffect(() => {
     if (Number(card.sequence) < 10) {
       let chapterArr = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
@@ -13,20 +17,20 @@ function BrunchbookCard({ card }) {
     } else {
       setChapter(card.sequence);
     }
-    const newSummary = (card.post_summary + '').substring(0, 200) + '⋯';
+    const newSummary = (card.post_summary + '').substring(0, 150) + '⋯';
     setSummary(newSummary);
   }, [card.post_summary, card.sequence]);
 
   return (
-    <CardContainer>
+    <CardContainer onClick={onClickContainer}>
       <CardIndex>{chapter}</CardIndex>
       <CardBody>
         <CardTitle>{card.post_title}</CardTitle>
         <CardSummary>{summary}</CardSummary>
       </CardBody>
-      <CardThumbnail>
-        <img src={card.post_thumbnail_url} alt="" />
-      </CardThumbnail>
+      <CardThumbnail
+        post_thumbnail_url={card.post_thumbnail_url}
+      ></CardThumbnail>
     </CardContainer>
   );
 }
@@ -39,6 +43,7 @@ const CardContainer = styled.div`
   width: 700px;
   height: 170px;
   border-bottom: 1px solid lightgray;
+  cursor: pointer;
 `;
 
 const CardIndex = styled.div`
@@ -74,6 +79,17 @@ const CardSummary = styled.p`
 `;
 
 const CardThumbnail = styled.div`
+  ${props => {
+    if (props.post_thumbnail_url.length > 0) {
+      return css`
+        opacity: 1;
+        background-image: url(${props.post_thumbnail_url});
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      `;
+    }
+  }}
   width: 120px;
   height: 120px;
   overflow: hidden;

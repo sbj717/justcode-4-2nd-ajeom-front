@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import BrunchbookTop from './BrunchbookTop';
 import BrunchbookBottom from './BrunchbookBottom';
-
+import { useParams } from 'react-router-dom';
 function Brunchbook() {
+  const params = useParams();
   return (
     <BrunchbookWrapper>
-      <BrunchbookTop />
-      <BrunchbookBottom />
+      <BrunchbookTop bookId={params.id} />
+      <BrunchbookBottom bookId={params.id} />
     </BrunchbookWrapper>
   );
 }
