@@ -40,8 +40,8 @@ function SideBar(props, ref) {
       />
       <SideBarWrapper isSideBarOpen={props.isSideBarOpen}>
         <ButtonWrapper>
-          <CompleteButton>완료</CompleteButton>
-          <CancelButton onClick={props.closeSideBar}>취소</CancelButton>
+          <CompleteButton onClick={props.PublishPost}>발행</CompleteButton>
+          <CancelButton>저장</CancelButton>
         </ButtonWrapper>
         <KeywordTitleWrapper>
           키워드 선택
@@ -87,7 +87,7 @@ const FullScreenBlack = styled.div`
 const SideBarWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 40px 30px 40px 40px;
+  padding: 40px 40px 40px 40px;
   transition: 0.5s;
   right: -360px;
   ${props => {
