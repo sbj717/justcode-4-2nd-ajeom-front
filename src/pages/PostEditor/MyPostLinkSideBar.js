@@ -109,7 +109,7 @@ const FullScreenBlack = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 5;
+  z-index: 1000;
 `;
 
 const SideBarWrapper = styled.div`
@@ -130,7 +130,7 @@ const SideBarWrapper = styled.div`
   width: 360px;
   height: 100%;
   background-color: rgb(250, 250, 250);
-  z-index: 5;
+  z-index: 5000;
 `;
 const TitleWrapper = styled.div`
   padding: 25px;

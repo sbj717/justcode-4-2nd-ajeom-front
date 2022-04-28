@@ -16,7 +16,7 @@ import {
   BiMapPin,
   BiTrash,
 } from 'react-icons/bi';
-
+import Header from '../components/Header/Header';
 function Editor() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
@@ -223,6 +223,7 @@ function Editor() {
 
   return (
     <>
+      <Header />
       <MyPostLinkSideBar
         isSideBarOpen={isMyPostLinkSidebarOpen}
         closeSideBar={closeSideBar}
