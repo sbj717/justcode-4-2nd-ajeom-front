@@ -7,6 +7,7 @@ function PostList({ posts }) {
 
   const clickPost = () => {
     navigate(`/detail/${posts.id}`);
+    window.scrollTo(0, 0);
   };
 
   return (

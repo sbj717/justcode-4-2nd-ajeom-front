@@ -50,6 +50,7 @@ function Auth() {
         if (!res.token) return;
         localStorage.setItem('token', res.token);
         navigate('/');
+        window.scrollTo(0, 0);
       });
   };
   return null;

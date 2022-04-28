@@ -22,6 +22,7 @@ function BrunchbookCard({ card }) {
 
   const goToPost = () => {
     navigate(`/detail/${card.id}`);
+    window.scrollTo(0, 0);
   };
 
   return (

@@ -52,6 +52,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/drawer');
+              window.scrollTo(0, 0);
             }}
           >
             작가의 서랍
@@ -60,6 +61,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/');
+              window.scrollTo(0, 0);
             }}
           >
             아점 홈
@@ -67,6 +69,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/list');
+              window.scrollTo(0, 0);
             }}
           >
             아점 나우
@@ -74,6 +77,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/book');
+              window.scrollTo(0, 0);
             }}
           >
             아점 책방
@@ -81,6 +85,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/');
+              window.scrollTo(0, 0);
             }}
           >
             글 읽는 서재
@@ -88,6 +93,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/');
+              window.scrollTo(0, 0);
             }}
           >
             피드
@@ -101,6 +107,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <WriterSupportText
             onClick={() => {
               navigate('/request');
+              window.scrollTo(0, 0);
             }}
           >
             작가-지원 <br /> 프로젝트 보러가기

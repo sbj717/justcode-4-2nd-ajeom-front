@@ -80,6 +80,7 @@ function Header() {
         <Logo
           onClick={() => {
             navigate('/');
+            window.scrollTo(0, 0);
           }}
         >
           ajeom
