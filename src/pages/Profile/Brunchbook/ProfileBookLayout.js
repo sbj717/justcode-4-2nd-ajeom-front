@@ -16,13 +16,13 @@ function ProfileBookLayout() {
         setBookList(res);
       });
   }, [token]);
+  console.log(bookList);
 
   return (
     <BookListWrapper>
       <BookListContainer>
-        {bookList.map(card => (
-          <ProfileBookCard key={card.id} card={card} />
-        ))}
+        {bookList === undefined &&
+          bookList.map(card => <ProfileBookCard key={card.id} card={card} />)}
       </BookListContainer>
     </BookListWrapper>
   );

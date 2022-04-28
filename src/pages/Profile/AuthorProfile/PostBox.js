@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from './PostBox.module.scss';
-import Spinner from '../../List/Spinner';
 import styled, { css } from 'styled-components';
 
-function PostBox({ toggle, lists, target, setSpinner, spinner }) {
-  console.log(lists);
+function PostBox({ toggle, lists, target }) {
   return (
     <div
       className={
