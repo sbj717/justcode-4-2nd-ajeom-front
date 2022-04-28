@@ -49,7 +49,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
               navigate('/myprofile');
             }}
           >
-            내 아점
+            내 프로필
           </Menu>
           <Menu
             onClick={() => {
