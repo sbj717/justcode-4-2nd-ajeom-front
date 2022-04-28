@@ -11,16 +11,18 @@ function Profile() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch(`http://localhost:8000/user/myProfile/${params.id}`, {
+    fetch(`http://localhost:8000/user/myProfile`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', token: token },
     })
       .then(res => res.json())
       .then(data => {
         setProfileData(data);
+        console.log(data);
       });
-  }, [params.id]);
+  }, []);
 
+  console.log(profileData);
   return (
     <>
       <Header />
@@ -28,18 +30,10 @@ function Profile() {
       <section className={styles.container}>
         <section className={styles.top}>
           <div className={styles.profileBox}>
-            {profileData.is_author ? (
-              <div className={styles.name}>{profileData.nickname}</div>
-            ) : (
-              <div className={styles.name}>김아점</div>
-            )}
+            <div className={styles.name}>{profileData.nickname}</div>
           </div>
           <div className={styles.ImageBox}>
-            {profileData.profile_img_url ? (
-              <img src={profileData.profile_img_url} alt="profileImg" />
-            ) : (
-              <img src="/image/ajeom_logo.png" alt="profileImg" />
-            )}
+            <img src={profileData.profile_img_url} alt="profileImg" />
           </div>
         </section>
         <div className={styles.writeBox}>

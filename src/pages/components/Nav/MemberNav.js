@@ -12,7 +12,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
 
   const navigate = useNavigate();
   const goToProfile = () => {
-    navigate('/profile');
+    navigate('/myprofile');
   };
   return (
     <NavWrapper memberNav={showNav === 'memberNav'}>
