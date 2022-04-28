@@ -37,7 +37,6 @@ function Detail() {
       if (data.postDetail[0].body) {
         MainTextFieldRef.current.innerHTML = `${data.postDetail[0].body}`;
       }
-      console.log(data);
     });
   }, [params.id]);
 
