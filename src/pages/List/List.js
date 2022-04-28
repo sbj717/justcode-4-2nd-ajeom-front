@@ -14,6 +14,8 @@ function List() {
   const [writerLists, setWriterLists] = useState({
     recommendedWriter: [{ id: 0, profileImg: '', writer: '' }],
   });
+  const [count, setCount] = useState(1);
+  const [spinner, setSpinner] = useState(true);
 
   const target = useRef(null);
 
@@ -30,17 +32,24 @@ function List() {
   }, []);
 
   useEffect(() => {
-    fetch('/data/ListCard.json')
+    fetch('http://localhost:8000/list/post/1?page=1&pageSize=6')
       .then(res => res.json())
-      .then(data => setPostLists(data.posts));
+      .then(data => {
+        setPostLists(data);
+      });
   }, []);
 
   const fetchData = async () => {
     setTimeout(async () => {
-      await fetch('/data/listCard.json')
+      setCount(count + 1);
+      await fetch(`http://localhost:8000/list/post/1?page=${count}&pageSize=6`)
         .then(res => res.json())
         .then(data => {
-          setPostLists(postLists.concat(data.posts));
+          if (data !== null) {
+            setPostLists(postLists.concat(data));
+          } else {
+            setSpinner(false);
+          }
         });
     }, 700);
   };
@@ -78,9 +87,7 @@ function List() {
           {postLists.map(data => (
             <PostList key={data.id} posts={data} />
           ))}
-          <SpinnerWrapper>
-            <Spinner />
-          </SpinnerWrapper>
+          <SpinnerWrapper>{spinner && <Spinner />}</SpinnerWrapper>
         </ListCardWrapper>
 
         <WriterCardWrapper>
