@@ -2,13 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import BrunchbookCard from './BrunchbookCard';
 
-function BrunchbookBottom(props) {
+function BrunchbookBottom() {
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/book/${props.bookId}/post`)
+    fetch('/data/post_list_data.json')
       .then(res => res.json())
-      .then(res => setPostList(res.postList));
+      .then(res => setPostList(res));
   }, []);
 
   const [exist, setExist] = useState(false);
@@ -52,7 +52,7 @@ function BrunchbookBottom(props) {
       {exist && (
         <div>
           {postList.map(card => (
-            <BrunchbookCard key={card.id} card={card} />
+            <BrunchbookCard key={card.sequence} card={card} />
           ))}
         </div>
       )}

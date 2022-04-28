@@ -12,14 +12,14 @@ function PostList({ posts }) {
   return (
     <CardWrapper onClick={clickPost}>
       <TextWrapper>
-        <CardTitle>{posts.postTitle}</CardTitle>
-        <CardText>{posts.postText}</CardText>
+        <CardTitle>{posts.title}</CardTitle>
+        <CardText>{posts.summary}</CardText>
         <CardWriter>
-          <By>by</By> {posts.writer}
+          <By>by</By> {posts.user_id}
         </CardWriter>
       </TextWrapper>
       <ImgWrapper>
-        <CardImg src={posts.postImg} />
+        <CardImg src={posts.thumbnail_url} />
       </ImgWrapper>
     </CardWrapper>
   );

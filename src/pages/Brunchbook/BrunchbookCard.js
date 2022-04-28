@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
 function BrunchbookCard({ card }) {
   const [chapter, setChapter] = useState('');
   const [summary, setSummary] = useState('');
-  const navigate = useNavigate();
-  const onClickContainer = () => {
-    navigate(`/post/${card.id}`);
-    window.scrollTo(0, 0);
-  };
+
   useEffect(() => {
     if (Number(card.sequence) < 10) {
       let chapterArr = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
@@ -17,20 +14,26 @@ function BrunchbookCard({ card }) {
     } else {
       setChapter(card.sequence);
     }
-    const newSummary = (card.post_summary + '').substring(0, 150) + '⋯';
+    const newSummary = (card.post_summary + '').substring(0, 200) + '⋯';
     setSummary(newSummary);
   }, [card.post_summary, card.sequence]);
 
+  const navigate = useNavigate();
+
+  const goToPost = () => {
+    navigate(`/detail/${card.id}`);
+  };
+
   return (
-    <CardContainer onClick={onClickContainer}>
+    <CardContainer>
       <CardIndex>{chapter}</CardIndex>
       <CardBody>
-        <CardTitle>{card.post_title}</CardTitle>
-        <CardSummary>{summary}</CardSummary>
+        <CardTitle onClick={goToPost}>{card.post_title}</CardTitle>
+        <CardSummary onClick={goToPost}>{summary}</CardSummary>
       </CardBody>
-      <CardThumbnail
-        post_thumbnail_url={card.post_thumbnail_url}
-      ></CardThumbnail>
+      <CardThumbnail onClick={goToPost}>
+        <img src={card.post_thumbnail_url} alt="" />
+      </CardThumbnail>
     </CardContainer>
   );
 }
@@ -43,7 +46,6 @@ const CardContainer = styled.div`
   width: 700px;
   height: 170px;
   border-bottom: 1px solid lightgray;
-  cursor: pointer;
 `;
 
 const CardIndex = styled.div`
@@ -67,6 +69,7 @@ const CardTitle = styled.h2`
   font-size: 20px;
   font-weight: 300;
   margin-bottom: 5px;
+  cursor: pointer;
 `;
 
 const CardSummary = styled.p`
@@ -76,25 +79,16 @@ const CardSummary = styled.p`
   letter-spacing: -1px;
   line-height: 19px;
   color: gray;
+  cursor: pointer;
 `;
 
 const CardThumbnail = styled.div`
-  ${props => {
-    if (props.post_thumbnail_url.length > 0) {
-      return css`
-        opacity: 1;
-        background-image: url(${props.post_thumbnail_url});
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
-      `;
-    }
-  }}
   width: 120px;
   height: 120px;
   overflow: hidden;
   margin-left: 50px;
   margin: 25px 0px;
+  cursor: pointer;
   img {
     width: 160px;
   }

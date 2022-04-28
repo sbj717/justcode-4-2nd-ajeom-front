@@ -39,6 +39,10 @@ function Header() {
     }
   };
 
+  useEffect(() => {
+    closeNav();
+  }, [navStyle]);
+
   const closeNav = () => {
     if (showNav === 'guestNav') {
       setShowNav('guestNone');
@@ -67,35 +71,39 @@ function Header() {
       window.removeEventListener('scroll', changeNavStyle);
     };
   });
-
   return (
-    <Wrapper show={showNav} navStyle={navStyle}>
-      <LeftWrapper>
-        <SidebarBtn>
-          <GrMenu size={30} onClick={openNav} />
-        </SidebarBtn>
-        <Logo
-          onClick={() => {
-            navigate('/');
-          }}
-        >
-          ajeom
-        </Logo>
-      </LeftWrapper>
-      <GuestNav className="guest" showNav={showNav} />
-      <MemberNav
-        className="member"
-        showNav={showNav}
-        userInfo={userInfo}
-        refreshLogOut={refreshLogOut}
-      />
-      <SearchBtn>
-        <GoSearch size={21} />
-      </SearchBtn>
-      {showNav !== ('guestNone' || 'memberNone') && (
-        <OutsideNav onClick={closeNav} />
-      )}
-    </Wrapper>
+    <>
+      <Wrapper show={showNav} navStyle={navStyle}>
+        <LeftWrapper>
+          <SidebarBtn>
+            <GrMenu size={30} onClick={openNav} />
+          </SidebarBtn>
+          <Logo
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            ajeom
+          </Logo>
+        </LeftWrapper>
+        <GuestNav className="guest" showNav={showNav} />
+        <MemberNav
+          className="member"
+          showNav={showNav}
+          userInfo={userInfo}
+          refreshLogOut={refreshLogOut}
+        />
+        <SearchBtn>
+          <GoSearch size={21} />
+        </SearchBtn>
+        {showNav !== 'guestNone' && showNav !== 'memberNone' && (
+          <OutsideNav onClick={closeNav} />
+        )}
+      </Wrapper>
+      {/* <ProgressbarWrapper navStyle={navStyle}>
+        <Progressbar navStyle={navStyle} />
+      </ProgressbarWrapper> */}
+    </>
   );
 }
 
@@ -104,7 +112,7 @@ const OutsideNav = styled.div`
   top: 0;
   left: 260px;
   bottom: 0;
-  right: 0;
+  /* right: 0; */
   background-color: transparent;
   z-index: 1;
 `;
