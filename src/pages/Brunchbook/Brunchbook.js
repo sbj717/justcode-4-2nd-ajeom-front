@@ -2,10 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import BrunchbookTop from './BrunchbookTop';
 import BrunchbookBottom from './BrunchbookBottom';
+import Header from '../components/Header/Header';
 
 function Brunchbook() {
   return (
     <BrunchbookWrapper>
+      <Header />
       <BrunchbookTop />
       <BrunchbookBottom />
     </BrunchbookWrapper>
