@@ -39,10 +39,6 @@ function Header() {
     }
   };
 
-  useEffect(() => {
-    closeNav();
-  }, [navStyle]);
-
   const closeNav = () => {
     if (showNav === 'guestNav') {
       setShowNav('guestNone');

@@ -19,7 +19,6 @@ const requestAuthor = async inputValue => {
     .then(res => res.json())
     .then(res => {
       if (res.success) {
-        console.log('SUCCESS');
         return res.success;
       }
     });
