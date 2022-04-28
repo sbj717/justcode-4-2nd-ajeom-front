@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { VscArrowLeft } from 'react-icons/vsc';
 import { VscArrowRight } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
+
 function BrunchbookTop(props) {
   const navigate = useNavigate();
   const [bookInfo, setBookInfo] = useState({});
@@ -231,7 +232,7 @@ function BrunchbookTop(props) {
         </BrunchbookTopSlide>
       </BrunchbookTopCarousel>
       {bookInfo.user_id == userInfo.id ? (
-        <DelButton mainColor={'#00c3bd'} onClick={delBook}>
+        <DelButton mainColor="#00c3bd" onClick={delBook}>
           삭제
         </DelButton>
       ) : null}

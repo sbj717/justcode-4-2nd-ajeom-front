@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 function ProfileBookCard({ card }) {
   const navigate = useNavigate();
@@ -11,13 +11,13 @@ function ProfileBookCard({ card }) {
 
   return (
     <CardWrapper>
-      <CardCover onClick={goToPost}>
-        <img src={card.bookcover_url} alt="" />
+      <CardCover onClick={goToPost} bookcover_url={card.bookcover_url}>
+        {/* <img src={card.bookcover_url} alt="" /> */}
         <span className="creaseOne" />
         <span className="creaseTwo" />
         <div>
           <h2>{card.title}</h2>
-          <h3>{card.username}</h3>
+          <h3>{card.nickname}</h3>
         </div>
         <p>brunch book</p>
       </CardCover>
@@ -41,11 +41,19 @@ const CardWrapper = styled.div`
 `;
 
 const CardCover = styled.div`
+  ${props => {
+    return css`
+      background-image: url(${props.bookcover_url});
+    `;
+  }}
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   width: 210px;
   height: 300px;
   border-radius: 3px 7px 7px 3px;
