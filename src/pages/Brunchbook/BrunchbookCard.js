@@ -34,7 +34,7 @@ function BrunchbookCard({ card }) {
       <CardThumbnail
         bookcover_url={card.post_thumbnail_url}
         onClick={goToPost}
-      ></CardThumbnail>
+      />
     </CardContainer>
   );
 }

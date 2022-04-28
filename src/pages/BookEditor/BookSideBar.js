@@ -367,19 +367,28 @@ function BookSideBar(props) {
         </TitleWrapper>
         <Wrapper>
           {postList.map(c => {
-            return (
-              <PostCard
-                key={c.id}
-                id={c.id}
-                Title={c.Title}
-                url="df.com"
-                Summary={c.Summary}
-                post_thumbnail_url={c.post_thumbnail_url}
-                closeSideBar={props.closeSideBar}
-                nowDragged={nowDragged}
-                setNowDragged={setNowDragged}
-              ></PostCard>
-            );
+            let sw = true;
+
+            for (let i = 0; i < selectedPostList.length; i++) {
+              if (selectedPostList[i].Id == c.id) {
+                sw = false;
+              }
+            }
+            if (sw) {
+              return (
+                <PostCard
+                  key={c.id}
+                  id={c.id}
+                  Title={c.Title}
+                  url="df.com"
+                  Summary={c.Summary}
+                  post_thumbnail_url={c.post_thumbnail_url}
+                  closeSideBar={props.closeSideBar}
+                  nowDragged={nowDragged}
+                  setNowDragged={setNowDragged}
+                ></PostCard>
+              );
+            }
           })}
           {props.isSideBarOpen ? <Space>{loadingText}</Space> : null}
           <ReloadSensor ref={reloadSensorRef} />

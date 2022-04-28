@@ -94,6 +94,7 @@ const PostCardBody = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  word-wrap: break-all;
 `;
 
 const MakeLinkButton = styled.button`
