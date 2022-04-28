@@ -3,23 +3,46 @@ import styled from 'styled-components';
 
 function DrawerPostCard({ card }) {
   const [summary, setSummary] = useState('');
+  const [dateArr, setDateArr] = useState([]);
 
   useEffect(() => {
-    const newSummary = (card.post_summary + '').substring(0, 115) + '⋯';
+    const newSummary = (card.summary + '').substring(0, 115) + '⋯';
     setSummary(newSummary);
-  }, [card.post_summary, card.sequence]);
+  }, [card.summary]);
+
+  useEffect(() => {
+    const newDate = card.created_at;
+    const dateArr = (newDate + '').split('T')[0].split('-');
+    let months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    let selectedMonthName = months[Number(dateArr[1] - 1)];
+    dateArr[1] = selectedMonthName;
+    setDateArr(dateArr);
+  }, [card.created_at]);
 
   return (
     <CardContainer>
       <CardBody>
-        <CardTitle>{card.post_title}</CardTitle>
+        <CardTitle>{card.title}</CardTitle>
         <CardSummary>{summary}</CardSummary>
         <CardDate>
-          {card.created_at[1]} {card.created_at[2]}. {card.created_at[0]}
+          {dateArr[1]} {dateArr[2]}. {dateArr[0]}
         </CardDate>
       </CardBody>
       <CardThumbnail>
-        <img src={card.post_thumbnail_url} alt="" />
+        <img src={card.thumbnail_url} alt="" />
       </CardThumbnail>
     </CardContainer>
   );

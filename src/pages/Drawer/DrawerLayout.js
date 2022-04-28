@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import DrawerPostCard from './DrawerPostCard';
 import DrawerBookCard from './DrawerBookCard';
 import EmptyBookCard from './EmptyBookCard';
-import { useNavigate } from 'react-router-dom';
+import Spinner from '../List/Spinner';
+import Header from '../components/Header/Header';
 
 function DrawerLayout() {
   const [categoryDeco, setCategoryDeco] = useState(['picked', 'none']);
   const [page, setPage] = useState('post');
   const [postList, setPostList] = useState([]);
   const [bookList, setBookList] = useState([]);
-  const navigate = useNavigate();
+  const [count, setCount] = useState(1);
+  const [spinner, setSpinner] = useState(true);
+
   const goToPost = () => {
     setCategoryDeco(['picked', 'none']);
     setPage('post');
@@ -22,34 +25,42 @@ function DrawerLayout() {
   };
 
   useEffect(() => {
-    fetch('/data/post_list_data.json')
+    fetch('http://localhost:8000/list/post/1?page=1&pageSize=4')
       .then(res => res.json())
       .then(res => setPostList(res));
   }, []);
 
+  const fetchPostList = async () => {
+    setTimeout(async () => {
+      setCount(count + 1);
+      await fetch(`http://localhost:8000/list/post/1?page=${count}&pageSize=4`)
+        .then(res => res.json())
+        .then(res => {
+          if (res !== null) {
+            setPostList(postList.concat(res));
+          } else {
+            setSpinner(false);
+          }
+        });
+    }, 700);
+  };
+
+  const target = useRef(null);
+
   useEffect(() => {
-    postList.map(post => {
-      const newDate = post.created_at;
-      const dateArr = (newDate + '').split(' ')[0].split('-');
-      let months = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ];
-      let selectedMonthName = months[Number(dateArr[1] - 1)];
-      dateArr[1] = selectedMonthName;
-      return (post.created_at = dateArr);
-    });
+    let observer;
+    if (target.current) {
+      observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
+      observer.observe(target.current);
+    }
+    return () => observer && observer.disconnect();
   }, [postList]);
+
+  const handleObserver = async ([entry], observer) => {
+    if (entry.isIntersecting) {
+      await fetchPostList();
+    }
+  };
 
   useEffect(() => {
     fetch('/data/profile_brunchbook_list_data.json')
@@ -60,40 +71,41 @@ function DrawerLayout() {
   }, []);
 
   return (
-    <DrawerWrapper>
-      <DrawerCategory>
-        <p className={categoryDeco[0]} onClick={goToPost}>
-          저장글
-        </p>
-        <p className={categoryDeco[1]} onClick={goToBook}>
-          브런치북
-        </p>
-      </DrawerCategory>
-      <DrawerBanner
-        onClick={() => {
-          navigate('/request');
-        }}
-      >
-        <img src="/images/drawerbanner.png" alt="" />
-      </DrawerBanner>
-      {page === 'post' && (
-        <PostListWrapper>
-          {postList.map(card => (
-            <DrawerPostCard key={card.id} card={card} />
-          ))}
-        </PostListWrapper>
-      )}
-      {page === 'book' && (
-        <BookListWrapper>
-          <BookListContainer>
-            <EmptyBookCard />
-            {bookList.map(card => (
-              <DrawerBookCard key={card.id} card={card} />
+    <>
+      <Header />
+      <DrawerWrapper>
+        <DrawerCategory>
+          <p className={categoryDeco[0]} onClick={goToPost}>
+            저장글
+          </p>
+          <p className={categoryDeco[1]} onClick={goToBook}>
+            브런치북
+          </p>
+        </DrawerCategory>
+        <DrawerBanner>
+          <img src="/images/drawerbanner.png" alt="" />
+        </DrawerBanner>
+        {page === 'post' && (
+          <PostListWrapper>
+            {postList.map(card => (
+              <DrawerPostCard key={card.id} card={card} />
             ))}
-          </BookListContainer>
-        </BookListWrapper>
-      )}
-    </DrawerWrapper>
+            <div ref={target} style={{ border: '1px solid rgba(0,0,0,0)' }} />
+            <SpinnerWrapper>{spinner && <Spinner />}</SpinnerWrapper>
+          </PostListWrapper>
+        )}
+        {page === 'book' && (
+          <BookListWrapper>
+            <BookListContainer>
+              <EmptyBookCard />
+              {bookList.map(card => (
+                <DrawerBookCard key={card.id} card={card} />
+              ))}
+            </BookListContainer>
+          </BookListWrapper>
+        )}
+      </DrawerWrapper>
+    </>
   );
 }
 
@@ -110,7 +122,8 @@ const DrawerCategory = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
+  height: 62px;
+  z-index: 20;
   p {
     font-size: 18px;
     font-weight: 100;
@@ -140,6 +153,12 @@ const DrawerBanner = styled.div`
 const PostListWrapper = styled.div`
   width: 700px;
   margin-top: 35px;
+`;
+
+const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
 `;
 
 const BookListWrapper = styled.div`
