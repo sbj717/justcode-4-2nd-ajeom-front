@@ -3,8 +3,10 @@ import styles from '../Profile/Profile.module.scss';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import WriterProfile from './WriterProfile';
 import Header from '../components/Header/Header';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [profileData, setProfileData] = useState({});
   useEffect(() => {
@@ -51,7 +53,14 @@ function Profile() {
           </div>
         </section>
         <div className={styles.writeBox}>
-          <div className={styles.writeBtn}>글쓰기</div>
+          <div
+            className={styles.writeBtn}
+            onClick={() => {
+              navigate('/write');
+            }}
+          >
+            글쓰기
+          </div>
           <HiOutlineDotsVertical
             className={styles.edit}
             onClick={clickModalOutside}
