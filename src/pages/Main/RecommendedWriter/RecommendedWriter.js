@@ -115,7 +115,10 @@ const CardTitle = styled.div`
   font-family: 'Nanum Myeongjo', serif;
 `;
 const CardBody = styled.div`
+  word-break: break-all;
+  overflow: hidden;
   color: gray;
+  height: 100px;
   margin-top: 20px;
   font-size: 13px;
   font-weight: 100;
