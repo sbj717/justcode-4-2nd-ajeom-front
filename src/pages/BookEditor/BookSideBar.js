@@ -255,9 +255,11 @@ function BookSideBar(props) {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data);
-          setPostList(postList.concat(data.PostList));
-          setReloadSw(0);
+          if (data.PostList.length > 0) {
+            setPostList(postList.concat(data.PostList));
+
+            setReloadSw(0);
+          }
         });
     }, 200);
     setOffset(offset + 1);

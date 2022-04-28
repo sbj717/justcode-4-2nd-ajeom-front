@@ -6,6 +6,7 @@ import {
   KAKAOINIT,
 } from '../../../src/config';
 import { useNavigate } from 'react-router-dom';
+
 function Auth() {
   const navigate = useNavigate();
 
@@ -33,12 +34,11 @@ function Auth() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         Kakao.init(KAKAOINIT);
-        console.log(data);
         sendData(data);
       });
   }, [Kakao, queryStringBody]);
+
   const sendData = async data => {
     await fetch('http://localhost:8000/user/login', {
       method: 'post',
