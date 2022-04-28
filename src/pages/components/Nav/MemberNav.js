@@ -46,7 +46,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
         <MenuWrapper>
           <Menu
             onClick={() => {
-              navigate('/profile');
+              navigate('/myprofile');
             }}
           >
             내 아점

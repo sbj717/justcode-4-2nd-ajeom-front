@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../Profile/Profile.module.scss';
+import styles from '../Profile/MyProfile.module.scss';
+import { HiOutlineDotsVertical } from 'react-icons/hi';
 import WriterProfile from './WriterProfile';
 import Header from '../components/Header/Header';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function Profile() {
+function MyProfile() {
   const navigate = useNavigate();
-  const params = useParams();
+  const [isOpen, setIsOpen] = useState(false);
   const [profileData, setProfileData] = useState({});
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch(`http://localhost:8000/user/myProfile/${params.id}`, {
+    fetch('http://localhost:8000/user/myProfile', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', token: token },
     })
@@ -19,7 +20,16 @@ function Profile() {
       .then(data => {
         setProfileData(data);
       });
-  }, [params.id]);
+  }, []);
+
+  const clickModalOutside = e => {
+    setIsOpen(!isOpen);
+  };
+
+  const [editProfile, setEditProfile] = useState(false);
+  const handleEditProfile = () => {
+    setEditProfile(!editProfile);
+  };
 
   return (
     <>
@@ -51,6 +61,15 @@ function Profile() {
           >
             글쓰기
           </div>
+          <HiOutlineDotsVertical
+            className={styles.edit}
+            onClick={clickModalOutside}
+          />
+          {isOpen && (
+            <ul className={styles.editBox}>
+              <li onClick={handleEditProfile}>프로필수정</li>
+            </ul>
+          )}
         </div>
         {profileData.is_author ? (
           <WriterProfile profileData={profileData} />
@@ -62,4 +81,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default MyProfile;
