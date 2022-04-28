@@ -1,14 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function WriterList({ data }) {
+  const navigate = useNavigate();
+
+  const goToAuthorProfile = () => {
+    navigate(`/profile/${data.id}`);
+  };
+
   return (
-    <WriterWrapper key={data.id}>
-      {data.profile_img_url ? (
-        <WriterImg src={data.profile_img_url} />
-      ) : (
-        <WriterImg src="/image/ajeom_logo2.png" />
-      )}
+    <WriterWrapper key={data.id} onClick={goToAuthorProfile}>
+      <WriterImg src={data.profile_img_url} />
       <WriterName>{data.nickname}</WriterName>
     </WriterWrapper>
   );
