@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { getDetial } from '../../apis/post';
 import Header from '../components/Header/Header';
@@ -7,16 +7,25 @@ import style from './AjeomBody.module.scss';
 
 function Detail() {
   const params = useParams();
-  const [postLists, setPostLists] = useState([]);
-  const [keywordLists, setKeywordLists] = useState({
-    keywordList: [{ id: 0, mainKeyword: [] }],
+  const navigate = useNavigate();
+  const [postLists, setPostLists] = useState({
+    postDetail: [
+      {
+        id: 0,
+        title: '',
+        subtitle: '',
+        body: '',
+        thumbnail_url: '',
+        user_id: 0,
+        nickname: '',
+        description: '',
+        profile_img_url: '',
+        keywords: [{ id: 0, name: '' }],
+      },
+    ],
+    previousPostInfo: [{ id: 0, title: '', user_id: 0 }],
+    nextPostInfo: [{ id: 0, title: '', user_id: 0 }],
   });
-  const [writerLists, setWriterLists] = useState({
-    recommendedWriter: [{ id: 0, profileImg: '', writer: '', description: '' }],
-  });
-  const fillteredWriter = writerLists.recommendedWriter.filter(
-    el => el.id === 1
-  );
 
   const [progressWidth, setProgressWidth] = useState(0);
   const MainTextFieldRef = useRef(null);
@@ -25,23 +34,24 @@ function Detail() {
   useEffect(() => {
     getDetial(postId).then(data => {
       setPostLists(data);
-      if (data[0].body) {
-        MainTextFieldRef.current.innerHTML = `${data[0].body}`;
+      if (data.postDetail[0].body) {
+        MainTextFieldRef.current.innerHTML = `${data.postDetail[0].body}`;
       }
+      console.log(data);
     });
   }, [params.id]);
 
-  useEffect(() => {
-    fetch('/data/keywords.json')
-      .then(res => res.json())
-      .then(data => setKeywordLists(data));
-  }, []);
+  const goToPrevPost = () => {
+    navigate(`/detail/${postLists.previousPostInfo[0].id}`);
+  };
 
-  useEffect(() => {
-    fetch('/data/writer.json')
-      .then(res => res.json())
-      .then(data => setWriterLists(data));
-  }, []);
+  const goToNextPost = () => {
+    navigate(`/detail/${postLists.nextPostInfo[0].id}`);
+  };
+
+  const goToProfile = () => {
+    navigate(`/profile/${postLists.postDetail[0].user_id}`);
+  };
 
   //progressbar 계산하는 useEffect
   useEffect(() => {
@@ -64,7 +74,7 @@ function Detail() {
   return (
     <>
       <Header />
-      {postLists.map(data => (
+      {postLists.postDetail.map(data => (
         <ThumbnailWrapper key={data.id} thumbnailUrl={data.thumbnail_url}>
           <TitleWrapper>
             <DetailTitle>
@@ -86,22 +96,35 @@ function Detail() {
             <div ref={MainTextFieldRef} />
           </section>
           <KeywordBtnWrapper>
-            {keywordLists.keywordList[0].mainKeyword.map(data => (
-              <Keyword key={data.id}>{data.keyword}</Keyword>
-            ))}
+            {postLists.postDetail.map(data =>
+              data.keywords.map(data => (
+                <Keyword
+                  key={data.id}
+                  onClick={() => {
+                    navigate(`/list/${data.id}`);
+                  }}
+                >
+                  {data.name}
+                </Keyword>
+              ))
+            )}
           </KeywordBtnWrapper>
         </BodyWrapper>
       </MainBody>
 
       <WriterWrapper>
         <WriterSubWrapper>
-          {fillteredWriter.map(data => (
+          {postLists.postDetail.map(data => (
             <>
-              <ProfileWrapper key={data.id}>
-                <WriterName>{data.writer}</WriterName>
-                <WriterImg src={data.profileImg} />
+              <ProfileWrapper key={data.user_id}>
+                <WriterName onClick={goToProfile}>{data.nickname}</WriterName>
+                <WriterImg
+                  alt="작가 프로필 이미지"
+                  src={data.profile_img_url}
+                  onClick={goToProfile}
+                />
               </ProfileWrapper>
-              <WriterDesc>{data.description}</WriterDesc>
+              <WriterDesc onClick={goToProfile}>{data.description}</WriterDesc>
             </>
           ))}
           <BtnWrapper>
@@ -112,14 +135,25 @@ function Detail() {
       </WriterWrapper>
 
       <NavBottom>
-        <NavWrapper>
-          <Prev>작가의 이전글</Prev>
-          <PrevPost>모던 데이터 인프라 시대</PrevPost>
-        </NavWrapper>
-        <NavWrapper>
-          <NextPost>개발자의 가치</NextPost>
-          <Next>작가의 다음글</Next>
-        </NavWrapper>
+        {postLists.previousPostInfo.length > 0 ? (
+          <NavWrapper onClick={goToPrevPost}>
+            <Prev>작가의 이전글</Prev>
+            <PrevPost key={postLists.previousPostInfo[0].id}>
+              {postLists.previousPostInfo[0].title}
+            </PrevPost>
+          </NavWrapper>
+        ) : (
+          <NavWrapper />
+        )}
+
+        {postLists.nextPostInfo.length > 0 ? (
+          <NavWrapper onClick={goToNextPost}>
+            <NextPost key={postLists.nextPostInfo[0].id}>
+              {postLists.nextPostInfo[0].title}
+            </NextPost>
+            <Next>작가의 다음글</Next>
+          </NavWrapper>
+        ) : null}
       </NavBottom>
     </>
   );

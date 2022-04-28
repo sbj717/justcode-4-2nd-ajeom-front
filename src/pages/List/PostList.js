@@ -15,7 +15,7 @@ function PostList({ posts }) {
         <CardTitle>{posts.title}</CardTitle>
         <CardText>{posts.summary}</CardText>
         <CardWriter>
-          <By>by</By> {posts.user_id}
+          <By>by</By> {posts.nickname}
         </CardWriter>
       </TextWrapper>
       <ImgWrapper>
