@@ -22,18 +22,19 @@ function List() {
 
   const target = useRef(null);
 
+  const keywordId = params.id;
+
   useEffect(() => {
-    const keywordId = params.id;
     getRelatedKeywords(keywordId).then(data => setKeywordList(data));
   }, [params.id]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/list/post/1?page=1&pageSize=6')
+    fetch(`http://localhost:8000/list/post/${keywordId}?page=1&pageSize=6`)
       .then(res => res.json())
       .then(data => {
         setPostLists(data);
       });
-  }, []);
+  }, [params.id]);
 
   useEffect(() => {
     getAuthorList().then(data => setWriterList(data.authorList));
@@ -44,7 +45,9 @@ function List() {
   const fetchData = async () => {
     setTimeout(async () => {
       setCount(count + 1);
-      await fetch(`http://localhost:8000/list/post/1?page=${count}&pageSize=6`)
+      await fetch(
+        `http://localhost:8000/list/post/${keywordId}?page=${count}&pageSize=6`
+      )
         .then(res => res.json())
         .then(data => {
           if (data !== null) {
@@ -66,7 +69,6 @@ function List() {
   }, [postLists]);
 
   const handleObserver = async ([entry], observer) => {
-    console.log(entry);
     if (entry.isIntersecting) {
       await fetchData();
     }
