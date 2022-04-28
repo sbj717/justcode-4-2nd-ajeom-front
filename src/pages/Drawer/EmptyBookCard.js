@@ -7,7 +7,7 @@ function EmptyBookCard() {
   const navigate = useNavigate();
 
   const goToPost = () => {
-    navigate(`/book`); //추후 논의 후 재설정 필요
+    navigate(`/bookeditor`); //추후 논의 후 재설정 필요
   };
 
   return (

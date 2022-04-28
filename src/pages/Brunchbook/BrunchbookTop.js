@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { VscArrowLeft } from 'react-icons/vsc';
 import { VscArrowRight } from 'react-icons/vsc';
-
-function BrunchbookTop() {
+import { useNavigate } from 'react-router-dom';
+function BrunchbookTop(props) {
+  const navigate = useNavigate();
   const [bookInfo, setBookInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
   const [releaseDate, setReleaseDate] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [delay, setDelay] = useState(700);
@@ -26,12 +28,23 @@ function BrunchbookTop() {
   const [buttonColor, setButtonColor] = useState(['#d9d9d9', '#d9d9d9']);
 
   useEffect(() => {
-    fetch('/data/brunchbook_data.json')
+    const token = localStorage.getItem('token');
+
+    fetch('http://localhost:8000/user/myProfile', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setUserInfo(data);
+      });
+
+    fetch(`http://localhost:8000/book/${props.id}`)
       .then(res => res.json())
       .then(res => {
-        setBookInfo(res);
+        setBookInfo(res.bookInfo[0]);
         const newDate = bookInfo.created_at;
-        const dateArr = (newDate + '').split(' ')[0].split('-');
+        const dateArr = (newDate + '').split('T')[0].split('-');
         let months = [
           'Jan',
           'Feb',
@@ -69,6 +82,19 @@ function BrunchbookTop() {
     }
   };
 
+  function delBook() {
+    const token = localStorage.getItem('token');
+    fetch(`http://localhost:8000/book/${props.id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
+      .then(res => res.json())
+      .then(data => {
+        alert('브런치북이 삭제되었습니다.');
+        navigate(`/`);
+        window.scrollTo(0, 0);
+      });
+  }
   const useInterval = (callback, delay) => {
     const savedCallback = useRef();
     useEffect(() => {
@@ -145,8 +171,11 @@ function BrunchbookTop() {
               </BookCase>
             )}
           </BookCaseWrapper>
-          <BookCover style={{ transform: `translateX(${coordinate[1]}px)` }}>
-            <img src={bookInfo.bookcover_url} alt="" />
+          <BookCover
+            bookcover_url={bookInfo.bookcover_url}
+            style={{ transform: `translateX(${coordinate[1]}px)` }}
+          >
+            {/* <img src={bookInfo.bookcover_url} alt="" /> */}
             <span className="creaseOne" />
             <span className="creaseTwo" />
             <div>
@@ -201,6 +230,11 @@ function BrunchbookTop() {
           </BookReleaseDateWrapper>
         </BrunchbookTopSlide>
       </BrunchbookTopCarousel>
+      {bookInfo.user_id == userInfo.id ? (
+        <DelButton mainColor={'#00c3bd'} onClick={delBook}>
+          삭제
+        </DelButton>
+      ) : null}
     </BrunchbookTopWrapper>
   );
 }
@@ -249,6 +283,7 @@ const BrunchbookTopSlide = styled.div`
 `;
 
 const BookCaseWrapper = styled.div`
+  word-wrap: break-word;
   width: 350px;
   height: 470px;
   background-color: transparent;
@@ -287,6 +322,21 @@ const BookCase = styled.div`
 `;
 
 const BookCover = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+
+  ${props => {
+    if (props.bookcover_url) {
+      return css`
+        opacity: 1;
+        background-image: url(${props.bookcover_url});
+      `;
+    } else {
+      return css``;
+    }
+  }}
+  word-wrap: break-word;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -323,6 +373,7 @@ const BookCover = styled.div`
     width: 600px;
   }
   div {
+    word-wrap: break-word;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -370,7 +421,7 @@ const BookPageOne = styled.div`
   background-color: white;
   margin-right: 2px;
   box-shadow: 0px 10px 10px -10px lightgray;
-
+  word-wrap: break-word;
   h4 {
     font-size: 14px;
     font-weight: 200;
@@ -393,6 +444,7 @@ const BookPageTwoWrapper = styled.div`
 `;
 
 const BookPageTwo = styled.div`
+  word-wrap: break-word;
   width: 320px;
   height: 450px;
   background-color: white;
@@ -460,4 +512,22 @@ const BookReleaseDate = styled.div`
     top: 155px;
     left: -60px;
   }
+`;
+
+const DelButton = styled.button`
+  font-size: 13px;
+  border: 1.3px solid
+    ${props => {
+      return props.mainColor;
+    }};
+  border-radius: 20px;
+  padding: 0.3rem 1.5rem;
+  margin-top: 30px;
+  background-color: #ffffff;
+  color: ${props => {
+    return props.mainColor;
+  }};
+  font-weight: 300;
+  cursor: pointer;
+  float: right;
 `;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 function BrunchbookCard({ card }) {
   const [chapter, setChapter] = useState('');
@@ -14,7 +14,7 @@ function BrunchbookCard({ card }) {
     } else {
       setChapter(card.sequence);
     }
-    const newSummary = (card.post_summary + '').substring(0, 200) + '⋯';
+    const newSummary = (card.post_summary + '').substring(0, 150) + '⋯';
     setSummary(newSummary);
   }, [card.post_summary, card.sequence]);
 
@@ -31,9 +31,10 @@ function BrunchbookCard({ card }) {
         <CardTitle onClick={goToPost}>{card.post_title}</CardTitle>
         <CardSummary onClick={goToPost}>{summary}</CardSummary>
       </CardBody>
-      <CardThumbnail onClick={goToPost}>
-        <img src={card.post_thumbnail_url} alt="" />
-      </CardThumbnail>
+      <CardThumbnail
+        bookcover_url={card.post_thumbnail_url}
+        onClick={goToPost}
+      ></CardThumbnail>
     </CardContainer>
   );
 }
@@ -41,6 +42,7 @@ function BrunchbookCard({ card }) {
 export default BrunchbookCard;
 
 const CardContainer = styled.div`
+  word-wrap: break-word;
   display: flex;
   justify-content: space-between;
   width: 700px;
@@ -53,9 +55,11 @@ const CardIndex = styled.div`
   padding: 30px 20px 0px 0px;
   font-size: 20px;
   font-weight: 300;
+  word-wrap: normal;
 `;
 
 const CardBody = styled.div`
+  word-wrap: break-word;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -83,6 +87,19 @@ const CardSummary = styled.p`
 `;
 
 const CardThumbnail = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  ${props => {
+    if (props.bookcover_url.length > 0) {
+      return css`
+        opacity: 1;
+        background-image: url(${props.bookcover_url});
+      `;
+    } else {
+      return css``;
+    }
+  }}
   width: 120px;
   height: 120px;
   overflow: hidden;
