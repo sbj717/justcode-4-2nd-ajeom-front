@@ -107,7 +107,7 @@ const OutsideNav = styled.div`
   top: 0;
   left: 260px;
   bottom: 0;
-  /* right: 0; */
+  right: 0;
   background-color: transparent;
   z-index: 1;
 `;
