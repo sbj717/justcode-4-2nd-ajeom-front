@@ -24,18 +24,28 @@ function DrawerLayout() {
     setPage('book');
   };
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
-    fetch('http://localhost:8000/list/post/1?page=1&pageSize=4')
+    fetch('http://localhost:8000/list/drawer?page=1&pageSize=5', {
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
       .then(res => res.json())
       .then(res => setPostList(res));
-  }, []);
+  }, [token]);
 
   const fetchPostList = async () => {
     setTimeout(async () => {
       setCount(count + 1);
-      await fetch(`http://localhost:8000/list/post/1?page=${count}&pageSize=4`)
+      await fetch(
+        `http://localhost:8000/list/drawer?page=${count}&pageSize=5`,
+        {
+          headers: { 'Content-Type': 'application/json', token: token },
+        }
+      )
         .then(res => res.json())
         .then(res => {
+          console.log(res);
           if (res !== null) {
             setPostList(postList.concat(res));
           } else {
@@ -85,7 +95,7 @@ function DrawerLayout() {
         <DrawerBanner>
           <img src="/images/drawerbanner.png" alt="" />
         </DrawerBanner>
-        {page === 'post' && (
+        {page === 'post' && postList !== null && (
           <PostListWrapper>
             {postList.map(card => (
               <DrawerPostCard key={card.id} card={card} />
