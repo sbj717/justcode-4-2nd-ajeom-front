@@ -97,7 +97,7 @@ function Header() {
         <SearchBtn>
           <GoSearch size={21} />
         </SearchBtn>
-        {showNav !== ('guestNone' || 'memberNone') && (
+        {showNav !== 'guestNone' && showNav !== 'memberNone' && (
           <OutsideNav onClick={closeNav} />
         )}
       </Wrapper>

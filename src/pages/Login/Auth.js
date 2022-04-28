@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useHistory } from 'react';
 import {
   CLIENT_SECRET,
   REST_API_KEY,
