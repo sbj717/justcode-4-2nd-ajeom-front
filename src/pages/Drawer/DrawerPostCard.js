@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
 function DrawerPostCard({ card }) {
   const [summary, setSummary] = useState('');
@@ -32,18 +33,22 @@ function DrawerPostCard({ card }) {
     setDateArr(dateArr);
   }, [card.created_at]);
 
+  const navigate = useNavigate();
+
+  const goToPost = () => {
+    navigate(`/detail/${card.id}`);
+  };
+
   return (
     <CardContainer>
       <CardBody>
-        <CardTitle>{card.title}</CardTitle>
-        <CardSummary>{summary}</CardSummary>
+        <CardTitle onClick={goToPost}>{card.title}</CardTitle>
+        <CardSummary onClick={goToPost}>{summary}</CardSummary>
         <CardDate>
           {dateArr[1]} {dateArr[2]}. {dateArr[0]}
         </CardDate>
       </CardBody>
-      <CardThumbnail>
-        <img src={card.thumbnail_url} alt="" />
-      </CardThumbnail>
+      <CardThumbnail onClick={goToPost} bookcover_url={card.thumbnail_url} />
     </CardContainer>
   );
 }
@@ -73,6 +78,7 @@ const CardTitle = styled.h2`
   font-size: 20px;
   font-weight: 300;
   margin-bottom: 5px;
+  cursor: pointer;
 `;
 
 const CardSummary = styled.p`
@@ -83,6 +89,7 @@ const CardSummary = styled.p`
   line-height: 19px;
   color: gray;
   margin-bottom: 15px;
+  cursor: pointer;
 `;
 
 const CardDate = styled.span`
@@ -93,11 +100,20 @@ const CardDate = styled.span`
 `;
 
 const CardThumbnail = styled.div`
+  ${props => {
+    return css`
+      background-image: url(${props.bookcover_url});
+    `;
+  }}
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   width: 120px;
   height: 120px;
   overflow: hidden;
   margin-left: 50px;
   margin: 40px 0px;
+  cursor: pointer;
   img {
     width: 160px;
   }
