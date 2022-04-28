@@ -16,7 +16,7 @@ import {
   BiMapPin,
   BiTrash,
 } from 'react-icons/bi';
-
+import Header from '../components/Header/Header';
 function Editor() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
@@ -93,7 +93,7 @@ function Editor() {
         } else {
           alert('글이 저장되었습니다.');
         }
-        navigate(`/post/${data.post_id}`);
+        navigate(`/detail/${data.post_id}`);
         window.scrollTo(0, 0);
       });
   }
@@ -223,6 +223,7 @@ function Editor() {
 
   return (
     <>
+      <Header />
       <MyPostLinkSideBar
         isSideBarOpen={isMyPostLinkSidebarOpen}
         closeSideBar={closeSideBar}

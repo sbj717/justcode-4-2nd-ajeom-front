@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Brunchbook from './pages/Brunchbook/Brunchbook';
 import Main from './pages/Main/Main';
 import Profile from './pages/Profile/Profile';
+import Author from './pages/Author/Author';
 import Login from './pages/Login/Login';
 import List from './pages/List/List';
 import Detail from './pages/Detail/Detail';
@@ -17,7 +18,8 @@ function Router() {
       <Routes>
         <Route path="" element={<Main />} />
         <Route path="/request" element={<Request />} />
-        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/author/:id" element={<Author />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/kakao" element={<Auth />} />
         <Route path="/list/:id" element={<List />} />

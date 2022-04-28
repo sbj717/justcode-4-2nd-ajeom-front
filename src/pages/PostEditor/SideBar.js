@@ -93,7 +93,7 @@ const FullScreenBlack = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 5;
+  z-index: 1000;
 `;
 
 const SideBarWrapper = styled.div`
@@ -115,7 +115,7 @@ const SideBarWrapper = styled.div`
   width: 360px;
   height: 100%;
   background-color: rgb(250, 250, 250);
-  z-index: 6;
+  z-index: 6000;
 `;
 const CompleteButton = styled.button`
   font-size: 13px;
