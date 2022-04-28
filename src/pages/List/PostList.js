@@ -6,7 +6,7 @@ function PostList({ posts }) {
   const navigate = useNavigate();
 
   const clickPost = () => {
-    navigate('/detail');
+    navigate(`/detail/${posts.id}`);
   };
 
   return (
@@ -15,7 +15,7 @@ function PostList({ posts }) {
         <CardTitle>{posts.title}</CardTitle>
         <CardText>{posts.summary}</CardText>
         <CardWriter>
-          <By>by</By> {posts.user_id}
+          <By>by</By> {posts.nickname}
         </CardWriter>
       </TextWrapper>
       <ImgWrapper thumbnail_url={posts.thumbnail_url}>

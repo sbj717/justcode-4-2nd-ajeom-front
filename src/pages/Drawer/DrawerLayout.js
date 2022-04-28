@@ -73,12 +73,14 @@ function DrawerLayout() {
   };
 
   useEffect(() => {
-    fetch('/data/profile_brunchbook_list_data.json')
+    fetch('http://localhost:8000/user/authorBookList', {
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
       .then(res => res.json())
       .then(res => {
         setBookList(res);
       });
-  }, []);
+  }, [token]);
 
   return (
     <>
