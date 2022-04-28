@@ -30,6 +30,7 @@ function Profile() {
   const handleEditProfile = () => {
     setEditProfile(!editProfile);
   };
+  // console.log('/');
 
   return (
     <>
