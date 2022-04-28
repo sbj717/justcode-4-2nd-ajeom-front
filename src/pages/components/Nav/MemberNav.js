@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { VscBell } from 'react-icons/vsc';
 
 function MemberNav({ showNav, userInfo, refreshLogOut }) {
-  const { nickname, profile_img_url } = userInfo;
+  const { nickname, profile_img_url, id } = userInfo;
   const handleLogOut = async () => {
     localStorage.clear();
     await refreshLogOut();
@@ -12,7 +12,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
 
   const navigate = useNavigate();
   const goToProfile = () => {
-    navigate('/myprofile');
+    navigate(`/profile/${id}`);
   };
   return (
     <NavWrapper memberNav={showNav === 'memberNav'}>
@@ -44,13 +44,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
       </ProfileWrapper>
       <ServiceWrapper>
         <MenuWrapper>
-          <Menu
-            onClick={() => {
-              navigate('/myprofile');
-            }}
-          >
-            내 프로필
-          </Menu>
+          <Menu onClick={goToProfile}>내 프로필</Menu>
           <Menu
             onClick={() => {
               navigate('/drawer');

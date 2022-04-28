@@ -38,11 +38,7 @@ function MyProfile() {
       <section className={styles.container}>
         <section className={styles.top}>
           <div className={styles.profileBox}>
-            {profileData.is_author ? (
-              <div className={styles.name}>{profileData.nickname}</div>
-            ) : (
-              <div className={styles.name}>김아점</div>
-            )}
+            <div className={styles.name}>{profileData.nickname}</div>
           </div>
           <div className={styles.ImageBox}>
             {profileData.profile_img_url ? (

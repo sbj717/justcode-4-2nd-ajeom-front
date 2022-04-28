@@ -71,6 +71,7 @@ function Header() {
       window.removeEventListener('scroll', changeNavStyle);
     };
   });
+
   return (
     <Wrapper show={showNav} navStyle={navStyle}>
       <LeftWrapper>

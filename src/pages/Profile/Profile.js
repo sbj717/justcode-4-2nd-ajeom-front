@@ -5,8 +5,8 @@ import Header from '../components/Header/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function Profile() {
-  const navigate = useNavigate();
   const params = useParams();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({});
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -22,7 +22,6 @@ function Profile() {
       });
   }, []);
 
-  console.log(profileData);
   return (
     <>
       <Header />
@@ -47,7 +46,7 @@ function Profile() {
           </div>
         </div>
         {profileData.is_author ? (
-          <WriterProfile profileData={profileData} />
+          <WriterProfile profileData={profileData} params={params} />
         ) : (
           <></>
         )}
