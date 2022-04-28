@@ -5,7 +5,7 @@ import Header from '../components/Header/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function Profile() {
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
 
   const params = useParams();
   const navigate = useNavigate();
