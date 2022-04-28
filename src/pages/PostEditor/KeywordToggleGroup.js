@@ -33,6 +33,7 @@ function KeywordToggleGroup(props) {
               <KeywordToggle
                 isSearch={false}
                 key={c.id}
+                sw={true}
                 id={c.id}
                 keywordName={c.name}
                 addKeyword={props.addKeyword}
