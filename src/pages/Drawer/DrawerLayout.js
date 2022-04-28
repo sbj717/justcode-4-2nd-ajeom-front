@@ -144,6 +144,7 @@ const DrawerBanner = styled.div`
   background-color: #f9f9f9;
   width: 100%;
   height: 100px;
+  cursor: pointer;
   img {
     width: 700px;
   }
