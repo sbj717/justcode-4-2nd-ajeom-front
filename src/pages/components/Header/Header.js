@@ -72,33 +72,38 @@ function Header() {
     };
   });
   return (
-    <Wrapper show={showNav} navStyle={navStyle}>
-      <LeftWrapper>
-        <SidebarBtn>
-          <GrMenu size={30} onClick={openNav} />
-        </SidebarBtn>
-        <Logo
-          onClick={() => {
-            navigate('/');
-          }}
-        >
-          ajeom
-        </Logo>
-      </LeftWrapper>
-      <GuestNav className="guest" showNav={showNav} />
-      <MemberNav
-        className="member"
-        showNav={showNav}
-        userInfo={userInfo}
-        refreshLogOut={refreshLogOut}
-      />
-      <SearchBtn>
-        <GoSearch size={21} />
-      </SearchBtn>
-      {showNav !== ('guestNone' || 'memberNone') && (
-        <OutsideNav onClick={closeNav} />
-      )}
-    </Wrapper>
+    <>
+      <Wrapper show={showNav} navStyle={navStyle}>
+        <LeftWrapper>
+          <SidebarBtn>
+            <GrMenu size={30} onClick={openNav} />
+          </SidebarBtn>
+          <Logo
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            ajeom
+          </Logo>
+        </LeftWrapper>
+        <GuestNav className="guest" showNav={showNav} />
+        <MemberNav
+          className="member"
+          showNav={showNav}
+          userInfo={userInfo}
+          refreshLogOut={refreshLogOut}
+        />
+        <SearchBtn>
+          <GoSearch size={21} />
+        </SearchBtn>
+        {showNav !== 'guestNone' && showNav !== 'memberNone' && (
+          <OutsideNav onClick={closeNav} />
+        )}
+      </Wrapper>
+      {/* <ProgressbarWrapper navStyle={navStyle}>
+        <Progressbar navStyle={navStyle} />
+      </ProgressbarWrapper> */}
+    </>
   );
 }
 
