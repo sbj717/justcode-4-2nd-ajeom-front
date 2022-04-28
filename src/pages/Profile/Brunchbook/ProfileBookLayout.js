@@ -21,8 +21,9 @@ function ProfileBookLayout() {
   return (
     <BookListWrapper>
       <BookListContainer>
-        {bookList === undefined &&
-          bookList.map(card => <ProfileBookCard key={card.id} card={card} />)}
+        {bookList.map(card => (
+          <ProfileBookCard key={card.id} card={card} />
+        ))}
       </BookListContainer>
     </BookListWrapper>
   );
