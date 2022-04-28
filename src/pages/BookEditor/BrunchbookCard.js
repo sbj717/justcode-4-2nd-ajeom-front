@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 function BrunchbookCard({ card }) {
   const [chapter, setChapter] = useState('');
@@ -24,9 +24,7 @@ function BrunchbookCard({ card }) {
         <CardTitle>{card.post_title}</CardTitle>
         <CardSummary>{summary}</CardSummary>
       </CardBody>
-      <CardThumbnail>
-        <img src={card.post_thumbnail_url} alt="" />
-      </CardThumbnail>
+      <CardThumbnail bookcover_url={card.post_thumbnail_url}></CardThumbnail>
     </CardContainer>
   );
 }
@@ -74,6 +72,20 @@ const CardSummary = styled.p`
 `;
 
 const CardThumbnail = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  ${props => {
+    if (props.bookcover_url.length > 0) {
+      return css`
+        opacity: 1;
+        background-image: url(${props.bookcover_url});
+      `;
+    } else {
+      return css``;
+    }
+  }}
+
   width: 120px;
   height: 120px;
   overflow: hidden;
