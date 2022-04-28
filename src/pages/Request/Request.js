@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { requestAuthor } from '../../apis/author';
 import Header from '../components/Header/Header';
 
 function Request() {
-  const [inputValue, setInputValue] = useState(0);
-  const [preventBtn, setPreventBtn] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   const [formToggle, setFormToggle] = useState(1);
+  const [preventBtn, setPreventBtn] = useState(false);
+  const [postList, setPostList] = useState([]);
+
   const navigate = useNavigate();
 
   const countText = e => {
@@ -28,6 +30,17 @@ function Request() {
     navigate('/');
     window.scrollTo(0, 0);
   };
+
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    fetch('http://localhost:8000/list/drawer?page=1&pageSize=3', {
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
+      .then(res => res.json())
+      .then(res => setPostList(res));
+  }, [token]);
+
   return (
     <BgColor>
       <Header />
@@ -92,15 +105,17 @@ function Request() {
 
             <SaveBoxWrapper>
               <SaveTitle>브런치 저장글</SaveTitle>
-              <SaveBox>
-                <input
-                  type="checkbox"
-                  name="save"
-                  value="안녕하세요"
-                  style={{ zoom: '1.5', marginRight: '0.3rem' }}
-                />
-                행복한 하루였다.
-              </SaveBox>
+              {postList.map(data => (
+                <SaveBox key={data.id}>
+                  <input
+                    type="checkbox"
+                    name="save"
+                    value="안녕하세요"
+                    style={{ zoom: '1.5', marginRight: '0.3rem' }}
+                  />
+                  {data.title}
+                </SaveBox>
+              ))}
             </SaveBoxWrapper>
           </FormSubWrapper>
           <FormSubmitBtn onClick={formSubmit}>다음</FormSubmitBtn>
@@ -151,7 +166,6 @@ const FormWrapper = styled.section`
   width: 700px;
   padding: 40px;
   background-color: #ffffff;
-  z-index: 50;
 `;
 
 const FormStage = styled.div`

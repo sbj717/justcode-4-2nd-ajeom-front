@@ -3,8 +3,9 @@ import styles from '../Profile/WriterProfile.module.scss';
 import InfoBox from './AuthorProfile/InfoBox';
 import PostBox from './AuthorProfile/PostBox';
 import CollectionBox from './AuthorProfile/CollectionBox';
+import { useParams } from 'react-router-dom';
 
-function WriterProfile({ profileData, params }) {
+function WriterProfile({ profileData }) {
   const target = useRef(null);
   const [count, setCount] = useState(1);
   const [writerList, setWriterList] = useState([]);
@@ -12,6 +13,7 @@ function WriterProfile({ profileData, params }) {
 
   const [toggle, setToggle] = useState(1);
   const [lists, setLists] = useState([]);
+  const params = useParams();
   const userId = params.id;
 
   console.log('userId', userId);
@@ -23,30 +25,21 @@ function WriterProfile({ profileData, params }) {
     handleMenu(1);
   }, []);
 
-  const token = localStorage.getItem('token');
-
   useEffect(() => {
-    fetch(`http://localhost:8000/list/myprofile?page=1&pageSize=6`, {
+    fetch(`http://localhost:8000/list/profile/${userId}?page=1&pageSize=6`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', token: token },
     })
       .then(res => res.json())
       .then(data => {
         setLists(data);
       });
-  }, [token]);
-
-  console.log(lists);
+  }, []);
 
   const fetchData = async () => {
     setTimeout(async () => {
       setCount(count + 1);
       await fetch(
-        `http://localhost:8000/list/myprofile?page=${count}&pageSize=6`,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json', token: token },
-        }
+        `http://localhost:8000/list/profile/${userId}?page=${count}&pageSize=6`
       )
         .then(res => res.json())
         .then(data => {
@@ -72,6 +65,7 @@ function WriterProfile({ profileData, params }) {
       await fetchData();
     }
   };
+
   return (
     <section className={styles.writerContainer}>
       <ul className={styles.menu}>
@@ -121,8 +115,9 @@ function WriterProfile({ profileData, params }) {
         target={target}
         setSpinner={setSpinner}
         spinner={spinner}
+        userId={userId}
       />
-      <CollectionBox toggle={toggle} handleMenu={handleMenu} />
+      <CollectionBox toggle={toggle} handleMenu={handleMenu} userId={userId} />
     </section>
   );
 }

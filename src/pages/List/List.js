@@ -34,7 +34,7 @@ function List() {
       .then(data => {
         setPostLists(data);
       });
-  }, [params.id]);
+  }, [keywordId, params.id]);
 
   useEffect(() => {
     getAuthorList().then(data => setWriterList(data.authorList));
