@@ -38,12 +38,13 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
         <Username>{nickname}</Username>
         <UserUrl>ajeom.co.kr/@{nickname}</UserUrl>
         <ButtonWrapper>
-          <WriteBtn>
-            <Link to="/write">글쓰기</Link>
+          <WriteBtn
+            onClick={() => {
+              navigate('/write');
+            }}
+          >
+            글쓰기
           </WriteBtn>
-          <ApplyAuthor>
-            <Link to="/request">작가 신청</Link>
-          </ApplyAuthor>
         </ButtonWrapper>
       </ProfileWrapper>
       <ServiceWrapper>
@@ -68,7 +69,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           </Menu>
           <Menu
             onClick={() => {
-              navigate('/list');
+              navigate('/list/4');
               window.scrollTo(0, 0);
             }}
           >
@@ -76,28 +77,14 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           </Menu>
           <Menu
             onClick={() => {
-              navigate('/book');
+              navigate('/book/1');
               window.scrollTo(0, 0);
             }}
           >
             아점 책방
           </Menu>
-          <Menu
-            onClick={() => {
-              navigate('/');
-              window.scrollTo(0, 0);
-            }}
-          >
-            글 읽는 서재
-          </Menu>
-          <Menu
-            onClick={() => {
-              navigate('/');
-              window.scrollTo(0, 0);
-            }}
-          >
-            피드
-          </Menu>
+          <Menu>글 읽는 서재</Menu>
+          <Menu>피드</Menu>
         </MenuWrapper>
         <WriterSupport>
           <WriterSupportLogo
@@ -177,7 +164,7 @@ const UserUrl = styled.p`
 const ButtonWrapper = styled.div`
   width: 170px;
   display: inline-flex;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const WriteBtn = styled.button`
@@ -197,8 +184,6 @@ const WriteBtn = styled.button`
     color: #00c3bd;
   }
 `;
-
-const ApplyAuthor = styled(WriteBtn)``;
 
 const ServiceWrapper = styled.div`
   text-align: center;
