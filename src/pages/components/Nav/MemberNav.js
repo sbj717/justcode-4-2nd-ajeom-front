@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { VscBell } from 'react-icons/vsc';
 
@@ -8,35 +9,102 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
     localStorage.clear();
     await refreshLogOut();
   };
+
+  const navigate = useNavigate();
+  const goToProfile = () => {
+    navigate('/profile');
+  };
   return (
     <NavWrapper memberNav={showNav === 'memberNav'}>
       <ProfileWrapper>
         <VscBell className="notification" />
-        <ProfileImg alt="ajeom_logo" src={profile_img_url} />
+        {profile_img_url ? (
+          <ProfileImg
+            onClick={goToProfile}
+            alt="ajeom_logo"
+            src={profile_img_url}
+          />
+        ) : (
+          <ProfileImg
+            onClick={goToProfile}
+            alt="ajeom_logo"
+            src="/image/ajeom_logo.png"
+          />
+        )}
         <Username>{nickname}</Username>
-        <UserUrl>ajeom.co.kr/@jjcho</UserUrl>
+        <UserUrl>ajeom.co.kr/@{nickname}</UserUrl>
         <ButtonWrapper>
-          <WriteBtn>글쓰기</WriteBtn>
-          <ApplyAuthor>작가 신청</ApplyAuthor>
+          <WriteBtn>
+            <Link to="/write">글쓰기</Link>
+          </WriteBtn>
+          <ApplyAuthor>
+            <Link to="/request">작가 신청</Link>
+          </ApplyAuthor>
         </ButtonWrapper>
       </ProfileWrapper>
       <ServiceWrapper>
         <MenuWrapper>
-          <Menu>내 아점</Menu>
-          <Menu>작가의 서랍</Menu>
+          <Menu
+            onClick={() => {
+              navigate('/profile');
+            }}
+          >
+            내 아점
+          </Menu>
+          <Menu
+            onClick={() => {
+              navigate('/drawer');
+            }}
+          >
+            작가의 서랍
+          </Menu>
           <Contour />
-          <Menu>아점 홈</Menu>
-          <Menu>아점 나우</Menu>
-          <Menu>아점 책방</Menu>
-          <Menu>글 읽는 서재</Menu>
-          <Menu>피드</Menu>
+          <Menu
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            아점 홈
+          </Menu>
+          <Menu
+            onClick={() => {
+              navigate('/list');
+            }}
+          >
+            아점 나우
+          </Menu>
+          <Menu
+            onClick={() => {
+              navigate('/book');
+            }}
+          >
+            아점 책방
+          </Menu>
+          <Menu
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            글 읽는 서재
+          </Menu>
+          <Menu
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            피드
+          </Menu>
         </MenuWrapper>
         <WriterSupport>
           <WriterSupportLogo
             alt="ajeom_logo"
             src="https://velog.velcdn.com/images/jhsol24/post/801b97b8-63fc-47b4-b4be-f90c84a17295/image.png"
           />
-          <WriterSupportText>
+          <WriterSupportText
+            onClick={() => {
+              navigate('/request');
+            }}
+          >
             작가-지원 <br /> 프로젝트 보러가기
           </WriterSupportText>
         </WriterSupport>
@@ -81,8 +149,11 @@ const ProfileWrapper = styled.div`
 
 const ProfileImg = styled.img`
   margin: 50px 0 10px;
-  width: 25%;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 `;
 const Username = styled.p`
   font-size: 15px;
@@ -116,6 +187,10 @@ const WriteBtn = styled.button`
   color: #00c3bd;
   background-color: #fff;
   cursor: pointer;
+  a {
+    text-decoration: none;
+    color: #00c3bd;
+  }
 `;
 
 const ApplyAuthor = styled(WriteBtn)``;
@@ -165,6 +240,13 @@ const Menu = styled.li`
     }
     &:after {
       background-color: #00c3be;
+    }
+  }
+  a {
+    text-decoration: none;
+    color: #000;
+    &:hover {
+      color: #00c3be;
     }
   }
 `;

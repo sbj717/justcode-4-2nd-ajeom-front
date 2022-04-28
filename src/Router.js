@@ -7,6 +7,7 @@ import List from './pages/List/List';
 import Detail from './pages/Detail/Detail';
 import Auth from './pages/Login/Auth';
 import Write from './pages/PostEditor/Editor';
+import BookEditor from './pages/BookEditor/BookEditor';
 import Request from './pages/Request/Request';
 import Drawer from './pages/Drawer/DrawerLayout';
 
@@ -23,6 +24,7 @@ function Router() {
         <Route path="/detail" element={<Detail />} />
         <Route path="/book" element={<Brunchbook />} />
         <Route path="/write" element={<Write />} />
+        <Route path="/bookeditor" element={<BookEditor />} />
         <Route path="/drawer" element={<Drawer />} />
       </Routes>
     </BrowserRouter>
