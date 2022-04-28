@@ -6,7 +6,7 @@ function PostList({ posts }) {
   const navigate = useNavigate();
 
   const clickPost = () => {
-    navigate('/detail');
+    navigate(`/detail/${posts.id}`);
   };
 
   return (
