@@ -27,7 +27,6 @@ function Request() {
     alert('작가 신청이 완료되었습니다.');
     navigate('/');
   };
-
   return (
     <BgColor>
       <Header />

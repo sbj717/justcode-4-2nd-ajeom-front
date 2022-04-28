@@ -3,11 +3,20 @@ import styles from '../Profile/WriterProfile.module.scss';
 import InfoBox from './AuthorProfile/InfoBox';
 import PostBox from './AuthorProfile/PostBox';
 import CollectionBox from './AuthorProfile/CollectionBox';
+import { useParams } from 'react-router-dom';
+
 function WriterProfile({ profileData }) {
   const target = useRef(null);
+  const [count, setCount] = useState(1);
+  const [writerList, setWriterList] = useState([]);
+  const [spinner, setSpinner] = useState(true);
+
   const [toggle, setToggle] = useState(1);
   const [lists, setLists] = useState([]);
+  const params = useParams();
+  const userId = params.id;
 
+  console.log('userId', userId);
   const handleMenu = index => {
     setToggle(index);
   };
@@ -17,21 +26,28 @@ function WriterProfile({ profileData }) {
   }, []);
 
   useEffect(() => {
-    fetch('/data/listCard.json', {
+    fetch(`http://localhost:8000/list/profile/${userId}?page=1&pageSize=6`, {
       method: 'GET',
     })
       .then(res => res.json())
       .then(data => {
-        setLists(data.posts);
+        setLists(data);
       });
   }, []);
 
   const fetchData = async () => {
     setTimeout(async () => {
-      await fetch('/data/listCard.json')
+      setCount(count + 1);
+      await fetch(
+        `http://localhost:8000/list/profile/${userId}?page=${count}&pageSize=6`
+      )
         .then(res => res.json())
         .then(data => {
-          setLists(lists.concat(data.posts));
+          if (data !== null) {
+            setLists(lists.concat(data));
+          } else {
+            setSpinner(false);
+          }
         });
     }, 700);
   };
@@ -89,12 +105,15 @@ function WriterProfile({ profileData }) {
         handleMenu={handleMenu}
         profileData={profileData}
       />
+
       <PostBox
         handleMenu={handleMenu}
         toggle={toggle}
         setLists={setLists}
         lists={lists}
         target={target}
+        setSpinner={setSpinner}
+        spinner={spinner}
       />
       <CollectionBox toggle={toggle} handleMenu={handleMenu} />
     </section>
