@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import PostCard from './PostCard';
 
 function MyPostLinkSideBar(props) {
+  const [offset, setOffset] = useState(1);
   const [reloadSw, setReloadSw] = useState(0);
   const [postList, setPostList] = useState([]);
   const reloadSensorRef = useRef();
@@ -27,21 +28,27 @@ function MyPostLinkSideBar(props) {
   }, []);
 
   function reloadData() {
+    const token = localStorage.getItem('token');
+
     setLoadingText('불러오는 중');
     setTimeout(() => {
       setLoadingText('위로 스크롤해서 더 보기');
     }, 800);
-    fetch('/data/PostList.json', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        setPostList(postList.concat(data.PostList));
-        setReloadSw(0);
-      });
+    setTimeout(() => {
+      fetch(`http://localhost:8000/write?offset=${offset}&limit=${10}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', token: token },
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          setPostList(postList.concat(data.PostList));
+          setReloadSw(0);
+        });
+    }, 200);
+    setOffset(offset + 1);
   }
   const [loadingText, setLoadingText] = useState('불러오는 중');
-
   return (
     <>
       <FullScreenBlack
@@ -55,9 +62,9 @@ function MyPostLinkSideBar(props) {
             return (
               <PostCard
                 setToolBarOn={props.setToolBarOn}
-                key={c.key}
+                key={c.id}
                 Title={c.Title}
-                url="df.com"
+                url={`localhost:3000/post/${c.id}`}
                 Summary={c.Summary}
                 closeSideBar={props.closeSideBar}
                 post_thumbnail_url={c.post_thumbnail_url}

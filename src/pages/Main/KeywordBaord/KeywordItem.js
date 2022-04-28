@@ -1,44 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-function KeywordItem() {
-  const [keywordLists, setKeywordLists] = useState({
-    keywordList: [{ id: 0, mainKeyword: [] }],
-  });
+function KeywordItem({ data }) {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch('/data/keywords.json')
-      .then(res => res.json())
-      .then(data => setKeywordLists(data));
-  }, []);
+  const goToList = () => {
+    navigate(`/list/${data.id}`);
+    window.scrollTo(0, 0);
+  };
 
   return (
-    <>
-      {keywordLists.keywordList[0].mainKeyword.map(data => (
-        <ItemWrap key={data.id}>
-          <ItemText>{data.keyword}</ItemText>
-        </ItemWrap>
-      ))}
-    </>
+    <AllWrap>
+      <ItemWrap onClick={goToList}>
+        <ItemText>{data.name}</ItemText>
+      </ItemWrap>
+    </AllWrap>
   );
 }
+
+const AllWrap = styled.section`
+  display: flex;
+  justify-content: center;
+`;
 
 const ItemWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 12.5%;
-  height: 120px;
-  padding: 0 2.5%;
+  padding: 2.6rem 1.4rem;
   text-align: center;
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  font-size: 14px;
+  font-size: 0.9rem;
   line-height: 18px;
   color: #333;
-  font-weight: 300;
   cursor: pointer;
   &:hover {
     color: #00c3be;
@@ -48,6 +46,9 @@ const ItemWrap = styled.div`
 
 const ItemText = styled.div`
   word-wrap: break-word;
+  width: 4.56rem;
+  color: #333333;
+  font-weight: 200;
 `;
 
 export default KeywordItem;

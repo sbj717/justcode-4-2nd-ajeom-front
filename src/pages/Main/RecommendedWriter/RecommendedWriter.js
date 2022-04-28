@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
+import { useNavigate } from 'react-router-dom';
+import { getAuthorList } from '../../../apis/author';
+
 function RecommendedWriter() {
   const [writerList, setWriterList] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    fetch('http://localhost:8000/user/authorList', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => setWriterList(data.authorList));
+    getAuthorList().then(data => setWriterList(data.authorList));
   }, []);
 
   const writerListLimit = writerList.slice(0, 6);
@@ -22,14 +18,20 @@ function RecommendedWriter() {
       <BoardTitle>AJEOM WRITERS</BoardTitle>
       <BoardDesc>아점 추천 작가</BoardDesc>
       <Board>
-        {writerListLimit.map(i => (
-          <Card key={i.id}>
-            <CardButton />
-            <ImageBox imageUrl={i.profile_img_url} />
-            <CardTitle>{i.nickname}</CardTitle>
-            <CardBody>{i.description}</CardBody>
-          </Card>
-        ))}
+        {writerListLimit.map((i, c) =>
+          c < 6 ? (
+            <Card key={i.id}>
+              <CardButton
+                onClick={() => {
+                  navigate(`/profile/${i.id}`);
+                }}
+              />
+              <ImageBox imageUrl={i.profile_img_url} />
+              <CardTitle>{i.nickname}</CardTitle>
+              <CardBody>{i.description}</CardBody>
+            </Card>
+          ) : null
+        )}
       </Board>
     </RecommendedWriterWrapper>
   );

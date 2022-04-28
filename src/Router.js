@@ -20,9 +20,9 @@ function Router() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/kakao" element={<Auth />} />
-        <Route path="/list" element={<List />} />
+        <Route path="/list/:id" element={<List />} />
         <Route path="/detail" element={<Detail />} />
-        <Route path="/book" element={<Brunchbook />} />
+        <Route path="/book/:id" element={<Brunchbook />} />
         <Route path="/write" element={<Write />} />
         <Route path="/bookeditor" element={<BookEditor />} />
         <Route path="/drawer" element={<Drawer />} />
