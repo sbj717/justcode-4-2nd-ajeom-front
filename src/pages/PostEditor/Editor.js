@@ -19,6 +19,7 @@ import {
 
 function Editor() {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({});
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isMyPostLinkSidebarOpen, setIsMyPostLinkSidebarOpen] = useState(false);
   const [backgroundUrl, setBackgroundUrl] = useState('');
@@ -33,7 +34,25 @@ function Editor() {
   const SubTilteTextFieldRef = useRef();
   const TopWrapperRef = useRef();
 
-  function PublishPost() {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    fetch('http://localhost:8000/user/myProfile', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setUserInfo(data);
+      });
+  }, []);
+
+  function PublishPost(Q) {
+    if (Q == 1 && userInfo.is_author == 0) {
+      alert('작가만 발행할 수 있습니다.');
+      return;
+    }
+
     if (TilteTextFieldRef.current.textContent.length < 2) {
       alert('제목을 2자 이상 입력하세요.');
       return;
@@ -61,14 +80,18 @@ function Editor() {
         body: MainTextFieldRef.current.innerHTML,
         summary: MainTextFieldRef.current.textContent.substr(0, 200),
         subtitle: SubTilteTextFieldRef.current.textContent,
-        isPublished: 1,
+        isPublished: Q,
         thumbnailUrl: backgroundUrl,
         keywordIdList: selectedKeywordList,
       }),
     })
       .then(res => res.json())
       .then(data => {
-        alert('글이 발행되었습니다.');
+        if (Q == 1) {
+          alert('글이 발행되었습니다.');
+        } else {
+          alert('글이 저장되었습니다.');
+        }
         navigate(`/post/${data.post_id}`);
         window.scrollTo(0, 0);
       });
