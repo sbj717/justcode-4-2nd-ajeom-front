@@ -19,7 +19,6 @@ function List() {
   const [count, setCount] = useState(1);
   const [spinner, setSpinner] = useState(true);
   const [writerList, setWriterList] = useState([]);
-  const [barrier, setBarrier] = useState(0);
 
   const target = useRef(null);
 
