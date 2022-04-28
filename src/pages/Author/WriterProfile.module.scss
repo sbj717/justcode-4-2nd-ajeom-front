@@ -1,0 +1,156 @@
+$darkgray: #666;
+$lightgray: #959595;
+.writerContainer {
+  padding-top: 50px;
+  font-weight: 100;
+}
+
+.menu {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  margin-bottom: 15px;
+  .menuTab {
+    display: block;
+    width: calc(100% / 3);
+    padding: 16px 0 17px;
+    font-size: 16px;
+    font-weight: 100;
+    color: $lightgray;
+    cursor: pointer;
+    &:hover {
+      color: $darkgray;
+      font-weight: 300;
+      border-top: 1px solid black;
+    }
+  }
+  .active {
+    border-top: 1px solid black;
+  }
+}
+
+.articleBox {
+  display: none;
+  .article {
+    display: block;
+    cursor: pointer;
+    .container {
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      padding: 24px 0 27px;
+      border-bottom: 1px solid #eee;
+
+      .textBox {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        span {
+          font-size: 20px;
+          padding-bottom: 15px;
+        }
+        p {
+          overflow: hidden;
+          display: -webkit-box;
+          max-height: 80px;
+          padding-top: 5px;
+          font-size: 14px;
+          line-height: 21px;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
+          color: $lightgray;
+        }
+      }
+      .imgBox {
+        width: 120px;
+        height: 120px;
+
+        img {
+          width: 100%;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+  .article:hover .title {
+    text-decoration: underline;
+  }
+}
+
+.collection {
+  display: none;
+  .container {
+    display: flex;
+    gap: 55px 35px;
+    flex-wrap: wrap;
+  }
+  .bookContainer {
+    width: 210px;
+  }
+}
+
+.book {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 2px 6px 6px 6px;
+  overflow: hidden;
+  cursor: pointer;
+  .bookLine {
+    width: 2px;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.05);
+    position: absolute;
+    left: 5px;
+  }
+  .titleBox {
+    font-size: 18px;
+    display: table-cell;
+    line-height: 1.2;
+    padding: 51px 52px 0;
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+  .imgBox {
+    position: absolute;
+    width: 100%;
+    height: 114px;
+    left: 0;
+    bottom: 0;
+    border-radius: 0 0 6px 0;
+    overflow: hidden;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.bottom {
+  .brunch {
+    font-size: 11px;
+    font-weight: 500;
+    color: #959595;
+    padding: 15px 0;
+  }
+}
+
+.activeContent {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: 0;
+  }
+}

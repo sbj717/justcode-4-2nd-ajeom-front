@@ -19,6 +19,7 @@ function List() {
   const [count, setCount] = useState(1);
   const [spinner, setSpinner] = useState(true);
   const [writerList, setWriterList] = useState([]);
+  const [barrier, setBarrier] = useState(0);
 
   const target = useRef(null);
 
@@ -34,7 +35,7 @@ function List() {
       .then(data => {
         setPostLists(data);
       });
-  }, [params.id]);
+  }, [keywordId, params.id]);
 
   useEffect(() => {
     getAuthorList().then(data => setWriterList(data.authorList));

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { VscBell } from 'react-icons/vsc';
 
 function MemberNav({ showNav, userInfo, refreshLogOut }) {
-  const { nickname, profile_img_url, id } = userInfo;
+  const { nickname, profile_img_url } = userInfo;
   const handleLogOut = async () => {
     await goToMain('/');
     await refreshLogOut();
@@ -13,7 +13,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
 
   const navigate = useNavigate();
   const goToProfile = () => {
-    navigate(`/profile/${id}`);
+    navigate(`/profile`);
   };
   const goToMain = () => {
     navigate('/');
