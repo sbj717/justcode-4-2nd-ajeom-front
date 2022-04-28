@@ -4,8 +4,12 @@ import styled from 'styled-components';
 function WriterList({ data }) {
   return (
     <WriterWrapper key={data.id}>
-      <WriterImg src={data.profileImg} />
-      <WriterName>{data.writer}</WriterName>
+      {data.profile_img_url ? (
+        <WriterImg src={data.profile_img_url} />
+      ) : (
+        <WriterImg src="/image/ajeom_logo2.png" />
+      )}
+      <WriterName>{data.nickname}</WriterName>
     </WriterWrapper>
   );
 }
