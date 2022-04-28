@@ -8,6 +8,7 @@ import style from './AjeomBody.module.scss';
 function Detail() {
   const params = useParams();
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({});
   const [postLists, setPostLists] = useState({
     postDetail: [
       {
@@ -31,6 +32,36 @@ function Detail() {
   const MainTextFieldRef = useRef(null);
   const postId = params.id;
 
+  function delPost() {
+    let result = window.confirm('정말 삭제하시겠습니까?');
+    if (result) {
+      const token = localStorage.getItem('token');
+
+      fetch(`http://localhost:8000/write/${postLists.postDetail[0].id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', token: token },
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert('포스트가 삭제되었습니다.');
+          navigate(`/`);
+          window.scrollTo(0, 0);
+        });
+    }
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    fetch('http://localhost:8000/user/myProfile', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setUserInfo(data);
+      });
+  }, []);
   useEffect(() => {
     getDetail(postId).then(data => {
       setPostLists(data);
@@ -75,6 +106,11 @@ function Detail() {
 
   return (
     <>
+      {postLists.postDetail[0].user_id == userInfo.id ? (
+        <DelButton mainColor="#000" onClick={delPost}>
+          삭제
+        </DelButton>
+      ) : null}
       <Header />
       {postLists.postDetail.map(data => (
         <ThumbnailWrapper key={data.id} thumbnailUrl={data.thumbnail_url}>
@@ -345,6 +381,28 @@ const NextPost = styled(PrevPost)`
 
 const Next = styled(Prev)`
   margin: 0 3rem 0 0;
+`;
+
+const DelButton = styled.button`
+  position: absolute;
+  z-index: 100;
+  right: 20px;
+  top: 15px;
+  font-size: 13px;
+  border: 1.3px solid
+    ${props => {
+      return props.mainColor;
+    }};
+  border-radius: 20px;
+  padding: 0.3rem 1.5rem;
+
+  background-color: #ffffff;
+  color: ${props => {
+    return props.mainColor;
+  }};
+  font-weight: 300;
+  cursor: pointer;
+  float: right;
 `;
 
 export default Detail;
