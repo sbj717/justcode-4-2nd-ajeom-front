@@ -30,6 +30,7 @@ function GuestNav({ showNav }) {
             <Menu
               onClick={() => {
                 navigate('/');
+                window.scrollTo(0, 0);
               }}
             >
               아점 홈
@@ -37,6 +38,7 @@ function GuestNav({ showNav }) {
             <Menu
               onClick={() => {
                 navigate('/');
+                window.scrollTo(0, 0);
               }}
             >
               아점 나우
@@ -44,6 +46,7 @@ function GuestNav({ showNav }) {
             <Menu
               onClick={() => {
                 navigate('/book');
+                window.scrollTo(0, 0);
               }}
             >
               아점 책방

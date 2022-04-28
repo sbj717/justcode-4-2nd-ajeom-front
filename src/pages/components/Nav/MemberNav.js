@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { VscBell } from 'react-icons/vsc';
 
 function MemberNav({ showNav, userInfo, refreshLogOut }) {
-  const { nickname, profile_img_url } = userInfo;
+  const { nickname, profile_img_url, id } = userInfo;
   const handleLogOut = async () => {
-    localStorage.clear();
+    await goToMain('/');
     await refreshLogOut();
+    localStorage.clear();
   };
 
   const navigate = useNavigate();
   const goToProfile = () => {
-    navigate('/profile');
+    navigate(`/profile/${id}`);
+  };
+  const goToMain = () => {
+    navigate('/');
   };
   return (
     <NavWrapper memberNav={showNav === 'memberNav'}>
@@ -44,16 +48,11 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
       </ProfileWrapper>
       <ServiceWrapper>
         <MenuWrapper>
-          <Menu
-            onClick={() => {
-              navigate('/profile');
-            }}
-          >
-            내 프로필
-          </Menu>
+          <Menu onClick={goToProfile}>내 프로필</Menu>
           <Menu
             onClick={() => {
               navigate('/drawer');
+              window.scrollTo(0, 0);
             }}
           >
             작가의 서랍
@@ -62,6 +61,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/');
+              window.scrollTo(0, 0);
             }}
           >
             아점 홈
@@ -69,6 +69,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/list');
+              window.scrollTo(0, 0);
             }}
           >
             아점 나우
@@ -76,6 +77,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/book');
+              window.scrollTo(0, 0);
             }}
           >
             아점 책방
@@ -83,6 +85,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/');
+              window.scrollTo(0, 0);
             }}
           >
             글 읽는 서재
@@ -90,6 +93,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <Menu
             onClick={() => {
               navigate('/');
+              window.scrollTo(0, 0);
             }}
           >
             피드
@@ -103,6 +107,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           <WriterSupportText
             onClick={() => {
               navigate('/request');
+              window.scrollTo(0, 0);
             }}
           >
             작가-지원 <br /> 프로젝트 보러가기

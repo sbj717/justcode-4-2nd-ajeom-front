@@ -16,6 +16,7 @@ function ProfileBookLayout() {
         setBookList(res);
       });
   }, [token]);
+  console.log(bookList);
 
   return (
     <BookListWrapper>

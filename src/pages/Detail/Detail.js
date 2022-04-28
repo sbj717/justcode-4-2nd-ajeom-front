@@ -73,14 +73,17 @@ function Detail() {
 
   const goToPrevPost = () => {
     navigate(`/detail/${postLists.previousPostInfo[0].id}`);
+    window.scrollTo(0, 0);
   };
 
   const goToNextPost = () => {
     navigate(`/detail/${postLists.nextPostInfo[0].id}`);
+    window.scrollTo(0, 0);
   };
 
   const goToProfile = () => {
     navigate(`/profile/${postLists.postDetail[0].user_id}`);
+    window.scrollTo(0, 0);
   };
 
   //progressbar 계산하는 useEffect
@@ -137,6 +140,7 @@ function Detail() {
                   key={data.id}
                   onClick={() => {
                     navigate(`/list/${data.id}`);
+                    window.scrollTo(0, 0);
                   }}
                 >
                   {data.name}

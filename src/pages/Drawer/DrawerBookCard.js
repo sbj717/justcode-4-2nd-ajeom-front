@@ -7,6 +7,7 @@ function DrawerBookCard({ card }) {
 
   const goToPost = () => {
     navigate(`/book/${card.id}`); //추후 논의 후 재설정 필요
+    window.scrollTo(0, 0);
   };
 
   return (
