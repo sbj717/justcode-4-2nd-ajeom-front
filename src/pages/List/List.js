@@ -1,35 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import Header from '../components/Header/Header';
 import PostList from './PostList';
 import KeywordList from './KeywordList';
 import WriterList from './WriterList';
 import Spinner from './Spinner';
+import { getAuthorList } from '../../apis/author';
+import { getRelatedKeywords } from '../../apis/keyword';
 
 function List() {
-  const [keywordLists, setKeywordLists] = useState({
-    keywordList: [{ id: 0, mainKeyword: [] }],
+  const params = useParams();
+  const [keywordList, setKeywordList] = useState({
+    selectedKeyword: [{ id: 0, name: '' }],
+    relatedKeywords: [{ id: 0, name: '' }],
   });
   const [postLists, setPostLists] = useState([]);
-  const [writerLists, setWriterLists] = useState({
-    recommendedWriter: [{ id: 0, profileImg: '', writer: '' }],
-  });
   const [count, setCount] = useState(1);
   const [spinner, setSpinner] = useState(true);
+  const [writerList, setWriterList] = useState([]);
 
   const target = useRef(null);
 
   useEffect(() => {
-    fetch('/data/keywords.json')
-      .then(res => res.json())
-      .then(data => setKeywordLists(data));
-  }, []);
-
-  useEffect(() => {
-    fetch('/data/writer.json')
-      .then(res => res.json())
-      .then(data => setWriterLists(data));
-  }, []);
+    const keywordId = params.id;
+    getRelatedKeywords(keywordId).then(data => setKeywordList(data));
+  }, [params.id]);
 
   useEffect(() => {
     fetch('http://localhost:8000/list/post/1?page=1&pageSize=6')
@@ -38,6 +34,12 @@ function List() {
         setPostLists(data);
       });
   }, []);
+
+  useEffect(() => {
+    getAuthorList().then(data => setWriterList(data.authorList));
+  }, []);
+
+  const writerListLimit = writerList.slice(0, 6);
 
   const fetchData = async () => {
     setTimeout(async () => {
@@ -74,9 +76,9 @@ function List() {
     <>
       <Header />
       <KeywordWrapper>
-        <MainKeyword>IT 트렌드</MainKeyword>
+        <MainKeyword>{keywordList.selectedKeyword[0].name}</MainKeyword>
         <KeywordBtnWrapper>
-          {keywordLists.keywordList[0].mainKeyword.map(data => (
+          {keywordList.relatedKeywords.map(data => (
             <KeywordList key={data.id} data={data} />
           ))}
         </KeywordBtnWrapper>
@@ -92,7 +94,7 @@ function List() {
 
         <WriterCardWrapper>
           <WriterCardTitle>추천작가</WriterCardTitle>
-          {writerLists.recommendedWriter.map(data => (
+          {writerListLimit.map(data => (
             <WriterList key={data.id} data={data} />
           ))}
         </WriterCardWrapper>

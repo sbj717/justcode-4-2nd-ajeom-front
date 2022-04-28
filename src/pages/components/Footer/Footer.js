@@ -104,6 +104,7 @@ const LinkInfo = styled.p`
   color: #d9d9d9;
   font-weight: 200;
   font-size: 0.8rem;
+  cursor: pointer;
 `;
 
 const BottomFooter = styled.section`

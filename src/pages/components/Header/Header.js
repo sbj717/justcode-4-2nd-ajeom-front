@@ -72,38 +72,33 @@ function Header() {
     };
   });
   return (
-    <>
-      <Wrapper show={showNav} navStyle={navStyle}>
-        <LeftWrapper>
-          <SidebarBtn>
-            <GrMenu size={30} onClick={openNav} />
-          </SidebarBtn>
-          <Logo
-            onClick={() => {
-              navigate('/');
-            }}
-          >
-            ajeom
-          </Logo>
-        </LeftWrapper>
-        <GuestNav className="guest" showNav={showNav} />
-        <MemberNav
-          className="member"
-          showNav={showNav}
-          userInfo={userInfo}
-          refreshLogOut={refreshLogOut}
-        />
-        <SearchBtn>
-          <GoSearch size={21} />
-        </SearchBtn>
-        {showNav !== 'guestNone' && showNav !== 'memberNone' && (
-          <OutsideNav onClick={closeNav} />
-        )}
-      </Wrapper>
-      {/* <ProgressbarWrapper navStyle={navStyle}>
-        <Progressbar navStyle={navStyle} />
-      </ProgressbarWrapper> */}
-    </>
+    <Wrapper show={showNav} navStyle={navStyle}>
+      <LeftWrapper>
+        <SidebarBtn>
+          <GrMenu size={30} onClick={openNav} />
+        </SidebarBtn>
+        <Logo
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          ajeom
+        </Logo>
+      </LeftWrapper>
+      <GuestNav className="guest" showNav={showNav} />
+      <MemberNav
+        className="member"
+        showNav={showNav}
+        userInfo={userInfo}
+        refreshLogOut={refreshLogOut}
+      />
+      <SearchBtn>
+        <GoSearch size={21} />
+      </SearchBtn>
+      {showNav !== 'guestNone' && showNav !== 'memberNone' && (
+        <OutsideNav onClick={closeNav} />
+      )}
+    </Wrapper>
   );
 }
 
@@ -112,7 +107,7 @@ const OutsideNav = styled.div`
   top: 0;
   left: 260px;
   bottom: 0;
-  /* right: 0; */
+  right: 0;
   background-color: transparent;
   z-index: 1;
 `;
@@ -124,14 +119,14 @@ const Wrapper = styled.section`
   padding: 7px 25px 14px 25px;
   justify-content: space-between;
   width: 100%;
-  z-index: 10;
+  z-index: 2;
   background-color: ${props => (props.navStyle ? 'white' : 'transparent')};
   border-bottom: ${props => (props.navStyle ? '1px solid #d1d1d1' : 'none')};
   opacity: ${props => (props.navStyle ? 0.9 : 1)};
   transition: all ease 0.5s;
   .guest,
   .member {
-    z-index: 10;
+    z-index: 2;
   }
 `;
 

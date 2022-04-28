@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { getAuthorList } from '../../../apis/author';
 
 function RecommendedWriter() {
   const [writerList, setWriterList] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/user/authorList', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => setWriterList(data.authorList));
+    getAuthorList().then(data => setWriterList(data.authorList));
   }, []);
 
   const writerListLimit = writerList.slice(0, 6);
