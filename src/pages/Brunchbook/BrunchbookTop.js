@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { VscArrowLeft } from 'react-icons/vsc';
 import { VscArrowRight } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
+
 function BrunchbookTop(props) {
   const navigate = useNavigate();
   const [bookInfo, setBookInfo] = useState({});
@@ -231,7 +232,7 @@ function BrunchbookTop(props) {
         </BrunchbookTopSlide>
       </BrunchbookTopCarousel>
       {bookInfo.user_id == userInfo.id ? (
-        <DelButton mainColor={'#00c3bd'} onClick={delBook}>
+        <DelButton mainColor="#00c3bd" onClick={delBook}>
           삭제
         </DelButton>
       ) : null}
@@ -283,7 +284,8 @@ const BrunchbookTopSlide = styled.div`
 `;
 
 const BookCaseWrapper = styled.div`
-  word-wrap: break-word;
+  word-wrap: break-all;
+  overflow: hidden;
   width: 350px;
   height: 470px;
   background-color: transparent;
@@ -336,7 +338,8 @@ const BookCover = styled.div`
       return css``;
     }
   }}
-  word-wrap: break-word;
+  word-wrap: break-all;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -373,7 +376,8 @@ const BookCover = styled.div`
     width: 600px;
   }
   div {
-    word-wrap: break-word;
+    word-wrap: break-all;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -421,7 +425,8 @@ const BookPageOne = styled.div`
   background-color: white;
   margin-right: 2px;
   box-shadow: 0px 10px 10px -10px lightgray;
-  word-wrap: break-word;
+  word-wrap: break-all;
+  overflow: hidden;
   h4 {
     font-size: 14px;
     font-weight: 200;
@@ -444,7 +449,8 @@ const BookPageTwoWrapper = styled.div`
 `;
 
 const BookPageTwo = styled.div`
-  word-wrap: break-word;
+  word-wrap: break-all;
+  overflow: hidden;
   width: 320px;
   height: 450px;
   background-color: white;
