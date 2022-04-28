@@ -27,7 +27,6 @@ function Request() {
     requestAuthor(inputValue);
     navigate('/');
   };
-
   return (
     <BgColor>
       <Header />
