@@ -6,11 +6,11 @@ import {
   KAKAOINIT,
 } from '../../../src/config';
 import { useNavigate } from 'react-router-dom';
-function Auth(props) {
-  const { Kakao } = window;
-  const code = new URL(window.location.href).searchParams.get('code');
+function Auth() {
   const navigate = useNavigate();
 
+  const { Kakao } = window;
+  const code = new URL(window.location.href).searchParams.get('code');
   const bodyData = {
     grant_type: 'authorization_code',
     client_id: REST_API_KEY,
@@ -33,16 +33,16 @@ function Auth(props) {
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         Kakao.init(KAKAOINIT);
+        console.log(data);
         sendData(data);
       });
   }, [Kakao, queryStringBody]);
-
   const sendData = async data => {
     await fetch('http://localhost:8000/user/login', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-
       body: JSON.stringify(data),
     })
       .then(res => res.json())

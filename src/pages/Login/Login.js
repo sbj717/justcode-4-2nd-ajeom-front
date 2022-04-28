@@ -12,7 +12,7 @@ const Login = loginModal => {
 
   const clickOutsideModal = async e => {
     if (!modal && (!modalRef.current || !modalRef.current.contains(e.target))) {
-      await setModal(false);
+      await setModal(modal);
       await closeBtn();
     }
   };

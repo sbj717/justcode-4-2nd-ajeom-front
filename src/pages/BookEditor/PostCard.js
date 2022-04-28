@@ -10,15 +10,35 @@ function PostCard(props) {
     }, 500);
   }, []);
 
-  function makeLink() {
-    document.execCommand('createLink', false, props.url);
-    props.setToolBarOn(false);
-    props.closeSideBar();
+  function dragStart(event) {
+    props.setNowDragged({
+      Title: props.Title,
+      Summary: props.Summary,
+      Id: props.id,
+      target: 1,
+      selectedPostTarget: -1,
+      post_thumbnail_url: props.post_thumbnail_url,
+    });
+  }
+
+  function dragEnd(event) {
+    props.setNowDragged({
+      id: '',
+      Title: '',
+      Summary: '',
+      target: 0,
+      selectedPostTarget: -1,
+      post_thumbnail_url: '',
+    });
   }
   return (
     <>
       <PostCardWrapper startf={start}>
-        <MakeLinkButton onClick={makeLink} />
+        <MakeLinkButton
+          draggable
+          onDragStart={dragStart}
+          onDragEnd={dragEnd}
+        ></MakeLinkButton>
         <PostCardContentWrapper>
           <PostCardTextWrapper>
             <PostCardTitle>{props.Title}</PostCardTitle>
@@ -32,7 +52,23 @@ function PostCard(props) {
 }
 
 export default PostCard;
+const PostCardWrapper = styled.div`
+  transition: opacity 1s, height 0.5s;
 
+  opacity: 0;
+  width: 100%;
+  height: 0px;
+  border-bottom: 1px rgb(230, 230, 230) solid;
+  position: relative;
+  ${props => {
+    if (props.startf) {
+      return css`
+        opacity: 1;
+        height: 100px;
+      `;
+    }
+  }}
+`;
 const ThumbnailCase = styled.div`
   margin-left: 10px;
   width: 50px;
@@ -53,24 +89,6 @@ const PostCardTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   user-select: none;
-`;
-
-const PostCardWrapper = styled.div`
-  transition: opacity 1s, height 0.5s;
-
-  opacity: 0;
-  width: 100%;
-  height: 0px;
-  border-bottom: 1px rgb(230, 230, 230) solid;
-  position: relative;
-  ${props => {
-    if (props.startf) {
-      return css`
-        opacity: 1;
-        height: 100px;
-      `;
-    }
-  }}
 `;
 const PostCardContentWrapper = styled.div`
   display: flex;
@@ -106,6 +124,14 @@ const MakeLinkButton = styled.button`
   width: 100%;
   height: 100%;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(200, 200, 200, 0.3);
+    box-shadow: 10px 5px 5px rgba(200, 200, 200, 1);
   }
+  /* ${props => {
+    if (props.nowDragged) {
+      return css`
+        background-color: rgba(0, 0, 0, 1);
+      `;
+    }
+  }} */
 `;
