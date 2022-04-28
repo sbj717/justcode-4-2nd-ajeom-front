@@ -5,7 +5,7 @@ import PostBox from './AuthorProfile/PostBox';
 import CollectionBox from './AuthorProfile/CollectionBox';
 import { useParams } from 'react-router-dom';
 
-function WriterProfile({ profileData, params }) {
+function WriterProfile({ profileData }) {
   const target = useRef(null);
   const [count, setCount] = useState(1);
   const [writerList, setWriterList] = useState([]);
@@ -13,6 +13,7 @@ function WriterProfile({ profileData, params }) {
 
   const [toggle, setToggle] = useState(1);
   const [lists, setLists] = useState([]);
+  const params = useParams();
   const userId = params.id;
 
   console.log('userId', userId);
@@ -64,6 +65,7 @@ function WriterProfile({ profileData, params }) {
       await fetchData();
     }
   };
+
   return (
     <section className={styles.writerContainer}>
       <ul className={styles.menu}>
