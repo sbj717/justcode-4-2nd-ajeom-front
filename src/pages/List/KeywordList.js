@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function KeywordList({ data }) {
-  return <Keyword>{data.keyword}</Keyword>;
+  const navigate = useNavigate();
+
+  const goToList = () => {
+    navigate(`/list/${data.id}`);
+  };
+
+  return <Keyword onClick={goToList}>{data.name}</Keyword>;
 }
 
 const Keyword = styled.button`

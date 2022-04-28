@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { requestAuthor } from '../../apis/author';
 import Header from '../components/Header/Header';
 
 function Request() {
-  const token = localStorage.getItem('token');
   const [inputValue, setInputValue] = useState(0);
   const [preventBtn, setPreventBtn] = useState(false);
   const [formToggle, setFormToggle] = useState(1);
@@ -23,24 +23,8 @@ function Request() {
   };
 
   const formSubmit = e => {
-    // e.preventDefault();
     alert('작가 신청이 완료되었습니다.');
-    fetch('http://localhost:8000/user/authorRequest', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        token: token,
-      },
-      body: JSON.stringify({
-        description: inputValue,
-      }),
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.success) {
-          console.log('SUCCESS');
-        }
-      });
+    requestAuthor(inputValue);
     navigate('/');
   };
 

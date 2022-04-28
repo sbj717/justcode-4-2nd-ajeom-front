@@ -116,14 +116,14 @@ const Wrapper = styled.section`
   padding: 7px 25px 14px 25px;
   justify-content: space-between;
   width: 100%;
-  z-index: 10;
+  z-index: 2;
   background-color: ${props => (props.navStyle ? 'white' : 'transparent')};
   border-bottom: ${props => (props.navStyle ? '1px solid #d1d1d1' : 'none')};
   opacity: ${props => (props.navStyle ? 0.9 : 1)};
   transition: all ease 0.5s;
   .guest,
   .member {
-    z-index: 10;
+    z-index: 2;
   }
 `;
 
