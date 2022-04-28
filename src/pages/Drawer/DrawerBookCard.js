@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 function DrawerBookCard({ card }) {
   const navigate = useNavigate();
@@ -11,8 +11,7 @@ function DrawerBookCard({ card }) {
 
   return (
     <CardWrapper>
-      <CardCover onClick={goToPost}>
-        <img src={card.bookcover_url} alt="" />
+      <CardCover onClick={goToPost} bookcover_url={card.bookcover_url}>
         <span className="creaseOne" />
         <span className="creaseTwo" />
         <div>
@@ -41,6 +40,14 @@ const CardWrapper = styled.div`
 `;
 
 const CardCover = styled.div`
+  ${props => {
+    return css`
+      background-image: url(${props.bookcover_url});
+    `;
+  }}
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   display: flex;
   flex-direction: column;
   align-items: center;
