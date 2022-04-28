@@ -26,6 +26,7 @@ function Request() {
     requestAuthor(inputValue);
     alert('작가 신청이 완료되었습니다.');
     navigate('/');
+    window.scrollTo(0, 0);
   };
 
   return (

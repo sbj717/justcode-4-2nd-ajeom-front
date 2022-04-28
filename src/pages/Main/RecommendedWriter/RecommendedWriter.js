@@ -24,6 +24,7 @@ function RecommendedWriter() {
               <CardButton
                 onClick={() => {
                   navigate(`/profile/${i.id}`);
+                  window.scrollTo(0, 0);
                 }}
               />
               <ImageBox imageUrl={i.profile_img_url} />

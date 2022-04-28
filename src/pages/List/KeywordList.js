@@ -7,6 +7,7 @@ function KeywordList({ data }) {
 
   const goToList = () => {
     navigate(`/list/${data.id}`);
+    window.scrollTo(0, 0);
   };
 
   return <Keyword onClick={goToList}>{data.name}</Keyword>;
