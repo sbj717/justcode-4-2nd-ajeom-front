@@ -4,6 +4,7 @@ import BrunchbookTop from './BrunchbookTop';
 import BrunchbookBottom from './BrunchbookBottom';
 import { useNavigate } from 'react-router-dom';
 import BookSideBar from './BookSideBar';
+import Header from '../components/Header/Header';
 function BookEditor() {
   const navigate = useNavigate();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -59,6 +60,7 @@ function BookEditor() {
   }
   return (
     <>
+      <Header />
       <BookSideBar
         isSideBarOpen={isSideBarOpen}
         closeSideBar={closeSideBar}
