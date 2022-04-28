@@ -31,6 +31,7 @@ function KeywordToggleGroup(props) {
           if (index < 7) {
             return (
               <KeywordToggle
+                isSearch={false}
                 key={c.id}
                 id={c.id}
                 keywordName={c.name}
@@ -50,18 +51,22 @@ function KeywordToggleGroup(props) {
       ></SearchBox>
       <KeywordWrapper>
         {keywordList.map((c, index) => {
+          let sw = false;
           if (searchText.length > 0 && c.name.includes(searchText)) {
-            return (
-              <KeywordToggle
-                key={c.id}
-                id={c.id}
-                keywordName={c.name}
-                addKeyword={props.addKeyword}
-                delKeyword={props.delKeyword}
-                selectedKeywordCount={props.selectedKeywordCount}
-              ></KeywordToggle>
-            );
+            sw = true;
           }
+          return (
+            <KeywordToggle
+              isSearch={true}
+              sw={sw}
+              key={c.id}
+              id={c.id}
+              keywordName={c.name}
+              addKeyword={props.addKeyword}
+              delKeyword={props.delKeyword}
+              selectedKeywordCount={props.selectedKeywordCount}
+            ></KeywordToggle>
+          );
         })}
       </KeywordWrapper>
     </>

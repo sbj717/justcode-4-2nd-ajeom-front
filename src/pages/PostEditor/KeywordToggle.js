@@ -17,7 +17,7 @@ function KeywordToggleGroup(props) {
   }
   return (
     <>
-      <KeywordButton checked={checked} onClick={toggleChecked}>
+      <KeywordButton sw={props.sw} checked={checked} onClick={toggleChecked}>
         {props.keywordName}
       </KeywordButton>
     </>
@@ -27,6 +27,7 @@ function KeywordToggleGroup(props) {
 export default KeywordToggleGroup;
 
 const KeywordButton = styled.button`
+  display: ${props => (props.sw ? '' : 'none')};
   border-radius: 20px;
   padding: 0.3rem 1.3rem;
   font-weight: 300;
