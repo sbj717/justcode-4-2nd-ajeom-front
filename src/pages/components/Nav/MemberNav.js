@@ -51,7 +51,13 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           >
             내 아점
           </Menu>
-          <Menu>작가의 서랍</Menu>
+          <Menu
+            onClick={() => {
+              navigate('/drawer');
+            }}
+          >
+            작가의 서랍
+          </Menu>
           <Contour />
           <Menu
             onClick={() => {
@@ -94,7 +100,11 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
             alt="ajeom_logo"
             src="https://velog.velcdn.com/images/jhsol24/post/801b97b8-63fc-47b4-b4be-f90c84a17295/image.png"
           />
-          <WriterSupportText>
+          <WriterSupportText
+            onClick={() => {
+              navigate('/request');
+            }}
+          >
             작가-지원 <br /> 프로젝트 보러가기
           </WriterSupportText>
         </WriterSupport>
@@ -139,8 +149,11 @@ const ProfileWrapper = styled.div`
 
 const ProfileImg = styled.img`
   margin: 50px 0 10px;
-  width: 25%;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 `;
 const Username = styled.p`
   font-size: 15px;

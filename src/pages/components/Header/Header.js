@@ -39,6 +39,10 @@ function Header() {
     }
   };
 
+  useEffect(() => {
+    closeNav();
+  }, [navStyle]);
+
   const closeNav = () => {
     if (showNav === 'guestNav') {
       setShowNav('guestNone');
@@ -67,7 +71,6 @@ function Header() {
       window.removeEventListener('scroll', changeNavStyle);
     };
   });
-
   return (
     <Wrapper show={showNav} navStyle={navStyle}>
       <LeftWrapper>
@@ -104,7 +107,7 @@ const OutsideNav = styled.div`
   top: 0;
   left: 260px;
   bottom: 0;
-  right: 0;
+  /* right: 0; */
   background-color: transparent;
   z-index: 1;
 `;
@@ -115,10 +118,6 @@ const Wrapper = styled.section`
   display: flex;
   padding: 7px 25px 14px 25px;
   justify-content: space-between;
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
   width: 100%;
   z-index: 10;
   background-color: ${props => (props.navStyle ? 'white' : 'transparent')};

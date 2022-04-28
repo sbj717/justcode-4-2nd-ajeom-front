@@ -76,7 +76,7 @@ const NavWrapper = styled.section`
   border-right: 1px solid #e9e9e9;
   margin-left: ${props => (props.guestNav ? '0' : '-260px')};
   transition: all ease 0.5s;
-  z-index: 100;
+  z-index: 10;
 `;
 
 const StartWrapper = styled.div`

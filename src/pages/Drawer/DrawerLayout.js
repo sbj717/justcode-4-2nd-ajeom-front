@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import DrawerPostCard from './DrawerPostCard';
 import DrawerBookCard from './DrawerBookCard';
 import EmptyBookCard from './EmptyBookCard';
+import { useNavigate } from 'react-router-dom';
 
 function DrawerLayout() {
   const [categoryDeco, setCategoryDeco] = useState(['picked', 'none']);
   const [page, setPage] = useState('post');
   const [postList, setPostList] = useState([]);
   const [bookList, setBookList] = useState([]);
-
+  const navigate = useNavigate();
   const goToPost = () => {
     setCategoryDeco(['picked', 'none']);
     setPage('post');
@@ -68,7 +69,11 @@ function DrawerLayout() {
           브런치북
         </p>
       </DrawerCategory>
-      <DrawerBanner>
+      <DrawerBanner
+        onClick={() => {
+          navigate('/request');
+        }}
+      >
         <img src="/images/drawerbanner.png" alt="" />
       </DrawerBanner>
       {page === 'post' && (
@@ -126,6 +131,7 @@ const DrawerBanner = styled.div`
   background-color: #f9f9f9;
   width: 100%;
   height: 100px;
+  cursor: pointer;
   img {
     width: 700px;
   }

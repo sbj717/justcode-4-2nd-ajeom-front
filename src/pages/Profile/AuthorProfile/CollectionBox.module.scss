@@ -5,55 +5,6 @@
     gap: 55px 35px;
     flex-wrap: wrap;
   }
-  .bookContainer {
-    width: 210px;
-  }
-}
-
-.book {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  border: 1px solid #ddd;
-  border-radius: 2px 6px 6px 6px;
-  overflow: hidden;
-  cursor: pointer;
-  .bookLine {
-    width: 2px;
-    height: 300px;
-    background: rgba(0, 0, 0, 0.05);
-    position: absolute;
-    left: 5px;
-  }
-  .titleBox {
-    font-size: 18px;
-    display: table-cell;
-    line-height: 1.2;
-    padding: 51px 52px 0;
-    word-break: break-all;
-    word-wrap: break-word;
-  }
-  .imgBox {
-    position: absolute;
-    width: 100%;
-    height: 114px;
-    left: 0;
-    bottom: 0;
-    border-radius: 0 0 6px 0;
-    overflow: hidden;
-    img {
-      width: 100%;
-    }
-  }
-}
-
-.bottom {
-  .brunch {
-    font-size: 11px;
-    font-weight: 500;
-    color: #959595;
-    padding: 15px 0;
-  }
 }
 
 .activeContent {

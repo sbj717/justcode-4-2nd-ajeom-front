@@ -35,6 +35,13 @@ function Profile() {
       <div className={styles.cover} />
       <section className={styles.container}>
         <section className={styles.top}>
+          <div className={styles.profileBox}>
+            {profileData.is_author ? (
+              <div className={styles.name}>{profileData.nickname}</div>
+            ) : (
+              <div className={styles.name}>김아점</div>
+            )}
+          </div>
           <div className={styles.ImageBox}>
             {profileData.profile_img_url ? (
               <img src={profileData.profile_img_url} alt="profileImg" />
@@ -42,23 +49,24 @@ function Profile() {
               <img src="/image/ajeom_logo.png" alt="profileImg" />
             )}
           </div>
-          <div className={styles.profileBox}>
-            <div className={styles.name}>{profileData.nickname}</div>
-            <div className={styles.writeBox}>
-              <div className={styles.writeBtn}>글쓰기</div>
-              <HiOutlineDotsVertical
-                className={styles.edit}
-                onClick={clickModalOutside}
-              />
-              {isOpen && (
-                <ul className={styles.editBox}>
-                  <li onClick={handleEditProfile}>프로필수정</li>
-                </ul>
-              )}
-            </div>
-          </div>
         </section>
-        <WriterProfile profileData={profileData} />
+        <div className={styles.writeBox}>
+          <div className={styles.writeBtn}>글쓰기</div>
+          <HiOutlineDotsVertical
+            className={styles.edit}
+            onClick={clickModalOutside}
+          />
+          {isOpen && (
+            <ul className={styles.editBox}>
+              <li onClick={handleEditProfile}>프로필수정</li>
+            </ul>
+          )}
+        </div>
+        {profileData.is_author ? (
+          <WriterProfile profileData={profileData} />
+        ) : (
+          <></>
+        )}
       </section>
     </>
   );

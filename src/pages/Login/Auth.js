@@ -7,10 +7,10 @@ import {
 } from '../../../src/config';
 import { useNavigate } from 'react-router-dom';
 function Auth() {
-  const { Kakao } = window;
-  const code = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
 
+  const { Kakao } = window;
+  const code = new URL(window.location.href).searchParams.get('code');
   const bodyData = {
     grant_type: 'authorization_code',
     client_id: REST_API_KEY,
