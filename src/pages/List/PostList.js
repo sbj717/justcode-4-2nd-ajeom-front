@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 function PostList({ posts }) {
@@ -19,8 +19,8 @@ function PostList({ posts }) {
           <By>by</By> {posts.nickname}
         </CardWriter>
       </TextWrapper>
-      <ImgWrapper>
-        <CardImg src={posts.thumbnail_url} />
+      <ImgWrapper thumbnail_url={posts.thumbnail_url}>
+        {/* <CardImg src={posts.thumbnail_url} /> */}
       </ImgWrapper>
     </CardWrapper>
   );
@@ -80,6 +80,16 @@ const By = styled.span`
 
 const ImgWrapper = styled.div`
   overflow: hidden;
+  width: 8rem;
+  height: 8rem;
+  ${props => {
+    return css`
+      background-image: url(${props.thumbnail_url});
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    `;
+  }}
 `;
 
 const CardImg = styled.img`

@@ -17,7 +17,7 @@ function Router() {
       <Routes>
         <Route path="" element={<Main />} />
         <Route path="/request" element={<Request />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/kakao" element={<Auth />} />
         <Route path="/list/:id" element={<List />} />

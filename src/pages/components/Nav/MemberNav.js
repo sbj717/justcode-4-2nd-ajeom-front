@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { VscBell } from 'react-icons/vsc';
 
 function MemberNav({ showNav, userInfo, refreshLogOut }) {
-  const { nickname, profile_img_url } = userInfo;
+  const { nickname, profile_img_url, id } = userInfo;
   const handleLogOut = async () => {
-    localStorage.clear();
+    await goToMain('/');
     await refreshLogOut();
+    localStorage.clear();
   };
 
   const navigate = useNavigate();
   const goToProfile = () => {
-    navigate('/profile');
+    navigate(`/profile/${id}`);
+  };
+  const goToMain = () => {
+    navigate('/');
   };
   return (
     <NavWrapper memberNav={showNav === 'memberNav'}>
@@ -44,14 +48,7 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
       </ProfileWrapper>
       <ServiceWrapper>
         <MenuWrapper>
-          <Menu
-            onClick={() => {
-              navigate('/profile');
-              window.scrollTo(0, 0);
-            }}
-          >
-            내 프로필
-          </Menu>
+          <Menu onClick={goToProfile}>내 프로필</Menu>
           <Menu
             onClick={() => {
               navigate('/drawer');

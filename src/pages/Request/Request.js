@@ -28,7 +28,6 @@ function Request() {
     navigate('/');
     window.scrollTo(0, 0);
   };
-
   return (
     <BgColor>
       <Header />

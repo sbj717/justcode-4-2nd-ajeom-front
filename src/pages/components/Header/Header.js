@@ -47,8 +47,11 @@ function Header() {
     }
   };
 
-  const refreshLogOut = () => {
-    window.location.reload();
+  const refreshLogOut = async () => {
+    await window.location.reload();
+  };
+  const goToMain = async () => {
+    await navigate('/');
   };
 
   //scrollY에 따라 header의 style 변경
@@ -67,6 +70,7 @@ function Header() {
       window.removeEventListener('scroll', changeNavStyle);
     };
   });
+
   return (
     <Wrapper show={showNav} navStyle={navStyle}>
       <LeftWrapper>
@@ -88,6 +92,7 @@ function Header() {
         showNav={showNav}
         userInfo={userInfo}
         refreshLogOut={refreshLogOut}
+        goToMain={goToMain}
       />
       <SearchBtn>
         <GoSearch size={21} />
