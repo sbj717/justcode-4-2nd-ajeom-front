@@ -22,9 +22,9 @@ function Request() {
     }
   };
 
-  const formSubmit = e => {
-    alert('작가 신청이 완료되었습니다.');
+  const formSubmit = () => {
     requestAuthor(inputValue);
+    alert('작가 신청이 완료되었습니다.');
     navigate('/');
   };
   return (
