@@ -5,6 +5,8 @@ import Header from '../components/Header/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function Profile() {
+  const token = localStorage.getItem('token');
+
   const params = useParams();
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState({});
@@ -18,7 +20,6 @@ function Profile() {
       .then(res => res.json())
       .then(data => {
         setProfileData(data);
-        console.log(data);
       });
   }, []);
 

@@ -6,13 +6,17 @@ import { VscBell } from 'react-icons/vsc';
 function MemberNav({ showNav, userInfo, refreshLogOut }) {
   const { nickname, profile_img_url, id } = userInfo;
   const handleLogOut = async () => {
-    localStorage.clear();
+    await goToMain('/');
     await refreshLogOut();
+    localStorage.clear();
   };
 
   const navigate = useNavigate();
   const goToProfile = () => {
     navigate(`/profile/${id}`);
+  };
+  const goToMain = () => {
+    navigate('/');
   };
   return (
     <NavWrapper memberNav={showNav === 'memberNav'}>

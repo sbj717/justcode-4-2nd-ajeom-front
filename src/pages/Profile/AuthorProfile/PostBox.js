@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './PostBox.module.scss';
 import Spinner from '../../List/Spinner';
+import styled, { css } from 'styled-components';
 
 function PostBox({ toggle, lists, target, setSpinner, spinner }) {
   console.log(lists);
@@ -20,9 +21,7 @@ function PostBox({ toggle, lists, target, setSpinner, spinner }) {
                 <span className={styles.title}>{lists.title}</span>
                 <p>{lists.summary}</p>
               </div>
-              <div className={styles.imgBox}>
-                <img src={lists.thumbnail_url} alt="postImg" />
-              </div>
+              <ImgBox backgroundUrl={lists.thumbnail_url} />
             </div>
           </div>
         ))}
@@ -31,5 +30,20 @@ function PostBox({ toggle, lists, target, setSpinner, spinner }) {
     </div>
   );
 }
+
+const ImgBox = styled.div`
+  width: 120px;
+  height: 120px;
+  ${props => {
+    if (props.backgroundUrl.length > 0) {
+      return css`
+        background-image: url(${props.backgroundUrl});
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      `;
+    }
+  }}
+`;
 
 export default PostBox;
