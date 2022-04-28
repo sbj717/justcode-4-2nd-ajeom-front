@@ -84,17 +84,20 @@ function BrunchbookTop(props) {
   };
 
   function delBook() {
-    const token = localStorage.getItem('token');
-    fetch(`http://localhost:8000/book/${props.id}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json', token: token },
-    })
-      .then(res => res.json())
-      .then(data => {
-        alert('브런치북이 삭제되었습니다.');
-        navigate(`/`);
-        window.scrollTo(0, 0);
-      });
+    let result = window.confirm('정말 삭제하시겠습니까?');
+    if (result) {
+      const token = localStorage.getItem('token');
+      fetch(`http://localhost:8000/book/${props.id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', token: token },
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert('브런치북이 삭제되었습니다.');
+          navigate(`/`);
+          window.scrollTo(0, 0);
+        });
+    }
   }
   const useInterval = (callback, delay) => {
     const savedCallback = useRef();

@@ -51,8 +51,8 @@ function BrunchbookBottom(props) {
     >
       {exist && (
         <div>
-          {postList.map(card => (
-            <BrunchbookCard key={card.id} card={card} />
+          {postList.map((card, Sequence) => (
+            <BrunchbookCard key={card.id} Sequence={Sequence + 1} card={card} />
           ))}
         </div>
       )}

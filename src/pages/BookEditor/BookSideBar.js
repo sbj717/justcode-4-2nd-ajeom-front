@@ -524,7 +524,7 @@ const SideBarWrapper = styled.div`
   width: 360px;
   height: 100%;
   background-color: rgb(250, 250, 250);
-  z-index: 5;
+  z-index: 1000;
 `;
 const TitleWrapper = styled.div`
   padding: 25px;

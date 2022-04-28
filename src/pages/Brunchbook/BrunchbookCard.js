@@ -2,37 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-function BrunchbookCard({ card }) {
+function BrunchbookCard(props) {
   const [chapter, setChapter] = useState('');
   const [summary, setSummary] = useState('');
 
   useEffect(() => {
-    if (Number(card.sequence) < 10) {
+    if (Number(props.Sequence) < 10) {
       let chapterArr = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
-      const newChapter = chapterArr[Number(card.sequence - 1)];
+      const newChapter = chapterArr[Number(props.Sequence - 1)];
       setChapter(newChapter);
     } else {
-      setChapter(card.sequence);
+      setChapter(props.Sequence);
     }
-    const newSummary = (card.post_summary + '').substring(0, 150) + '⋯';
+    const newSummary = (props.card.post_summary + '').substring(0, 150) + '⋯';
     setSummary(newSummary);
-  }, [card.post_summary, card.sequence]);
+  }, [props.card.post_summary, props.Sequence]);
 
   const navigate = useNavigate();
 
   const goToPost = () => {
-    navigate(`/detail/${card.id}`);
+    navigate(`/detail/${props.card.id}`);
+    window.scrollTo(0, 0);
   };
 
   return (
     <CardContainer>
       <CardIndex>{chapter}</CardIndex>
       <CardBody>
-        <CardTitle onClick={goToPost}>{card.post_title}</CardTitle>
+        <CardTitle onClick={goToPost}>{props.card.post_title}</CardTitle>
         <CardSummary onClick={goToPost}>{summary}</CardSummary>
       </CardBody>
       <CardThumbnail
-        bookcover_url={card.post_thumbnail_url}
+        bookcover_url={props.card.post_thumbnail_url}
         onClick={goToPost}
       />
     </CardContainer>

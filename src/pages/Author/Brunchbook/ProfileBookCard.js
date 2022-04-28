@@ -2,22 +2,22 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-function DrawerBookCard({ card }) {
+function ProfileBookCard({ card }) {
   const navigate = useNavigate();
 
   const goToPost = () => {
     navigate(`/book/${card.id}`); //추후 논의 후 재설정 필요
-    window.scrollTo(0, 0);
   };
 
   return (
     <CardWrapper>
       <CardCover onClick={goToPost} bookcover_url={card.bookcover_url}>
+        {/* <img src={card.bookcover_url} alt="" /> */}
         <span className="creaseOne" />
         <span className="creaseTwo" />
         <div>
           <h2>{card.title}</h2>
-          <h3>{card.username}</h3>
+          <h3>{card.nickname}</h3>
         </div>
         <p>brunch book</p>
       </CardCover>
@@ -29,7 +29,7 @@ function DrawerBookCard({ card }) {
   );
 }
 
-export default DrawerBookCard;
+export default ProfileBookCard;
 
 const CardWrapper = styled.div`
   display: flex;
@@ -46,14 +46,14 @@ const CardCover = styled.div`
       background-image: url(${props.bookcover_url});
     `;
   }}
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   width: 210px;
   height: 300px;
   border-radius: 3px 7px 7px 3px;
