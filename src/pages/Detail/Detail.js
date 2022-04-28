@@ -208,7 +208,7 @@ const TitleWrapper = styled.section`
 
 const ThumbnailWrapper = styled.section`
   position: relative;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
     url(${props => props.thumbnailUrl});
   background-repeat: no-repeat; //이미지 크기가 기준보다 더 작을 때라도 반복하지 않는다.
   background-size: cover; //지정한 요소를 다 덮도록 배경이미지를 확대/축소
