@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { getDetial } from '../../apis/post';
+import { getDetail } from '../../apis/post';
 import Header from '../components/Header/Header';
 import style from './AjeomBody.module.scss';
 
@@ -32,7 +32,7 @@ function Detail() {
   const postId = params.id;
 
   useEffect(() => {
-    getDetial(postId).then(data => {
+    getDetail(postId).then(data => {
       setPostLists(data);
       if (data.postDetail[0].body) {
         MainTextFieldRef.current.innerHTML = `${data.postDetail[0].body}`;
