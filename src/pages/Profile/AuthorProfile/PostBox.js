@@ -6,6 +6,7 @@ function PostBox({ toggle, lists, target }) {
   const navigate = useNavigate();
   return (
     <div
+      ref={target}
       className={
         toggle === 2
           ? `${styles.postBox} ${styles.activeContent}`
@@ -30,8 +31,6 @@ function PostBox({ toggle, lists, target }) {
             </div>
           </div>
         ))}
-
-      <div ref={target} style={{ border: '1px solid rgba(0,0,0,0)' }} />
     </div>
   );
 }

@@ -7,14 +7,12 @@ import CollectionBox from './AuthorProfile/CollectionBox';
 function WriterProfile({ profileData, params }) {
   const target = useRef(null);
   const [count, setCount] = useState(1);
-  const [writerList, setWriterList] = useState([]);
   const [spinner, setSpinner] = useState(true);
 
   const [toggle, setToggle] = useState(1);
   const [lists, setLists] = useState([]);
   const userId = params.id;
 
-  console.log('userId', userId);
   const handleMenu = index => {
     setToggle(index);
   };

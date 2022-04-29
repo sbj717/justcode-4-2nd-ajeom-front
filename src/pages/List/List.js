@@ -101,7 +101,6 @@ function List() {
           ))}
         </WriterCardWrapper>
       </AllListsWrapper>
-      <div ref={target} style={{ border: '1px solid rgba(0,0,0,0)' }} />
     </>
   );
 }
