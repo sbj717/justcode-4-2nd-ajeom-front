@@ -16,7 +16,6 @@ function WriterProfile({ profileData }) {
   const params = useParams();
   const userId = params.id;
 
-  console.log('userId', userId);
   const handleMenu = index => {
     setToggle(index);
   };
