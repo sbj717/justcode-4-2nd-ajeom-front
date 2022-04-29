@@ -32,16 +32,6 @@ function Author() {
             <img src={profileData.profile_img_url} alt="profileImg" />
           </div>
         </section>
-        <div className={styles.writeBox}>
-          <div
-            className={styles.writeBtn}
-            onClick={() => {
-              navigate('/write');
-            }}
-          >
-            글쓰기
-          </div>
-        </div>
         {profileData.is_author ? (
           <WriterProfile profileData={profileData} params={params} />
         ) : (
