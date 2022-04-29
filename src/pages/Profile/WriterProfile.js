@@ -3,9 +3,8 @@ import styles from '../Profile/WriterProfile.module.scss';
 import InfoBox from './AuthorProfile/InfoBox';
 import PostBox from './AuthorProfile/PostBox';
 import CollectionBox from './AuthorProfile/CollectionBox';
-import { useParams } from 'react-router-dom';
 
-function WriterProfile({ profileData }) {
+function WriterProfile({ profileData, params }) {
   const target = useRef(null);
   const [count, setCount] = useState(1);
   const [writerList, setWriterList] = useState([]);
@@ -13,7 +12,6 @@ function WriterProfile({ profileData }) {
 
   const [toggle, setToggle] = useState(1);
   const [lists, setLists] = useState([]);
-  const params = useParams();
   const userId = params.id;
 
   console.log('userId', userId);
@@ -25,21 +23,30 @@ function WriterProfile({ profileData }) {
     handleMenu(1);
   }, []);
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
-    fetch(`http://localhost:8000/list/profile/${userId}?page=1&pageSize=6`, {
+    fetch(`http://localhost:8000/list/myprofile?page=1&pageSize=6`, {
       method: 'GET',
+      headers: { 'Content-Type': 'application/json', token: token },
     })
       .then(res => res.json())
       .then(data => {
         setLists(data);
       });
-  }, []);
+  }, [token]);
+
+  console.log(lists);
 
   const fetchData = async () => {
     setTimeout(async () => {
       setCount(count + 1);
       await fetch(
-        `http://localhost:8000/list/profile/${userId}?page=${count}&pageSize=6`
+        `http://localhost:8000/list/myprofile?page=${count}&pageSize=6`,
+        {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json', token: token },
+        }
       )
         .then(res => res.json())
         .then(data => {
