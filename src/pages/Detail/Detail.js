@@ -50,6 +50,28 @@ function Detail() {
     }
   }
 
+  function setIsPublished(set) {
+    const token = localStorage.getItem('token');
+    fetch(
+      `http://localhost:8000/write/${postLists.postDetail[0].id}?isPublished=${set}`,
+      {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', token: token },
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        if (set == 1) {
+          alert('포스트가 발행되었습니다.');
+        } else if (set == 0) {
+          alert('발행이 취소 되었습니다.');
+        }
+
+        window.scrollTo(0, 0);
+        window.location.reload();
+      });
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('token');
 
@@ -62,6 +84,7 @@ function Detail() {
         setUserInfo(data);
       });
   }, []);
+
   useEffect(() => {
     getDetail(postId).then(data => {
       setPostLists(data);
@@ -82,7 +105,7 @@ function Detail() {
   };
 
   const goToProfile = () => {
-    navigate(`/profile/${postLists.postDetail[0].user_id}`);
+    navigate(`/author/${postLists.postDetail[0].user_id}`);
     window.scrollTo(0, 0);
   };
 
@@ -107,9 +130,31 @@ function Detail() {
   return (
     <>
       {postLists.postDetail[0].user_id == userInfo.id ? (
-        <DelButton mainColor="#000" onClick={delPost}>
-          삭제
-        </DelButton>
+        <ButtonDiv>
+          <DelButton mainColor="#e22" onClick={delPost}>
+            삭제
+          </DelButton>
+
+          {postLists.postDetail[0].is_published == 0 ? (
+            <DelButton
+              mainColor="#000"
+              onClick={() => {
+                setIsPublished(1);
+              }}
+            >
+              발행하기
+            </DelButton>
+          ) : (
+            <DelButton
+              mainColor="#000"
+              onClick={() => {
+                setIsPublished(0);
+              }}
+            >
+              발행취소
+            </DelButton>
+          )}
+        </ButtonDiv>
       ) : null}
       <Header />
       {postLists.postDetail.map(data => (
@@ -383,12 +428,16 @@ const Next = styled(Prev)`
   margin: 0 3rem 0 0;
 `;
 
-const DelButton = styled.button`
+const ButtonDiv = styled.div`
   position: absolute;
   z-index: 100;
   right: 20px;
   top: 15px;
+`;
+const DelButton = styled.button`
+  margin-left: 5px;
   font-size: 13px;
+  z-index: 100;
   border: 1.3px solid
     ${props => {
       return props.mainColor;

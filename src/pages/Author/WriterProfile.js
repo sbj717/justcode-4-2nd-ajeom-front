@@ -16,7 +16,6 @@ function WriterProfile({ profileData }) {
   const params = useParams();
   const userId = params.id;
 
-  console.log('userId', userId);
   const handleMenu = index => {
     setToggle(index);
   };
@@ -33,7 +32,7 @@ function WriterProfile({ profileData }) {
       .then(data => {
         setLists(data);
       });
-  }, []);
+  }, [params.id]);
 
   const fetchData = async () => {
     setTimeout(async () => {

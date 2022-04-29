@@ -501,7 +501,7 @@ const MainToolbox = styled.div`
   ${props => {
     if (props.scrollY > 450) {
       return css`
-        margin-top: ${props.scrollY - 450 + 'px'};
+        margin-top: ${props.scrollY - 350 + 'px'};
       `;
     }
   }}

@@ -59,7 +59,7 @@ const FooterBackground = styled.section`
   flex-direction: column;
   align-items: center;
   padding: 3.3rem 0;
-  margin-top: 5rem;
+  margin-top: 0rem;
   background-color: #101010;
 `;
 
