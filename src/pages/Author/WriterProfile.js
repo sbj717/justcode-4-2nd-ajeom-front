@@ -32,7 +32,7 @@ function WriterProfile({ profileData }) {
       .then(data => {
         setLists(data);
       });
-  }, []);
+  }, [params.id]);
 
   const fetchData = async () => {
     setTimeout(async () => {

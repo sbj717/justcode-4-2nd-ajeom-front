@@ -37,7 +37,8 @@ function Slide1() {
   const navigate = useNavigate();
 
   const goToBook = () => {
-    navigate('/book');
+    navigate('/book/1');
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -60,7 +61,7 @@ function Slide1() {
             <span className="creaseTwo" />
             <div className="bookContent">
               <h3>{bookInfo.title}</h3>
-              <h4>{bookInfo.username}</h4>
+              <h4>임경훈</h4>
             </div>
             <div className="logo">brunch book</div>
           </div>
@@ -74,26 +75,36 @@ function Slide1() {
         </ArticleOne>
       </SectionOne>
       <SectionTwo>
-        <ArticleTwo>
+        <ArticleTwo
+          onClick={() => {
+            navigate('/detail/1');
+            window.scrollTo(0, 0);
+          }}
+        >
           <h3>
             나는야 행운의
             <br />
             고양이!
           </h3>
-          <p>by 오와우</p>
+          <p>by 임경훈</p>
           <div className="grayOver" />
           <img
             src="https://images.unsplash.com/photo-1626602411112-10742f9a3ab8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80"
             alt=""
           />
         </ArticleTwo>
-        <ArticleThree>
+        <ArticleThree
+          onClick={() => {
+            navigate('/detail/3');
+            window.scrollTo(0, 0);
+          }}
+        >
           <h3>
             [미식일기]
             <br />
             느릅나무, 강릉
           </h3>
-          <p>by comma</p>
+          <p>by 정한솔</p>
           <div className="grayOver" />
           <img
             src="https://images.unsplash.com/photo-1519567770579-c2fc5436bcf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
