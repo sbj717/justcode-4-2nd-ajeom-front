@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 function WriterProfile({ profileData }) {
   const target = useRef(null);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(2);
   const [writerList, setWriterList] = useState([]);
   const [spinner, setSpinner] = useState(true);
 
@@ -37,7 +37,6 @@ function WriterProfile({ profileData }) {
 
   const fetchData = async () => {
     setTimeout(async () => {
-      setCount(count + 1);
       await fetch(
         `http://localhost:8000/list/profile/${userId}?page=${count}&pageSize=6`
       )
@@ -49,6 +48,7 @@ function WriterProfile({ profileData }) {
             setSpinner(false);
           }
         });
+      setCount(count + 1);
     }, 700);
   };
   useEffect(() => {
