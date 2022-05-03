@@ -13,7 +13,7 @@ function AjeomIntro() {
           />
         </AjeomTitle>
         <AjeomDesc>
-          브런치에 담긴 아름다운 작품을 감상해 보세요.
+          아점에 담긴 아름다운 작품을 감상해 보세요.
           <br />
           그리고 다시 꺼내 보세요.
           <br />
