@@ -84,7 +84,6 @@ function Detail() {
         setUserInfo(data);
       });
   }, []);
-
   useEffect(() => {
     getDetail(postId).then(data => {
       setPostLists(data);
@@ -105,7 +104,7 @@ function Detail() {
   };
 
   const goToProfile = () => {
-    navigate(`/author/${postLists.postDetail[0].user_id}`);
+    navigate(`/profile/${postLists.postDetail[0].user_id}`);
     window.scrollTo(0, 0);
   };
 

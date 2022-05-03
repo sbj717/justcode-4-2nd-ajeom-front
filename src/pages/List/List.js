@@ -10,7 +10,6 @@ import { getAuthorList } from '../../apis/author';
 import { getRelatedKeywords } from '../../apis/keyword';
 
 function List() {
-  const params = useParams();
   const [keywordList, setKeywordList] = useState({
     selectedKeyword: [{ id: 0, name: '' }],
     relatedKeywords: [{ id: 0, name: '' }],
@@ -19,15 +18,25 @@ function List() {
   const [count, setCount] = useState(1);
   const [spinner, setSpinner] = useState(true);
   const [writerList, setWriterList] = useState([]);
-
-  const target = useRef(null);
-
+  const params = useParams();
   const keywordId = params.id;
 
+  //intersection observer를 위한 타겟
+  const target = useRef(null);
+
+  //키워드 fetch
   useEffect(() => {
     getRelatedKeywords(keywordId).then(data => setKeywordList(data));
-  }, [params.id]);
+  }, [keywordId, params.id]);
 
+  //추천 작가 리스트 fetch
+  useEffect(() => {
+    getAuthorList().then(data => setWriterList(data.authorList));
+  }, []);
+
+  const writerListLimit = writerList.slice(0, 6);
+
+  //발행 글 리스트에서 무한 스크롤을 위한 API Fetch
   useEffect(() => {
     fetch(`http://localhost:8000/list/post/${keywordId}?page=1&pageSize=6`)
       .then(res => res.json())
@@ -35,12 +44,6 @@ function List() {
         setPostLists(data);
       });
   }, [keywordId, params.id]);
-
-  useEffect(() => {
-    getAuthorList().then(data => setWriterList(data.authorList));
-  }, []);
-
-  const writerListLimit = writerList.slice(0, 6);
 
   const fetchData = async () => {
     setTimeout(async () => {
@@ -59,6 +62,7 @@ function List() {
     }, 700);
   };
 
+  //Intersection Observer API
   useEffect(() => {
     let observer;
     if (target.current) {
