@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileBookLayout from '../../Profile/Brunchbook/ProfileBookLayout';
+import ProfileBookLayout from '../Brunchbook/ProfileBookLayout';
 import styles from './CollectionBox.module.scss';
 
 function CollectionBox({ toggle }) {

@@ -1,20 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
-import styles from '../Profile/WriterProfile.module.scss';
+import styles from './AuthorProfile.module.scss';
 import InfoBox from './AuthorProfile/InfoBox';
 import PostBox from './AuthorProfile/PostBox';
 import CollectionBox from './AuthorProfile/CollectionBox';
-import { useParams } from 'react-router-dom';
 
-function WriterProfile({ profileData }) {
+function AuthorProfileCenter({ profileData, userId }) {
   const target = useRef(null);
   const [count, setCount] = useState(2);
-  const [writerList, setWriterList] = useState([]);
   const [spinner, setSpinner] = useState(true);
 
   const [toggle, setToggle] = useState(1);
   const [lists, setLists] = useState([]);
-  const params = useParams();
-  const userId = params.id;
 
   const handleMenu = index => {
     setToggle(index);
@@ -32,7 +28,7 @@ function WriterProfile({ profileData }) {
       .then(data => {
         setLists(data);
       });
-  }, [params.id]);
+  }, [userId]);
 
   const fetchData = async () => {
     setTimeout(async () => {
@@ -64,7 +60,6 @@ function WriterProfile({ profileData }) {
       await fetchData();
     }
   };
-
   return (
     <section className={styles.writerContainer}>
       <ul className={styles.menu}>
@@ -121,4 +116,4 @@ function WriterProfile({ profileData }) {
   );
 }
 
-export default WriterProfile;
+export default AuthorProfileCenter;

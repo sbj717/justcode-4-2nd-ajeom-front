@@ -2,21 +2,18 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ProfileBookCard from './ProfileBookCard';
 
-function ProfileBookLayout() {
+function ProfileBookLayout({ userId }) {
   const [bookList, setBookList] = useState([]);
 
-  const token = localStorage.getItem('token');
-
   useEffect(() => {
-    fetch('http://localhost:8000/user/authorBookList', {
-      headers: { 'Content-Type': 'application/json', token: token },
+    fetch(`http://localhost:8000/user/authorBruchBook/${userId}`, {
+      headers: { 'Content-Type': 'application/json' },
     })
       .then(res => res.json())
       .then(res => {
         setBookList(res);
       });
-  }, [token]);
-  console.log(bookList);
+  }, []);
 
   return (
     <BookListWrapper>

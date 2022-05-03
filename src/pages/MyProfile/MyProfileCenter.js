@@ -1,17 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
-import styles from '../Profile/WriterProfile.module.scss';
-import InfoBox from './AuthorProfile/InfoBox';
-import PostBox from './AuthorProfile/PostBox';
-import CollectionBox from './AuthorProfile/CollectionBox';
+import React, { useState, useRef, useEffect } from 'react';
+import styled, { css } from 'styled-components';
+import InfoBox from './ProfileBox/InfoBox';
+import PostBox from './ProfileBox/PostBox';
+import CollectionBox from './ProfileBox/CollectionBox';
 
-function WriterProfile({ profileData }) {
+function MyProfileCenter({ profileData }) {
   const target = useRef(null);
   const [count, setCount] = useState(2);
-  const [writerList, setWriterList] = useState([]);
   const [spinner, setSpinner] = useState(true);
-
   const [toggle, setToggle] = useState(1);
   const [lists, setLists] = useState([]);
+  const token = localStorage.getItem('token');
 
   const handleMenu = index => {
     setToggle(index);
@@ -20,8 +19,6 @@ function WriterProfile({ profileData }) {
   useEffect(() => {
     handleMenu(1);
   }, []);
-
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetch(`http://localhost:8000/list/myprofile?page=1&pageSize=6`, {
@@ -34,11 +31,10 @@ function WriterProfile({ profileData }) {
       });
   }, [token]);
 
-  console.log(lists);
-
   const fetchData = async () => {
     setTimeout(async () => {
       await fetch(
+        //배포하기 전 server 주소로 바꿔줘야함!
         `http://localhost:8000/list/myprofile?page=${count}&pageSize=6`,
         {
           method: 'GET',
@@ -71,39 +67,27 @@ function WriterProfile({ profileData }) {
     }
   };
   return (
-    <section className={styles.writerContainer}>
-      <ul className={styles.menu}>
-        <li
-          className={
-            toggle === 1
-              ? `${styles.menuTab} ${styles.active}`
-              : `${styles.menuTab}`
-          }
+    <Container>
+      <Menu>
+        <MenuTab
+          className={toggle === 1 ? MenuTab.active : ''}
           onClick={() => handleMenu(1)}
         >
           작가소개
-        </li>
-        <li
-          className={
-            toggle === 2
-              ? `${styles.menuTab} ${styles.active}`
-              : `${styles.menuTab}`
-          }
+        </MenuTab>
+        <MenuTab
+          className={toggle === 2 ? MenuTab.active : ''}
           onClick={() => handleMenu(2)}
         >
           글
-        </li>
-        <li
-          className={
-            toggle === 3
-              ? `${styles.menuTab} ${styles.active}`
-              : `${styles.menuTab}`
-          }
+        </MenuTab>
+        <MenuTab
+          className={toggle === 3 ? MenuTab.active : ''}
           onClick={() => handleMenu(3)}
         >
           브런치북
-        </li>
-      </ul>
+        </MenuTab>
+      </Menu>
 
       <InfoBox
         toggle={toggle}
@@ -121,8 +105,46 @@ function WriterProfile({ profileData }) {
         spinner={spinner}
       />
       <CollectionBox toggle={toggle} handleMenu={handleMenu} />
-    </section>
+    </Container>
   );
 }
 
-export default WriterProfile;
+export default MyProfileCenter;
+
+const Container = styled.section`
+  padding-top: 50px;
+  font-weight: 100;
+`;
+
+const Menu = styled.ul`
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  margin-bottom: 15px;
+  .menuTab {
+  }
+`;
+
+const MenuTab = styled.li`
+  display: block;
+  width: calc(100% / 3);
+  padding: 16px 0 17px;
+  font-size: 16px;
+  font-weight: 100;
+  color: #959595;
+  cursor: pointer;
+  &:hover {
+    color: #666;
+    font-weight: 300;
+    border-top: 1px solid black;
+  }
+  &.active {
+    border-top: 1px solid black;
+  }
+`;
+
+const Active = styled.div``;
