@@ -4,17 +4,15 @@ import InfoBox from './AuthorProfile/InfoBox';
 import PostBox from './AuthorProfile/PostBox';
 import CollectionBox from './AuthorProfile/CollectionBox';
 
-function WriterProfile({ profileData, params }) {
+function WriterProfile({ profileData }) {
   const target = useRef(null);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(2);
   const [writerList, setWriterList] = useState([]);
   const [spinner, setSpinner] = useState(true);
 
   const [toggle, setToggle] = useState(1);
   const [lists, setLists] = useState([]);
-  const userId = params.id;
 
-  console.log('userId', userId);
   const handleMenu = index => {
     setToggle(index);
   };
@@ -40,7 +38,6 @@ function WriterProfile({ profileData, params }) {
 
   const fetchData = async () => {
     setTimeout(async () => {
-      setCount(count + 1);
       await fetch(
         `http://localhost:8000/list/myprofile?page=${count}&pageSize=6`,
         {
@@ -56,6 +53,7 @@ function WriterProfile({ profileData, params }) {
             setSpinner(false);
           }
         });
+      setCount(count + 1);
     }, 700);
   };
   useEffect(() => {

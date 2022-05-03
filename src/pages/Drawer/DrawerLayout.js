@@ -11,7 +11,7 @@ function DrawerLayout() {
   const [page, setPage] = useState('post');
   const [postList, setPostList] = useState([]);
   const [bookList, setBookList] = useState([]);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(2);
   const [spinner, setSpinner] = useState(true);
 
   const goToPost = () => {
