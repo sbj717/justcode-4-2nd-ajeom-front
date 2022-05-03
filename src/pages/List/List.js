@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import Header from '../components/Header/Header';
+import Keyword from './Keyword';
 import PostList from './PostList';
-import KeywordList from './KeywordList';
 import WriterList from './WriterList';
 import Spinner from './Spinner';
-import { getAuthorList } from '../../apis/author';
 import { getRelatedKeywords } from '../../apis/keyword';
+import { getAuthorList } from '../../apis/author';
 
 function List() {
   const [keywordList, setKeywordList] = useState({
@@ -85,7 +85,7 @@ function List() {
         <MainKeyword>{keywordList.selectedKeyword[0].name}</MainKeyword>
         <KeywordBtnWrapper>
           {keywordList.relatedKeywords.map(data => (
-            <KeywordList key={data.id} data={data} />
+            <Keyword key={data.id} data={data} />
           ))}
         </KeywordBtnWrapper>
       </KeywordWrapper>
