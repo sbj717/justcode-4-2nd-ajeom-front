@@ -15,7 +15,7 @@ function Footer() {
         </LogoWrapper>
 
         <LinkInfoWrapper>
-          <LinkInfo>브런치 이용안내</LinkInfo>
+          <LinkInfo>아점 이용안내</LinkInfo>
           <LinkInfo>작가신청</LinkInfo>
           <LinkInfo>작가 지원 프로젝트</LinkInfo>
           <LinkInfo>제휴제안</LinkInfo>
@@ -33,10 +33,10 @@ function Footer() {
         </LinkInfoWrapper>
 
         <LinkInfoWrapper>
-          <LinkInfo>브런치팀 공지사항</LinkInfo>
-          <LinkInfo>브런치 카카오톡 채널</LinkInfo>
-          <LinkInfo>브런치 인스타그램</LinkInfo>
-          <LinkInfo>브런치 페이스북</LinkInfo>
+          <LinkInfo>아점팀 공지사항</LinkInfo>
+          <LinkInfo>아점 카카오톡 채널</LinkInfo>
+          <LinkInfo>아점 인스타그램</LinkInfo>
+          <LinkInfo>아점 페이스북</LinkInfo>
         </LinkInfoWrapper>
       </FooterWrapper>
 

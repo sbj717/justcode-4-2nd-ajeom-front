@@ -45,6 +45,16 @@ function MemberNav({ showNav, userInfo, refreshLogOut }) {
           >
             글쓰기
           </WriteBtn>
+          &nbsp;
+          {userInfo.is_author ? null : (
+            <WriteBtn
+              onClick={() => {
+                navigate('/request');
+              }}
+            >
+              작가신청
+            </WriteBtn>
+          )}
         </ButtonWrapper>
       </ProfileWrapper>
       <ServiceWrapper>
