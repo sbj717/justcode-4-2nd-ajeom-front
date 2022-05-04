@@ -37,7 +37,7 @@ function GuestNav({ showNav }) {
             </Menu>
             <Menu
               onClick={() => {
-                navigate('/');
+                navigate('/list/4');
                 window.scrollTo(0, 0);
               }}
             >

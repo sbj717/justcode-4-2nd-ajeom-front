@@ -48,7 +48,8 @@ function Header() {
   };
 
   const refreshLogOut = async () => {
-    await window.location.reload();
+    await setShowNav('guestNone');
+    await setUserInfo({});
   };
   const goToMain = async () => {
     await navigate('/');
