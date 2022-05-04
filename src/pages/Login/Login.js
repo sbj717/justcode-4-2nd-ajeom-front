@@ -57,10 +57,10 @@ const Login = loginModal => {
               </div>
               <div className={styles.findBox}>
                 <span>내 아점 찾기</span>
-                <Button>내 브런치의 카카오계정을 모르겠어요</Button>
+                <Button>내 아점의 카카오계정을 모르겠어요</Button>
                 <Button>페이스북 트위터로만 로그인 했었나요?</Button>
                 <Link to="" className={styles.link}>
-                  브런치 로그인 관련 상세 도움말
+                  아점 로그인 관련 상세 도움말
                 </Link>
               </div>
             </div>

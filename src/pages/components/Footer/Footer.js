@@ -11,7 +11,7 @@ function Footer() {
           <AjeomSlogan>
             You can make anything <br /> by coding
           </AjeomSlogan>
-          <SloganWriter>- J.J.Cho -</SloganWriter>
+          <SloganWriter>- S.H.Lee -</SloganWriter>
         </LogoWrapper>
 
         <LinkInfoWrapper>
