@@ -1,11 +1,10 @@
 import React from 'react';
-import ProfileBookLayout from '../../Author/Brunchbook/ProfileBookLayout';
+import ProfileBookLayout from '../Brunchbook/ProfileBookLayout';
 import styled from 'styled-components';
-
-function CollectionBox({ toggle, userId }) {
+function CollectionBox({ toggle }) {
   return (
     <Collection>
-      <ProfileBookLayout userId={userId} />
+      <ProfileBookLayout />
     </Collection>
   );
 }

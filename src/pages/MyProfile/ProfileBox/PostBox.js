@@ -1,32 +1,31 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import Spinner from '../../List/Spinner';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../../List/Spinner';
 import { localhost } from '../../../config';
-
-function PostBox({ userId }) {
-  const navigate = useNavigate();
+function PostBox() {
   const target = useRef(null);
   const [count, setCount] = useState(2);
   const [spinner, setSpinner] = useState(true);
   const [lists, setLists] = useState([]);
   const token = localStorage.getItem('token');
-
   useEffect(() => {
-    fetch(`${localhost}/list/profile/${userId}?page=1&pageSize=6`, {
+    fetch(`${localhost}/list/myprofile?page=1&pageSize=6`, {
       method: 'GET',
+      headers: { 'Content-Type': 'application/json', token: token },
     })
       .then(res => res.json())
       .then(data => {
         setLists(data);
       });
-  }, [userId]);
+  }, [token]);
 
   const fetchData = async () => {
     setTimeout(async () => {
-      await fetch(
-        `${localhost}/list/profile/${userId}?page=${count}&pageSize=6`
-      )
+      await fetch(`${localhost}/list/myprofile?page=${count}&pageSize=6`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', token: token },
+      })
         .then(res => res.json())
         .then(data => {
           if (data !== null) {
@@ -52,6 +51,8 @@ function PostBox({ userId }) {
       await fetchData();
     }
   };
+
+  const navigate = useNavigate();
   return (
     <PostContainer ref={target}>
       {lists === null ||

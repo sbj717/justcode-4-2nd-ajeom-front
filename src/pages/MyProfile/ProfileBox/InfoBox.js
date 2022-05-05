@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-function InfoBox({ toggle, profileData }) {
+
+function InfoBox({ profileData, target }) {
   return (
     <Info className="activeContent">
       <Container>
         <Title>소개</Title>
         <Description>{profileData.description}</Description>
+        <div ref={target} style={{ border: '1px solid rgba(0,0,0,0)' }} />
       </Container>
     </Info>
   );
 }
-
 export default InfoBox;
 
 const Info = styled.div`

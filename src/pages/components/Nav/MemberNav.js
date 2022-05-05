@@ -6,9 +6,9 @@ import { VscBell } from 'react-icons/vsc';
 function MemberNav({ showNav, userInfo, refreshLogOut }) {
   const { nickname, profile_img_url } = userInfo;
   const handleLogOut = async () => {
-    await goToMain('/');
     await refreshLogOut();
     localStorage.clear();
+    await goToMain('/');
   };
 
   const navigate = useNavigate();
