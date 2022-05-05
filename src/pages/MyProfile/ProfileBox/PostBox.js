@@ -1,7 +1,57 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-function PostBox({ lists, target }) {
+import Spinner from '../../List/Spinner';
+import { localhost } from '../../../config';
+function PostBox() {
+  const target = useRef(null);
+  const [count, setCount] = useState(2);
+  const [spinner, setSpinner] = useState(true);
+  const [lists, setLists] = useState([]);
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    fetch(`${localhost}/list/myprofile?page=1&pageSize=6`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', token: token },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setLists(data);
+      });
+  }, [token]);
+
+  const fetchData = async () => {
+    setTimeout(async () => {
+      await fetch(`${localhost}/list/myprofile?page=${count}&pageSize=6`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', token: token },
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data !== null) {
+            setLists(lists.concat(data));
+          } else {
+            setSpinner(false);
+          }
+        });
+      setCount(count + 1);
+    }, 700);
+  };
+  useEffect(() => {
+    let observer;
+    if (target.current) {
+      observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
+      observer.observe(target.current);
+    }
+    return () => observer && observer.disconnect();
+  }, [lists]);
+
+  const handleObserver = async ([entry], observer) => {
+    if (entry.isIntersecting) {
+      await fetchData();
+    }
+  };
+
   const navigate = useNavigate();
   return (
     <PostContainer ref={target}>
@@ -22,6 +72,8 @@ function PostBox({ lists, target }) {
             </Container>
           </Post>
         ))}
+      <div ref={target} style={{ border: '1px solid transparent' }} />
+      <SpinnerWrapper>{spinner && <Spinner />}</SpinnerWrapper>
     </PostContainer>
   );
 }
@@ -100,4 +152,9 @@ const ImgBox = styled.div`
       `;
     }
   }}
+`;
+const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
 `;

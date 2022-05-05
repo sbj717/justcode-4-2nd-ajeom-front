@@ -5,61 +5,12 @@ import PostBox from './AuthorProfile/PostBox';
 import CollectionBox from './AuthorProfile/CollectionBox';
 
 function AuthorProfileCenter({ profileData, userId }) {
-  const target = useRef(null);
-  const [count, setCount] = useState(2);
-  const [spinner, setSpinner] = useState(true);
-
   const [toggle, setToggle] = useState(1);
-  const [lists, setLists] = useState([]);
 
   const handleMenu = index => {
     setToggle(index);
   };
 
-  useEffect(() => {
-    handleMenu(1);
-  }, []);
-
-  useEffect(() => {
-    fetch(`http://localhost:8000/list/profile/${userId}?page=1&pageSize=6`, {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        setLists(data);
-      });
-  }, [userId]);
-
-  const fetchData = async () => {
-    setTimeout(async () => {
-      await fetch(
-        `http://localhost:8000/list/profile/${userId}?page=${count}&pageSize=6`
-      )
-        .then(res => res.json())
-        .then(data => {
-          if (data !== null) {
-            setLists(lists.concat(data));
-          } else {
-            setSpinner(false);
-          }
-        });
-      setCount(count + 1);
-    }, 700);
-  };
-  useEffect(() => {
-    let observer;
-    if (target.current) {
-      observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
-      observer.observe(target.current);
-    }
-    return () => observer && observer.disconnect();
-  }, [lists]);
-
-  const handleObserver = async ([entry], observer) => {
-    if (entry.isIntersecting) {
-      await fetchData();
-    }
-  };
   return (
     <Container>
       <MenuWrap>
@@ -83,19 +34,12 @@ function AuthorProfileCenter({ profileData, userId }) {
         </li>
       </MenuWrap>
       {toggle === 1 && <InfoBox profileData={profileData} />}
-      {toggle === 2 && (
-        <PostBox
-          lists={lists}
-          target={target}
-          setSpinner={setSpinner}
-          spinner={spinner}
-          userId={userId}
-        />
-      )}
+      {toggle === 2 && <PostBox userId={userId} />}
       {toggle === 3 && <CollectionBox userId={userId} />}
     </Container>
   );
 }
+export default AuthorProfileCenter;
 
 const Container = styled.div`
   padding-top: 50px;
@@ -130,5 +74,3 @@ const MenuWrap = styled.ul`
     border-top: 1px solid black;
   }
 `;
-
-export default AuthorProfileCenter;

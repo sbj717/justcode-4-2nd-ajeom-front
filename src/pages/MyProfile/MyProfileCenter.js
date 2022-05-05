@@ -1,67 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import InfoBox from './ProfileBox/InfoBox';
 import PostBox from './ProfileBox/PostBox';
 import CollectionBox from './ProfileBox/CollectionBox';
 import styled from 'styled-components';
 
 function MyProfileCenter({ profileData }) {
-  const target = useRef(null);
-  const [count, setCount] = useState(2);
-  const [spinner, setSpinner] = useState(true);
   const [toggle, setToggle] = useState(1);
-  const [lists, setLists] = useState([]);
-  const token = localStorage.getItem('token');
-
   const handleMenu = index => {
     setToggle(index);
   };
 
-  useEffect(() => {
-    fetch(`http://localhost:8000/list/myprofile?page=1&pageSize=6`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json', token: token },
-    })
-      .then(res => res.json())
-      .then(data => {
-        setLists(data);
-      });
-  }, [token]);
-
-  const fetchData = async () => {
-    setTimeout(async () => {
-      await fetch(
-        //배포하기 전 server 주소로 바꿔줘야함!
-        `http://localhost:8000/list/myprofile?page=${count}&pageSize=6`,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json', token: token },
-        }
-      )
-        .then(res => res.json())
-        .then(data => {
-          if (data !== null) {
-            setLists(lists.concat(data));
-          } else {
-            setSpinner(false);
-          }
-        });
-      setCount(count + 1);
-    }, 700);
-  };
-  useEffect(() => {
-    let observer;
-    if (target.current) {
-      observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
-      observer.observe(target.current);
-    }
-    return () => observer && observer.disconnect();
-  }, [lists]);
-
-  const handleObserver = async ([entry], observer) => {
-    if (entry.isIntersecting) {
-      await fetchData();
-    }
-  };
   return (
     <Container>
       <MenuWrap>
@@ -85,18 +33,8 @@ function MyProfileCenter({ profileData }) {
         </li>
       </MenuWrap>
       {toggle === 1 && <InfoBox profileData={profileData} />}
-      {toggle === 2 && (
-        <PostBox
-          setLists={setLists}
-          lists={lists}
-          target={target}
-          setSpinner={setSpinner}
-          spinner={spinner}
-        />
-      )}
-      {toggle === 3 && (
-        <CollectionBox toggle={toggle} handleMenu={handleMenu} />
-      )}
+      {toggle === 2 && <PostBox />}
+      {toggle === 3 && <CollectionBox />}
     </Container>
   );
 }

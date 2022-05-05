@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header/Header';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import AuthorProfileTop from './AuthorProfileTop';
 import AuthorProfileCenter from './AuthorProfileCenter';
+import { localhost } from '../../config';
 
 function AuthorLayout() {
   const params = useParams();
   const [profileData, setProfileData] = useState({});
   useEffect(() => {
-    fetch(`http://localhost:8000/user/authorProfile/${params.id}`, {
+    fetch(`${localhost}/user/authorProfile/${params.id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
