@@ -1,3 +1,5 @@
+//키워드 관련 API 모음
+
 const localhost = 'http://localhost:8000';
 
 const getMainKeywords = async () => {

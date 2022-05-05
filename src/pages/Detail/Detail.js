@@ -1,13 +1,25 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { getDetail } from '../../apis/post';
+import Thumbnail from './Thumbnail';
+import WriterInfo from './WriterInfo';
+import Keyword from '../List/Keyword';
 import Header from '../components/Header/Header';
+import { useScroll } from '../../hooks/useScroll';
+import { updatePost, deletePost, getDetail } from '../../apis/post';
+import { getMyProfile } from '../../apis/profile';
 import style from './AjeomBody.module.scss';
 
 function Detail() {
   const params = useParams();
+  const postId = params.id;
   const navigate = useNavigate();
+
+  const [navStyle, setNavStyle] = useState(false);
+  const scroll = useScroll();
+
+  const MainTextFieldRef = useRef(null);
+  const [progressWidth, setProgressWidth] = useState(0);
   const [userInfo, setUserInfo] = useState({});
   const [postLists, setPostLists] = useState({
     postDetail: [
@@ -28,63 +40,44 @@ function Detail() {
     nextPostInfo: [{ id: 0, title: '', user_id: 0 }],
   });
 
-  const [progressWidth, setProgressWidth] = useState(0);
-  const MainTextFieldRef = useRef(null);
-  const postId = params.id;
+  //scrollY값에 따른 Header style 변화
+  useEffect(() => {
+    scroll > 530 ? setNavStyle(true) : setNavStyle(false);
+  }, [scroll]);
 
+  let myPostId = postLists.postDetail[0].id;
+
+  //본인 포스트 삭제 API
   function delPost() {
     let result = window.confirm('정말 삭제하시겠습니까?');
     if (result) {
-      const token = localStorage.getItem('token');
-
-      fetch(`http://localhost:8000/write/${postLists.postDetail[0].id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json', token: token },
-      })
-        .then(res => res.json())
-        .then(data => {
-          alert('포스트가 삭제되었습니다.');
-          navigate(`/`);
-          window.scrollTo(0, 0);
-        });
+      deletePost(myPostId).then(data => {
+        alert('포스트가 삭제되었습니다.');
+        navigate(`/`);
+        window.scrollTo(0, 0);
+      });
     }
   }
 
+  //본인 포스트 발행 취소, 재발행 API
   function setIsPublished(set) {
-    const token = localStorage.getItem('token');
-    fetch(
-      `http://localhost:8000/write/${postLists.postDetail[0].id}?isPublished=${set}`,
-      {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', token: token },
+    updatePost(postId, set).then(data => {
+      if (set === 1) {
+        alert('포스트가 발행되었습니다.');
+      } else if (set === 0) {
+        alert('발행이 취소 되었습니다.');
       }
-    )
-      .then(res => res.json())
-      .then(data => {
-        if (set == 1) {
-          alert('포스트가 발행되었습니다.');
-        } else if (set == 0) {
-          alert('발행이 취소 되었습니다.');
-        }
-
-        window.scrollTo(0, 0);
-        window.location.reload();
-      });
+      window.scrollTo(0, 0);
+      window.location.reload();
+    });
   }
 
+  //userId get 하기 위한 api
   useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    fetch('http://localhost:8000/user/myProfile', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json', token: token },
-    })
-      .then(res => res.json())
-      .then(data => {
-        setUserInfo(data);
-      });
+    getMyProfile().then(data => setUserInfo(data));
   }, []);
 
+  //detail body 불러오는 API
   useEffect(() => {
     getDetail(postId).then(data => {
       setPostLists(data);
@@ -92,20 +85,25 @@ function Detail() {
         MainTextFieldRef.current.innerHTML = `${data.postDetail[0].body}`;
       }
     });
-  }, [params.id]);
+  }, [params.id, postId]);
 
+  //Params로 이전 글 이동
   const goToPrevPost = () => {
     navigate(`/detail/${postLists.previousPostInfo[0].id}`);
     window.scrollTo(0, 0);
   };
 
+  //Params로 다음 글 이동
   const goToNextPost = () => {
     navigate(`/detail/${postLists.nextPostInfo[0].id}`);
     window.scrollTo(0, 0);
   };
 
+  //내 글일 경우 내 프로필로 이동 || Params로 작가 프로필 이동
   const goToProfile = () => {
-    navigate(`/author/${postLists.postDetail[0].user_id}`);
+    postLists.postDetail[0].user_id === userInfo.id
+      ? navigate('/profile')
+      : navigate(`/author/${postLists.postDetail[0].user_id}`);
     window.scrollTo(0, 0);
   };
 
@@ -129,13 +127,13 @@ function Detail() {
 
   return (
     <>
-      {postLists.postDetail[0].user_id == userInfo.id ? (
+      {postLists.postDetail[0].user_id === userInfo.id ? (
         <ButtonDiv>
           <DelButton mainColor="#e22" onClick={delPost}>
             삭제
           </DelButton>
 
-          {postLists.postDetail[0].is_published == 0 ? (
+          {postLists.postDetail[0].is_published === 0 ? (
             <DelButton
               mainColor="#000"
               onClick={() => {
@@ -156,23 +154,12 @@ function Detail() {
           )}
         </ButtonDiv>
       ) : null}
-      <Header />
+
+      <Header navStyle={navStyle} />
       {postLists.postDetail.map(data => (
-        <ThumbnailWrapper key={data.id} thumbnailUrl={data.thumbnail_url}>
-          <TitleWrapper>
-            <DetailTitle>
-              {data.title}
-              <DetailSubTitle>{data.subtitle}</DetailSubTitle>
-              <DetailWriter>
-                <By>by</By>
-                {data.nickname}
-              </DetailWriter>
-            </DetailTitle>
-          </TitleWrapper>
-        </ThumbnailWrapper>
+        <Thumbnail key={data.id} data={data} />
       ))}
       <Progressbar style={{ width: progressWidth + '%' }} />
-
       <MainBody>
         <BodyWrapper>
           <section className={style.ajeomBody}>
@@ -180,17 +167,7 @@ function Detail() {
           </section>
           <KeywordBtnWrapper>
             {postLists.postDetail.map(data =>
-              data.keywords.map(data => (
-                <Keyword
-                  key={data.id}
-                  onClick={() => {
-                    navigate(`/list/${data.id}`);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  {data.name}
-                </Keyword>
-              ))
+              data.keywords.map(data => <Keyword key={data.id} data={data} />)
             )}
           </KeywordBtnWrapper>
         </BodyWrapper>
@@ -199,17 +176,7 @@ function Detail() {
       <WriterWrapper>
         <WriterSubWrapper>
           {postLists.postDetail.map(data => (
-            <>
-              <ProfileWrapper key={data.user_id}>
-                <WriterName onClick={goToProfile}>{data.nickname}</WriterName>
-                <WriterImg
-                  alt="작가 프로필 이미지"
-                  src={data.profile_img_url}
-                  onClick={goToProfile}
-                />
-              </ProfileWrapper>
-              <WriterDesc onClick={goToProfile}>{data.description}</WriterDesc>
-            </>
+            <WriterInfo key={data.id} data={data} goToProfile={goToProfile} />
           ))}
           <BtnWrapper>
             <Proposition>제안하기</Proposition>
@@ -229,7 +196,6 @@ function Detail() {
         ) : (
           <NavWrapper />
         )}
-
         {postLists.nextPostInfo.length > 0 ? (
           <NavWrapper onClick={goToNextPost}>
             <NextPost key={postLists.nextPostInfo[0].id}>
@@ -243,63 +209,11 @@ function Detail() {
   );
 }
 
-const TitleWrapper = styled.section`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 90;
-`;
-
-const ThumbnailWrapper = styled.section`
-  position: relative;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
-    url(${props => props.thumbnailUrl});
-  background-repeat: no-repeat; //이미지 크기가 기준보다 더 작을 때라도 반복하지 않는다.
-  background-size: cover; //지정한 요소를 다 덮도록 배경이미지를 확대/축소
-  background-position: center center; //이미지의 정가운데를 표시
-  background-attachment: fixed;
-  height: 33rem;
-  z-index: -10;
-`;
-
 const Progressbar = styled.div`
   position: fixed;
   top: 63px;
   height: 1.8px;
   background-color: #29434e;
-`;
-
-const DetailTitle = styled.h1`
-  position: fixed;
-  width: 700px;
-  color: #ffffff;
-  font-family: 'Nanum Myeongjo';
-  font-weight: 400;
-  font-size: 2.5rem;
-  line-height: 3rem;
-  margin-top: 15rem;
-  z-index: -1;
-`;
-
-const DetailSubTitle = styled.div`
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 200;
-  z-index: -1;
-`;
-
-const DetailWriter = styled(DetailSubTitle)`
-  position: relative;
-  font-size: 0.8rem;
-  padding-top: 3rem;
-  z-index: -1;
-`;
-
-const By = styled.span`
-  font-family: Georgia;
-  font-style: italic;
-  margin-right: 0.3rem;
 `;
 
 const MainBody = styled.section`
@@ -317,57 +231,17 @@ const KeywordBtnWrapper = styled.div`
   margin: 7rem 0 4rem 0;
 `;
 
-const Keyword = styled.button`
-  margin: 0 0.5rem;
-  padding: 0.2rem 0.7rem;
-  color: #959595;
-  background-color: #fff;
-  border: 1px solid #d1d1d1;
-  border-radius: 1rem;
-  font-size: 0.8rem;
-  font-weight: 200;
-  cursor: pointer;
-`;
-
 const WriterWrapper = styled.section`
   display: flex;
   justify-content: center;
-  background-color: #fbfbfb;
   color: #333333;
+  background-color: #fbfbfb;
 `;
 
 const WriterSubWrapper = styled.div`
   width: 700px;
+  margin-bottom: 2rem;
   font-weight: 200;
-  margin-bottom: 2rem;
-`;
-
-const ProfileWrapper = styled.section`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  position: relative;
-  bottom: 20%;
-`;
-
-const WriterName = styled.p`
-  font-size: 1.8rem;
-  cursor: pointer;
-`;
-
-const WriterImg = styled.img`
-  width: 7rem;
-  height: 7rem;
-  border-radius: 50%;
-  cursor: pointer;
-`;
-
-const WriterDesc = styled.p`
-  color: #959595;
-  line-height: 1.5rem;
-  font-size: 0.85rem;
-  margin-bottom: 2rem;
-  cursor: pointer;
 `;
 
 const BtnWrapper = styled.section`
@@ -377,28 +251,28 @@ const BtnWrapper = styled.section`
 
 const Proposition = styled.button`
   width: 5rem;
-  border: 1px solid #bbb;
-  border-radius: 3rem;
+  margin-left: 0.7rem;
+  padding: 0.4rem 0;
   color: #666;
   background: #fff;
-  padding: 0.4rem 0;
+  border: 1px solid #bbb;
+  border-radius: 3rem;
   font-weight: 200;
-  margin-left: 0.7rem;
 `;
 
 const Subscription = styled(Proposition)`
-  border: 1px solid #00c3bd;
   color: #00c3bd;
+  border: 1px solid #00c3bd;
 `;
 
 const NavBottom = styled.section`
   position: sticky;
   bottom: 0;
+  display: flex;
+  justify-content: space-between;
   padding: 1.4rem 0;
   border-top: 1px solid #eee;
   background-color: #fff;
-  display: flex;
-  justify-content: space-between;
 `;
 
 const NavWrapper = styled.section`
@@ -410,14 +284,14 @@ const NavWrapper = styled.section`
 `;
 
 const Prev = styled.div`
+  margin-left: 3rem;
   color: #959595;
   font-size: 0.8rem;
-  margin-left: 3rem;
 `;
 
 const PrevPost = styled.div`
-  color: #333333;
   margin-left: 1rem;
+  color: #333333;
 `;
 
 const NextPost = styled(PrevPost)`
@@ -430,28 +304,27 @@ const Next = styled(Prev)`
 
 const ButtonDiv = styled.div`
   position: absolute;
-  z-index: 100;
   right: 20px;
   top: 15px;
+  z-index: 100;
 `;
 const DelButton = styled.button`
+  float: right;
   margin-left: 5px;
-  font-size: 13px;
-  z-index: 100;
+  padding: 0.3rem 1.5rem;
+  background-color: #ffffff;
+  color: ${props => {
+    return props.mainColor;
+  }};
   border: 1.3px solid
     ${props => {
       return props.mainColor;
     }};
   border-radius: 20px;
-  padding: 0.3rem 1.5rem;
-
-  background-color: #ffffff;
-  color: ${props => {
-    return props.mainColor;
-  }};
   font-weight: 300;
+  font-size: 13px;
+  z-index: 100;
   cursor: pointer;
-  float: right;
 `;
 
 export default Detail;

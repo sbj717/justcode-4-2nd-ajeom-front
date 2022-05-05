@@ -1,6 +1,6 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import styled, { css, keyframes } from 'styled-components';
 
 function PostList({ posts }) {
   const navigate = useNavigate();
@@ -19,20 +19,30 @@ function PostList({ posts }) {
           <By>by</By> {posts.nickname}
         </CardWriter>
       </TextWrapper>
-      <ImgWrapper thumbnail_url={posts.thumbnail_url}>
-        {/* <CardImg src={posts.thumbnail_url} /> */}
-      </ImgWrapper>
+      <ImgWrapper thumbnail_url={posts.thumbnail_url} />
     </CardWrapper>
   );
 }
 
+const fadeIn = keyframes`
+from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: 0;
+    }
+`;
+
 const CardWrapper = styled.section`
-  width: 700px;
   display: flex;
+  width: 700px;
+  margin: 0 2rem 1rem 0;
   padding: 1.9rem 1.5rem;
-  margin-bottom: 1rem;
-  background-color: #ffffff;
   border-bottom: 1px solid #eee;
+  background-color: #ffffff;
+  animation: ${fadeIn} 0.5s ease-in-out;
   cursor: pointer;
 `;
 
@@ -53,12 +63,12 @@ const CardTitle = styled.h1`
 const CardText = styled.p`
   display: -webkit-box;
   width: 31rem;
+  height: 3em;
   margin-bottom: 1rem;
   color: #333333;
   font-weight: 200;
   font-size: 0.9rem;
   line-height: 1.5em;
-  height: 3em;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
@@ -73,15 +83,15 @@ const CardWriter = styled.div`
 
 const By = styled.span`
   margin-right: 0.2rem;
+  color: #bfbfbf;
   font-family: Georgia;
   font-style: italic;
-  color: #bfbfbf;
 `;
 
 const ImgWrapper = styled.div`
-  overflow: hidden;
   width: 8rem;
   height: 8rem;
+  overflow: hidden;
   ${props => {
     return css`
       background-image: url(${props.thumbnail_url});
@@ -90,10 +100,6 @@ const ImgWrapper = styled.div`
       background-position: center center;
     `;
   }}
-`;
-
-const CardImg = styled.img`
-  width: 8rem;
 `;
 
 export default PostList;

@@ -1,33 +1,52 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import Header from '../components/Header/Header';
+import Keyword from './Keyword';
 import PostList from './PostList';
-import KeywordList from './KeywordList';
 import WriterList from './WriterList';
 import Spinner from './Spinner';
-import { getAuthorList } from '../../apis/author';
+import Header from '../components/Header/Header';
+import { useScroll } from '../../hooks/useScroll';
 import { getRelatedKeywords } from '../../apis/keyword';
+import { getAuthorList } from '../../apis/author';
 
 function List() {
   const params = useParams();
+  const keywordId = params.id;
+
+  const [navStyle, setNavStyle] = useState(false);
+  const scroll = useScroll();
+
   const [keywordList, setKeywordList] = useState({
     selectedKeyword: [{ id: 0, name: '' }],
     relatedKeywords: [{ id: 0, name: '' }],
   });
-  const [postLists, setPostLists] = useState([]);
   const [count, setCount] = useState(1);
   const [spinner, setSpinner] = useState(true);
+  const [postLists, setPostLists] = useState([]);
   const [writerList, setWriterList] = useState([]);
 
+  //intersection observer를 위한 타겟
   const target = useRef(null);
 
-  const keywordId = params.id;
+  //scrollY값에 따른 Header style 변화
+  useEffect(() => {
+    scroll > 190 ? setNavStyle(true) : setNavStyle(false);
+  }, [scroll]);
 
+  //키워드 fetch
   useEffect(() => {
     getRelatedKeywords(keywordId).then(data => setKeywordList(data));
-  }, [params.id]);
+  }, [keywordId, params.id]);
 
+  //추천 작가 리스트 fetch
+  useEffect(() => {
+    getAuthorList().then(data => setWriterList(data.authorList));
+  }, []);
+
+  const writerListLimit = writerList.slice(0, 6);
+
+  //발행 글 리스트에서 무한 스크롤을 위한 API Fetch
   useEffect(() => {
     fetch(`http://localhost:8000/list/post/${keywordId}?page=1&pageSize=6`)
       .then(res => res.json())
@@ -35,12 +54,6 @@ function List() {
         setPostLists(data);
       });
   }, [keywordId, params.id]);
-
-  useEffect(() => {
-    getAuthorList().then(data => setWriterList(data.authorList));
-  }, []);
-
-  const writerListLimit = writerList.slice(0, 6);
 
   const fetchData = async () => {
     setTimeout(async () => {
@@ -59,6 +72,7 @@ function List() {
     }, 700);
   };
 
+  //Intersection Observer API
   useEffect(() => {
     let observer;
     if (target.current) {
@@ -68,7 +82,7 @@ function List() {
     return () => observer && observer.disconnect();
   }, [postLists]);
 
-  const handleObserver = async ([entry], observer) => {
+  const handleObserver = async ([entry]) => {
     if (entry.isIntersecting) {
       await fetchData();
     }
@@ -76,12 +90,12 @@ function List() {
 
   return (
     <>
-      <Header />
+      <Header navStyle={navStyle} />
       <KeywordWrapper>
         <MainKeyword>{keywordList.selectedKeyword[0].name}</MainKeyword>
         <KeywordBtnWrapper>
           {keywordList.relatedKeywords.map(data => (
-            <KeywordList key={data.id} data={data} />
+            <Keyword key={data.id} data={data} />
           ))}
         </KeywordBtnWrapper>
       </KeywordWrapper>
@@ -142,10 +156,7 @@ from {
     }
 `;
 
-const ListCardWrapper = styled.section`
-  margin-right: 2rem;
-  animation: ${fadeIn} 0.5s ease-in-out;
-`;
+const ListCardWrapper = styled.section``;
 
 const WriterCardWrapper = styled.section`
   width: 220px;
@@ -156,11 +167,11 @@ const WriterCardWrapper = styled.section`
 `;
 
 const WriterCardTitle = styled.p`
+  margin-bottom: 0.5rem;
+  padding-left: 0.2rem;
   color: #666;
   font-size: 0.8rem;
   font-weight: 300;
-  margin-bottom: 0.5rem;
-  padding-left: 0.2rem;
 `;
 
 const SpinnerWrapper = styled.div`

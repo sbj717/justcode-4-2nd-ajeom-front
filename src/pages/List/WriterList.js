@@ -6,7 +6,7 @@ function WriterList({ data }) {
   const navigate = useNavigate();
 
   const goToAuthorProfile = () => {
-    navigate(`/profile/${data.id}`);
+    navigate(`/author/${data.id}`);
     window.scrollTo(0, 0);
   };
 
