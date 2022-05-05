@@ -7,7 +7,6 @@ import AuthorProfileCenter from './AuthorProfileCenter';
 
 function AuthorLayout() {
   const params = useParams();
-  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({});
   useEffect(() => {
     fetch(`http://localhost:8000/user/authorProfile/${params.id}`, {

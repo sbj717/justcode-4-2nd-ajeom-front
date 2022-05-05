@@ -1,22 +1,46 @@
 import React from 'react';
-import styles from './InfoBox.module.scss';
-
+import styled from 'styled-components';
 function InfoBox({ toggle, profileData }) {
   return (
-    <div
-      className={
-        toggle === 1
-          ? `${styles.InfoBox} ${styles.activeContent}`
-          : `${styles.InfoBox}`
-      }
-    >
-      <div className={styles.container}>
-        <p>소개</p>
-        <span>{profileData.description}</span>
-        {/* <WriterTags tags={tags} /> */}
-      </div>
-    </div>
+    <Info className="activeContent">
+      <Container>
+        <Title>소개</Title>
+        <Description>{profileData.description}</Description>
+      </Container>
+    </Info>
   );
 }
 
 export default InfoBox;
+
+const Info = styled.div`
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: 0;
+    }
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`;
+
+const Title = styled.p`
+  display: block;
+  font-size: 12px;
+`;
+
+const Description = styled.span`
+  font-size: 14px;
+  line-height: 1.5;
+`;
