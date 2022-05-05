@@ -1,22 +1,33 @@
 import React from 'react';
-import styles from './InfoBox.module.scss';
+import styled from 'styled-components';
 
 function InfoBox({ toggle, profileData, target }) {
   return (
-    <div
-      className={
-        toggle === 1
-          ? `${styles.InfoBox} ${styles.activeContent}`
-          : `${styles.InfoBox}`
-      }
-    >
-      <div className={styles.container}>
-        <p>소개</p>
-        <span>{profileData.description}</span>
+    <Info>
+      <Container>
+        <Title>소개</Title>
+        <Description>{profileData.description}</Description>
         <div ref={target} style={{ border: '1px solid rgba(0,0,0,0)' }} />
-      </div>
-    </div>
+      </Container>
+    </Info>
   );
 }
 
+const Info = styled.div``;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`;
+
+const Title = styled.p`
+  display: block;
+  font-size: 12px;
+`;
+
+const Description = styled.span`
+  font-size: 14px;
+  line-height: 1.5;
+`;
 export default InfoBox;

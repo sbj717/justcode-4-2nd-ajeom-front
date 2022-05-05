@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styles from './MyProfileCenter.module.scss';
 import InfoBox from './ProfileBox/InfoBox';
 import PostBox from './ProfileBox/PostBox';
 import CollectionBox from './ProfileBox/CollectionBox';
@@ -15,10 +15,6 @@ function MyProfileCenter({ profileData }) {
   const handleMenu = index => {
     setToggle(index);
   };
-
-  useEffect(() => {
-    handleMenu(1);
-  }, []);
 
   useEffect(() => {
     fetch(`http://localhost:8000/list/myprofile?page=1&pageSize=6`, {
@@ -67,84 +63,60 @@ function MyProfileCenter({ profileData }) {
     }
   };
   return (
-    <Container>
-      <Menu>
-        <MenuTab
-          className={toggle === 1 ? MenuTab.active : ''}
+    <section className={styles.writerContainer}>
+      <ul className={styles.menu}>
+        <li
+          className={
+            toggle === 1
+              ? `${styles.menuTab} ${styles.active}`
+              : `${styles.menuTab}`
+          }
           onClick={() => handleMenu(1)}
         >
           작가소개
-        </MenuTab>
-        <MenuTab
-          className={toggle === 2 ? MenuTab.active : ''}
+        </li>
+        <li
+          className={
+            toggle === 2
+              ? `${styles.menuTab} ${styles.active}`
+              : `${styles.menuTab}`
+          }
           onClick={() => handleMenu(2)}
         >
           글
-        </MenuTab>
-        <MenuTab
-          className={toggle === 3 ? MenuTab.active : ''}
+        </li>
+        <li
+          className={
+            toggle === 3
+              ? `${styles.menuTab} ${styles.active}`
+              : `${styles.menuTab}`
+          }
           onClick={() => handleMenu(3)}
         >
           브런치북
-        </MenuTab>
-      </Menu>
-
-      <InfoBox
-        toggle={toggle}
-        handleMenu={handleMenu}
-        profileData={profileData}
-      />
-
-      <PostBox
-        handleMenu={handleMenu}
-        toggle={toggle}
-        setLists={setLists}
-        lists={lists}
-        target={target}
-        setSpinner={setSpinner}
-        spinner={spinner}
-      />
+        </li>
+      </ul>
+      {toggle === 1 && (
+        <InfoBox
+          toggle={toggle}
+          handleMenu={handleMenu}
+          profileData={profileData}
+        />
+      )}
+      {toggle === 2 && (
+        <PostBox
+          handleMenu={handleMenu}
+          toggle={toggle}
+          setLists={setLists}
+          lists={lists}
+          target={target}
+          setSpinner={setSpinner}
+          spinner={spinner}
+        />
+      )}
       <CollectionBox toggle={toggle} handleMenu={handleMenu} />
-    </Container>
+    </section>
   );
 }
 
 export default MyProfileCenter;
-
-const Container = styled.section`
-  padding-top: 50px;
-  font-weight: 100;
-`;
-
-const Menu = styled.ul`
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  text-align: center;
-  border-top: 1px solid #ddd;
-  margin-bottom: 15px;
-  .menuTab {
-  }
-`;
-
-const MenuTab = styled.li`
-  display: block;
-  width: calc(100% / 3);
-  padding: 16px 0 17px;
-  font-size: 16px;
-  font-weight: 100;
-  color: #959595;
-  cursor: pointer;
-  &:hover {
-    color: #666;
-    font-weight: 300;
-    border-top: 1px solid black;
-  }
-  &.active {
-    border-top: 1px solid black;
-  }
-`;
-
-const Active = styled.div``;

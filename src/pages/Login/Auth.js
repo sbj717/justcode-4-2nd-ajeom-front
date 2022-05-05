@@ -12,7 +12,6 @@ function Auth() {
 
   const { Kakao } = window;
   const code = new URL(window.location.href).searchParams.get('code');
-  console.log(code);
   const bodyData = {
     grant_type: 'authorization_code',
     client_id: REST_API_KEY,
