@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-function KeywordList({ data }) {
+function Keyword({ data }) {
   const navigate = useNavigate();
 
   const goToList = () => {
@@ -10,10 +10,10 @@ function KeywordList({ data }) {
     window.scrollTo(0, 0);
   };
 
-  return <Keyword onClick={goToList}>{data.name}</Keyword>;
+  return <KeywordBtn onClick={goToList}>{data.name}</KeywordBtn>;
 }
 
-const Keyword = styled.button`
+const KeywordBtn = styled.button`
   margin: 0 0.5rem;
   padding: 0.2rem 0.7rem;
   color: #959595;
@@ -25,4 +25,4 @@ const Keyword = styled.button`
   cursor: pointer;
 `;
 
-export default KeywordList;
+export default Keyword;

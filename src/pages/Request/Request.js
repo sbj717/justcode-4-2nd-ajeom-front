@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { requestAuthor } from '../../apis/author';
 import Header from '../components/Header/Header';
+import { getSavedPost, requestAuthor } from '../../apis/author';
 
 function Request() {
   const [inputValue, setInputValue] = useState('');
@@ -17,7 +17,10 @@ function Request() {
   };
 
   const nextForm = () => {
-    if (inputValue.length === 0) {
+    if (postList === null) {
+      alert('작가 신청을 하려면 새로운 글을 작성해주세요:)');
+      navigate('/');
+    } else if (inputValue.length === 0) {
       setPreventBtn(true);
     } else if (inputValue.length > 0) {
       setFormToggle(2);
@@ -31,15 +34,10 @@ function Request() {
     window.scrollTo(0, 0);
   };
 
-  const token = localStorage.getItem('token');
-
+  //본인의 저장글 세 개 불러오는 API
   useEffect(() => {
-    fetch('http://localhost:8000/list/drawer?page=1&pageSize=3', {
-      headers: { 'Content-Type': 'application/json', token: token },
-    })
-      .then(res => res.json())
-      .then(res => setPostList(res));
-  }, [token]);
+    getSavedPost().then(res => setPostList(res));
+  }, []);
 
   return (
     <BgColor>
@@ -162,16 +160,16 @@ const FormWrapper = styled.section`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 17px 40px rgb(0 0 0 / 15%);
   width: 700px;
   padding: 40px;
+  box-shadow: 0 17px 40px rgb(0 0 0 / 15%);
   background-color: #ffffff;
 `;
 
 const FormStage = styled.div`
+  margin-bottom: 3rem;
   color: #00c3bd;
   font-weight: 300;
-  margin-bottom: 3rem;
 `;
 
 const FormSubWrapper = styled.article`
@@ -193,8 +191,8 @@ const FormTextWrapper = styled.div`
 `;
 
 const FormText = styled.div`
-  color: #959595;
   margin-bottom: 1rem;
+  color: #959595;
   font-size: 0.9rem;
   font-weight: 200;
   line-height: 1.5rem;
@@ -213,8 +211,8 @@ const FormTextArea = styled.textarea.attrs({
   width: 620px;
   height: 170px;
   margin-bottom: 1rem;
-  border: solid 1px #e1e1e1;
   padding: 12px 14px;
+  border: solid 1px #e1e1e1;
   resize: none;
   &::placeholder {
     color: ${props => (props.preventBtn ? 'red' : '#959595')};
@@ -223,21 +221,21 @@ const FormTextArea = styled.textarea.attrs({
 `;
 
 const FormBtn = styled.button`
+  float: right;
+  padding: 0.5rem 2rem;
   border: 1px solid #00c3bd;
   border-radius: 20px;
-  padding: 0.5rem 2rem;
   background-color: #ffffff;
   color: #00c3bd;
   font-weight: 300;
   cursor: pointer;
-  float: right;
 `;
 
 const SaveBoxWrapper = styled.section`
   max-width: 17rem;
   margin-left: 3rem;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
 `;
 
@@ -248,12 +246,12 @@ const SaveTitle = styled.p`
 `;
 
 const SaveBox = styled.div`
+  display: flex;
+  align-items: center;
   padding-bottom: 0.2rem;
   color: #666666;
   font-weight: 200;
   font-size: 0.9rem;
-  display: flex;
-  align-items: center;
 `;
 
 const FormSubmitBtn = styled(FormBtn)``;

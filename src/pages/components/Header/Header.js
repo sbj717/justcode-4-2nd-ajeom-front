@@ -6,9 +6,8 @@ import { GoSearch } from 'react-icons/go';
 import GuestNav from '../Nav/GuestNav';
 import MemberNav from '../Nav/MemberNav';
 
-function Header() {
+function Header({ navStyle }) {
   const [showNav, setShowNav] = useState('');
-  const [navStyle, setNavStyle] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
 
@@ -54,23 +53,6 @@ function Header() {
   const goToMain = async () => {
     await navigate('/');
   };
-
-  //scrollY에 따라 header의 style 변경
-  useEffect(() => {
-    const changeNavStyle = () => {
-      if (window.scrollY > 530) {
-        setNavStyle(true);
-      } else {
-        setNavStyle(false);
-      }
-    };
-
-    window.addEventListener('scroll', changeNavStyle);
-
-    return () => {
-      window.removeEventListener('scroll', changeNavStyle);
-    };
-  });
 
   return (
     <Wrapper show={showNav} navStyle={navStyle}>
