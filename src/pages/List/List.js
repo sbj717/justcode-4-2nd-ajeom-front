@@ -9,6 +9,7 @@ import Header from '../components/Header/Header';
 import { useScroll } from '../../hooks/useScroll';
 import { getRelatedKeywords } from '../../apis/keyword';
 import { getAuthorList } from '../../apis/author';
+import { BASE_URL } from '../../config';
 
 function List() {
   const params = useParams();
@@ -48,7 +49,7 @@ function List() {
 
   //발행 글 리스트에서 무한 스크롤을 위한 API Fetch
   useEffect(() => {
-    fetch(`http://localhost:8000/list/post/${keywordId}?page=1&pageSize=6`)
+    fetch(`${BASE_URL}/list/post/${keywordId}?page=1&pageSize=6`)
       .then(res => res.json())
       .then(data => {
         setPostLists(data);
@@ -58,9 +59,7 @@ function List() {
   const fetchData = async () => {
     setTimeout(async () => {
       setCount(count + 1);
-      await fetch(
-        `http://localhost:8000/list/post/${keywordId}?page=${count}&pageSize=6`
-      )
+      await fetch(`${BASE_URL}/list/post/${keywordId}?page=${count}&pageSize=6`)
         .then(res => res.json())
         .then(data => {
           if (data !== null) {

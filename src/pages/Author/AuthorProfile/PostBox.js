@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import Spinner from '../../List/Spinner';
 import { useNavigate } from 'react-router-dom';
-import { localhost } from '../../../config';
-
+import { BASE_URL } from '../../../config';
 function PostBox({ userId }) {
   const navigate = useNavigate();
   const target = useRef(null);
@@ -13,7 +12,7 @@ function PostBox({ userId }) {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch(`${localhost}/list/profile/${userId}?page=1&pageSize=6`, {
+    fetch(`${BASE_URL}/list/profile/${userId}?page=1&pageSize=6`, {
       method: 'GET',
     })
       .then(res => res.json())
@@ -24,9 +23,7 @@ function PostBox({ userId }) {
 
   const fetchData = async () => {
     setTimeout(async () => {
-      await fetch(
-        `${localhost}/list/profile/${userId}?page=${count}&pageSize=6`
-      )
+      await fetch(`${BASE_URL}/list/profile/${userId}?page=${count}&pageSize=6`)
         .then(res => res.json())
         .then(data => {
           if (data !== null) {

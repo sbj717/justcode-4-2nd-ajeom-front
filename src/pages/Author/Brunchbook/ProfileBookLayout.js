@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ProfileBookCard from './ProfileBookCard';
-
+import { BASE_URL } from '../../../config';
 function ProfileBookLayout({ userId }) {
   const [bookList, setBookList] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/user/authorBruchBook/${userId}`, {
+    fetch(`${BASE_URL}/user/authorBruchBook/${userId}`, {
       headers: { 'Content-Type': 'application/json' },
     })
       .then(res => res.json())

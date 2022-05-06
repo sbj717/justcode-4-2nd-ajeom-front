@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import MyProfileTop from './MyProfileTop';
 import MyProfileCenter from './MyProfileCenter';
-import { localhost } from '../../config';
-
+import { BASE_URL } from '../../config';
 function MyProfileLayout() {
   const [profileData, setProfileData] = useState({});
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch(`${localhost}/user/myProfile`, {
+    fetch(`${BASE_URL}/user/myProfile`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', token: token },
     })

@@ -1,13 +1,11 @@
 //키워드 관련 API 모음
-
-const localhost = 'http://localhost:8000';
-
+import { BASE_URL } from '../config';
 const getMainKeywords = async () => {
-  return await fetch(`${localhost}/keyword/main`).then(res => res.json());
+  return await fetch(`${BASE_URL}/keyword/main`).then(res => res.json());
 };
 
 const getRelatedKeywords = async keywordId => {
-  return await fetch(`${localhost}/keyword/${keywordId}`).then(res =>
+  return await fetch(`${BASE_URL}/keyword/${keywordId}`).then(res =>
     res.json()
   );
 };

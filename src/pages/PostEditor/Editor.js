@@ -17,6 +17,7 @@ import {
   BiTrash,
 } from 'react-icons/bi';
 import Header from '../components/Header/Header';
+import { BASE_URL } from '../../config';
 function Editor() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
@@ -37,19 +38,18 @@ function Editor() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch('http://localhost:8000/user/myProfile', {
+    fetch(`${BASE_URL}/user/myProfile`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', token: token },
     })
       .then(res => res.json())
       .then(data => {
         setUserInfo(data);
-        console.log(data);
       });
   }, []);
 
   function PublishPost(Q) {
-    if (Q == 1 && userInfo.is_author == 0) {
+    if (Q === 1 && userInfo.is_author === 0) {
       alert('작가만 발행할 수 있습니다.');
       return;
     }
@@ -60,20 +60,20 @@ function Editor() {
     } else if (SubTilteTextFieldRef.current.textContent < 2) {
       alert('소제목을 2자 이상 입력하세요.');
       return;
-    } else if (backgroundUrl.length == 0) {
+    } else if (backgroundUrl.length === 0) {
       alert('타이틀 이미지를 설정하세요.');
       return;
     } else if (MainTextFieldRef.current.textContent < 15) {
       alert('본문을 15자 이상 입력하세요.');
       return;
-    } else if (selectedKeywordList.length == 0) {
+    } else if (selectedKeywordList.length === 0) {
       alert('키워드를 1개 이상 선택하세요.');
       return;
     }
 
     const token = localStorage.getItem('token');
 
-    fetch('http://localhost:8000/write', {
+    fetch(`${BASE_URL}/write`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', token: token },
       body: JSON.stringify({
@@ -88,7 +88,7 @@ function Editor() {
     })
       .then(res => res.json())
       .then(data => {
-        if (Q == 1) {
+        if (Q === 1) {
           alert('글이 발행되었습니다.');
         } else {
           alert('글이 저장되었습니다.');
@@ -128,22 +128,22 @@ function Editor() {
 
     TilteTextFieldRef.current.addEventListener('paste', function (event) {
       event.preventDefault();
-      var pastedData = event.clipboardData || window.clipboardData;
-      var textData = pastedData.getData('Text');
+      let pastedData = event.clipboardData || window.clipboardData;
+      let textData = pastedData.getData('Text');
       window.document.execCommand('insertHTML', false, textData);
     });
 
     MainTextFieldRef.current.addEventListener('paste', function (event) {
       event.preventDefault();
-      var pastedData = event.clipboardData || window.clipboardData;
-      var textData = pastedData.getData('Text');
+      let pastedData = event.clipboardData || window.clipboardData;
+      let textData = pastedData.getData('Text');
       window.document.execCommand('insertHTML', false, textData);
     });
 
     SubTilteTextFieldRef.current.addEventListener('paste', function (event) {
       event.preventDefault();
-      var pastedData = event.clipboardData || window.clipboardData;
-      var textData = pastedData.getData('Text');
+      let pastedData = event.clipboardData || window.clipboardData;
+      let textData = pastedData.getData('Text');
       window.document.execCommand('insertHTML', false, textData);
     });
 
@@ -228,14 +228,14 @@ function Editor() {
         isSideBarOpen={isMyPostLinkSidebarOpen}
         closeSideBar={closeSideBar}
         setToolBarOn={setToolBarOn}
-      ></MyPostLinkSideBar>
+      />
       <SideBar
         isSideBarOpen={isSideBarOpen}
         closeSideBar={closeSideBar}
         selectedKeywordList={selectedKeywordList}
         setSelectedKeywordList={setSelectedKeywordList}
         PublishPost={PublishPost}
-      ></SideBar>
+      />
       <FontStyleToolBar
         ToolBarPosition={ToolBarPosition}
         ToolBarOn={ToolBarOn}
@@ -266,14 +266,14 @@ function Editor() {
             contentEditable="true"
             placeholder="제목을 입력하세요"
             spellCheck="false"
-          ></TilteField>
+          />
           <SubTilteField
             backgroundUrl={backgroundUrl}
             ref={SubTilteTextFieldRef}
             contentEditable="true"
             placeholder="소제목을 입력하세요"
             spellCheck="false"
-          ></SubTilteField>
+          />
         </TopTitleWrapper>
       </TopWrapper>
       <BottomWrapper>
@@ -287,7 +287,7 @@ function Editor() {
             contentEditable="true"
             placeholder="본문을 입력하세요"
             spellCheck="false"
-          ></MainTextField>
+          />
           <MainToolbox scrollY={scrollYstate}>
             <Button onClick={addImage}>
               <BiImageAdd
@@ -307,7 +307,7 @@ function Editor() {
           </MainToolbox>
         </MainTextFieldWrapper>
         <PublishButtonBox>
-          <PublishButton mainColor={'#00c3bd'} onClick={openSideBar}>
+          <PublishButton mainColor="#00c3bd" onClick={openSideBar}>
             완료
           </PublishButton>
         </PublishButtonBox>

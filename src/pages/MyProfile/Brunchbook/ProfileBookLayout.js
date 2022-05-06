@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ProfileBookCard from './ProfileBookCard';
-
+import { BASE_URL } from '../../../config';
 function ProfileBookLayout() {
   const [bookList, setBookList] = useState([]);
 
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch('http://localhost:8000/user/authorBookList', {
+    fetch(`${BASE_URL}/user/authorBookList`, {
       headers: { 'Content-Type': 'application/json', token: token },
     })
       .then(res => res.json())

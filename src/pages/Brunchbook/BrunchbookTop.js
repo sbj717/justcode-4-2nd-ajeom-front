@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { VscArrowLeft } from 'react-icons/vsc';
 import { VscArrowRight } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
-
+import { BASE_URL } from '../../config';
 function BrunchbookTop(props) {
   const navigate = useNavigate();
   const [bookInfo, setBookInfo] = useState({});
@@ -31,7 +31,7 @@ function BrunchbookTop(props) {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch('http://localhost:8000/user/myProfile', {
+    fetch(`${BASE_URL}/user/myProfile`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', token: token },
     })
@@ -40,7 +40,7 @@ function BrunchbookTop(props) {
         setUserInfo(data);
       });
 
-    fetch(`http://localhost:8000/book/${props.id}`)
+    fetch(`${BASE_URL}/book/${props.id}`)
       .then(res => res.json())
       .then(res => {
         setBookInfo(res.bookInfo[0]);
@@ -87,7 +87,7 @@ function BrunchbookTop(props) {
     let result = window.confirm('정말 삭제하시겠습니까?');
     if (result) {
       const token = localStorage.getItem('token');
-      fetch(`http://localhost:8000/book/${props.id}`, {
+      fetch(`${BASE_URL}/book/${props.id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', token: token },
       })

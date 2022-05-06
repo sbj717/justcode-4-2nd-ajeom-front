@@ -16,18 +16,16 @@ function PostCard(props) {
     props.closeSideBar();
   }
   return (
-    <>
-      <PostCardWrapper startf={start}>
-        <MakeLinkButton onClick={makeLink} />
-        <PostCardContentWrapper>
-          <PostCardTextWrapper>
-            <PostCardTitle>{props.Title}</PostCardTitle>
-            <PostCardBody>{props.Summary}</PostCardBody>
-          </PostCardTextWrapper>
-          <ThumbnailCase post_thumbnail_url={props.post_thumbnail_url} />
-        </PostCardContentWrapper>
-      </PostCardWrapper>
-    </>
+    <PostCardWrapper startf={start}>
+      <MakeLinkButton onClick={makeLink} />
+      <PostCardContentWrapper>
+        <PostCardTextWrapper>
+          <PostCardTitle>{props.Title}</PostCardTitle>
+          <PostCardBody>{props.Summary}</PostCardBody>
+        </PostCardTextWrapper>
+        <ThumbnailCase post_thumbnail_url={props.post_thumbnail_url} />
+      </PostCardContentWrapper>
+    </PostCardWrapper>
   );
 }
 

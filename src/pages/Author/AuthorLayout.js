@@ -4,13 +4,12 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import AuthorProfileTop from './AuthorProfileTop';
 import AuthorProfileCenter from './AuthorProfileCenter';
-import { localhost } from '../../config';
-
+import { BASE_URL } from '../../config';
 function AuthorLayout() {
   const params = useParams();
   const [profileData, setProfileData] = useState({});
   useEffect(() => {
-    fetch(`${localhost}/user/authorProfile/${params.id}`, {
+    fetch(`${BASE_URL}/user/authorProfile/${params.id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
