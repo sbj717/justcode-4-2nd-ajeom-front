@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# AJEOM
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## ✨ Intro
 
-## Available Scripts
+> - [브런치](brunch.co.kr) 웹사이트를 모티브로 하여 구현한 프로젝트입니다.
+>
+> - 한정된 인원 및 기간으로 디자인/일부 기능만 구현했습니다.
+> - 해당 프로젝트는 브런치 웹사이트를 보고 구현할 부분을 선정하여 초기 세팅부터 전부 직접 구현했습니다.
 
-In the project directory, you can run:
+누구나 작가가 될 수 있다.' 라는 모토로 유저가 작가 신청을 하고 작가가 되면 글을 발행할 수 있도록 만든 콘텐츠 플랫폼입니다. 글을 쓰고 키워드 별로 분류하여 볼 수 있고, 작가는 발행한 글들을 책으로 발간할 수 있습니다.
 
-### `npm start`
+## ✅ Info
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 기간 : 22.04.18 ~ 22.04.29 (12일)
+- 팀 구성 : Front-end 4명, Back-end 2명
+- [Front-end Github](https://github.com/wecode-bootcamp-korea/justcode-4-2nd-ajeom-front)
+- [Back-end Github](https://github.com/wecode-bootcamp-korea/justcode-4-2nd-ajeom-back)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🎬 Demo
 
-### `npm test`
+[아점 홈페이지 데모 영상](https://youtu.be/ydv4rAPWln4)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🔧 DB Modeling
 
-### `npm run build`
+<img src=https://ifh.cc/g/2DvZxl.png/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🔨 Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Front-end
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"><img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styled-components&logoColor=black">
 
-### `npm run eject`
+### Back-end
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"><img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### DB
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white"><img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Teamwork
 
-## Learn More
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/notion-181717?style=for-the-badge&logo=notion&logoColor=white"><img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"><img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📌 Features
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 카카오 로그인 API 를 활용한 회원 데이터 관리
+- 글쓰기 에디터를 구현하여 회원이 작성한 글을 데이터로 관리
+- 작가 신청을 통해 작가가 되면 글을 발행하고 여러 글을 묶어서 Book 으로 만드는 에디터 기능 구현
+- 글 작성 시 키워드를 선택하여 키워드 별 글을 볼 수 있는 기능 구현
 
-### Code Splitting
+## 📃 API Document
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- 추가 예정
 
-### Analyzing the Bundle Size
+## 👨‍👨‍👧‍👦Team
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Front-end
 
-### Making a Progressive Web App
+- [박송이](https://github.com/songyi-p)
+- [성봉준](https://github.com/sbj717)
+- [김민경](https://github.com/alicia-mkkim)
+- [임경훈](https://github.com/nsoarim)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Back-end
 
-### Advanced Configuration
+- [한채령](https://github.com/Aleafspring)
+- [정한솔](https://github.com/jhsol24)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## **:open_book: Reference**
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 이 프로젝트는 [브런치](https://brunch.co.kr/) 사이트를 참조하여 학습목적으로 만들었습니다.
+- 실무수준의 프로젝트이지만 학습용으로 만들었기 때문에 이 코드를 활용하여 이득을 취하거나 무단 배포할 경우 법적으로 문제될 수 있습니다.
+- 이 프로젝트에서 사용하고 있는 사진 대부분은 위코드에서 구매한 것이므로 해당 프로젝트 외부인이 사용할 수 없습니다.

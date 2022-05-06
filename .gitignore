@@ -26,3 +26,7 @@ yarn-error.log*
 
 .eslintcache
 .node_modules
+
+config
+
+.env

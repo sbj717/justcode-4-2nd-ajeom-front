@@ -1,0 +1,33 @@
+.ajeomBody {
+  img {
+    width: 100%;
+    margin: 10px 0 10px 0;
+    cursor: move;
+    vertical-align: middle;
+  }
+  li {
+    list-style-type: disc;
+  }
+  a:link {
+    color: rgb(24 184 175);
+    cursor: pointer;
+  }
+  a:visited {
+    color: rgb(24 184 175);
+    cursor: pointer;
+  }
+  a:hover {
+    color: rgb(24 184 175);
+    cursor: pointer;
+  }
+  a:active {
+    color: rgb(24 184 175);
+    cursor: pointer;
+  }
+}
+
+.noButton {
+  color: rgb(200, 200, 200);
+  margin-top: 2px;
+  cursor: not-allowed;
+}

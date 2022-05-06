@@ -1,0 +1,133 @@
+.loginOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 999 !important;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.loginModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 1000px;
+  height: 620px;
+  overflow: hidden;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+.loginContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.logo {
+  position: absolute;
+  z-index: 33;
+  left: 70px;
+  top: 70px;
+  width: 30px;
+  height: 30px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Square Peg', cursive;
+  font-size: 36px;
+  background: #000;
+  cursor: pointer;
+}
+
+.sliderContainer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.sliderItem {
+  width: 100%;
+  display: flex;
+  // flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  .sliderImg {
+    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
+
+  .title {
+    padding: 20px 0;
+    font-size: 27px;
+  }
+
+  .cont {
+    font-weight: 100;
+    color: #999;
+    span {
+      line-height: 1.5;
+      display: block;
+      font-size: 15px;
+    }
+  }
+}
+
+.login {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  padding: 20px 45px;
+  background: #f8f8f8;
+}
+
+.close {
+  position: absolute;
+  display: block;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.kakaologinBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 50px 0;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.imageBox {
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.imageBox img {
+  width: 100%;
+}
+
+.findBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 50px 0;
+}
+
+.link {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 14px;
+  color: #6c6c6c;
+}
