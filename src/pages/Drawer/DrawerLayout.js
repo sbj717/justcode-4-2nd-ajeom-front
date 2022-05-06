@@ -5,7 +5,7 @@ import DrawerBookCard from './DrawerBookCard';
 import EmptyBookCard from './EmptyBookCard';
 import Spinner from '../List/Spinner';
 import Header from '../components/Header/Header';
-
+import { BASE_URL } from '../../config';
 function DrawerLayout() {
   const [categoryDeco, setCategoryDeco] = useState(['picked', 'none']);
   const [page, setPage] = useState('post');
@@ -27,7 +27,7 @@ function DrawerLayout() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch('http://localhost:8000/list/drawer?page=1&pageSize=5', {
+    fetch(`${BASE_URL}/list/drawer?page=1&pageSize=5`, {
       headers: { 'Content-Type': 'application/json', token: token },
     })
       .then(res => res.json())
@@ -37,12 +37,9 @@ function DrawerLayout() {
   const fetchPostList = async () => {
     setTimeout(async () => {
       setCount(count + 1);
-      await fetch(
-        `http://localhost:8000/list/drawer?page=${count}&pageSize=5`,
-        {
-          headers: { 'Content-Type': 'application/json', token: token },
-        }
-      )
+      await fetch(`${BASE_URL}/list/drawer?page=${count}&pageSize=5`, {
+        headers: { 'Content-Type': 'application/json', token: token },
+      })
         .then(res => res.json())
         .then(res => {
           console.log(res);
@@ -73,7 +70,7 @@ function DrawerLayout() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8000/user/authorBookList', {
+    fetch(`${BASE_URL}/user/authorBookList`, {
       headers: { 'Content-Type': 'application/json', token: token },
     })
       .then(res => res.json())

@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { GrMenu } from 'react-icons/gr';
-import { GoSearch } from 'react-icons/go';
 import GuestNav from '../components/Nav/GuestNav';
 import MemberNav from '../components/Nav/MemberNav';
 
 function Header(props) {
   const [showNav, setShowNav] = useState('none');
-
-  const openGuestNav = () => {
-    setShowNav('guestNav');
-  };
-
   const openMemberNav = () => {
     setShowNav('memberNav');
   };

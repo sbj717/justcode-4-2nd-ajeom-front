@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../List/Spinner';
-import { localhost } from '../../../config';
+import { BASE_URL } from '../../../config';
 function PostBox() {
   const target = useRef(null);
   const [count, setCount] = useState(2);
@@ -10,7 +10,7 @@ function PostBox() {
   const [lists, setLists] = useState([]);
   const token = localStorage.getItem('token');
   useEffect(() => {
-    fetch(`${localhost}/list/myprofile?page=1&pageSize=6`, {
+    fetch(`${BASE_URL}/list/myprofile?page=1&pageSize=6`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', token: token },
     })
@@ -22,7 +22,7 @@ function PostBox() {
 
   const fetchData = async () => {
     setTimeout(async () => {
-      await fetch(`${localhost}/list/myprofile?page=${count}&pageSize=6`, {
+      await fetch(`${BASE_URL}/list/myprofile?page=${count}&pageSize=6`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', token: token },
       })

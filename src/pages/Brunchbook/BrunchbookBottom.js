@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import BrunchbookCard from './BrunchbookCard';
-
+import { BASE_URL } from '../../config';
 function BrunchbookBottom(props) {
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/book/${props.id}/post`)
+    fetch(`${BASE_URL}/book/${props.id}/post`)
       .then(res => res.json())
       .then(res => setPostList(res.postList));
   }, []);

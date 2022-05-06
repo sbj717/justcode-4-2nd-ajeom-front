@@ -59,7 +59,7 @@ function SideBar(props, ref) {
           키워드 선택
           <KeywordCounterWrapperF
             selectedKeywordListLen={selectedKeywordCount}
-          ></KeywordCounterWrapperF>
+          />
         </KeywordTitleWrapper>
 
         <KeywordToggleGroup

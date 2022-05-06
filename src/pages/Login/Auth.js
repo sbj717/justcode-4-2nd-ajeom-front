@@ -4,6 +4,7 @@ import {
   REST_API_KEY,
   REDIRECT_URI,
   KAKAOINIT,
+  BASE_URL,
 } from '../../../src/config';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,7 +41,7 @@ function Auth() {
   }, [Kakao, queryStringBody]);
 
   const sendData = async data => {
-    await fetch('http://localhost:8000/user/login', {
+    await fetch(`${BASE_URL}/user/login`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

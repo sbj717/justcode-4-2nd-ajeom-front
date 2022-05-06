@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import KeywordToggle from './KeywordToggle';
-
+import { BASE_URL } from '../../config';
 function KeywordToggleGroup(props) {
   const [keywordList, setKeywordList] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -15,7 +15,7 @@ function KeywordToggleGroup(props) {
       false
     );
 
-    fetch('http://localhost:8000/keyword', {
+    fetch(`${BASE_URL}/keyword`, {
       method: 'GET',
     })
       .then(res => res.json())
@@ -39,7 +39,7 @@ function KeywordToggleGroup(props) {
                 addKeyword={props.addKeyword}
                 delKeyword={props.delKeyword}
                 selectedKeywordCount={props.selectedKeywordCount}
-              ></KeywordToggle>
+              />
             );
           }
         })}
@@ -49,7 +49,7 @@ function KeywordToggleGroup(props) {
         placeholder="검색어를 입력하세요."
         spellCheck="false"
         ref={SearchBoxRef}
-      ></SearchBox>
+      />
       <KeywordWrapper>
         {keywordList.map((c, index) => {
           let sw = false;
@@ -66,7 +66,7 @@ function KeywordToggleGroup(props) {
               addKeyword={props.addKeyword}
               delKeyword={props.delKeyword}
               selectedKeywordCount={props.selectedKeywordCount}
-            ></KeywordToggle>
+            />
           );
         })}
       </KeywordWrapper>

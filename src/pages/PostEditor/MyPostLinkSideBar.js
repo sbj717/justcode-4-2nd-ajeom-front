@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import PostCard from './PostCard';
-
+import { BASE_URL } from '../../config';
 function MyPostLinkSideBar(props) {
   const [offset, setOffset] = useState(1);
   const [reloadSw, setReloadSw] = useState(0);
@@ -35,7 +35,7 @@ function MyPostLinkSideBar(props) {
       setLoadingText('위로 스크롤해서 더 보기');
     }, 800);
     setTimeout(() => {
-      fetch(`http://localhost:8000/write?offset=${offset}&limit=${10}`, {
+      fetch(`${BASE_URL}/write?offset=${offset}&limit=${10}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', token: token },
       })
@@ -56,7 +56,7 @@ function MyPostLinkSideBar(props) {
       <FullScreenBlack
         onClick={props.closeSideBar}
         isSideBarOpen={props.isSideBarOpen}
-      ></FullScreenBlack>
+      />
       <SideBarWrapper isSideBarOpen={props.isSideBarOpen}>
         <TitleWrapper>나의 글</TitleWrapper>
         <Wrapper>
@@ -66,11 +66,11 @@ function MyPostLinkSideBar(props) {
                 setToolBarOn={props.setToolBarOn}
                 key={c.id}
                 Title={c.Title}
-                url={`localhost:3000/post/${c.id}`}
+                url={`${BASE_URL}/post/${c.id}`}
                 Summary={c.Summary}
                 closeSideBar={props.closeSideBar}
                 post_thumbnail_url={c.post_thumbnail_url}
-              ></PostCard>
+              />
             );
           })}
           {props.isSideBarOpen ? <Space>{loadingText}</Space> : null}

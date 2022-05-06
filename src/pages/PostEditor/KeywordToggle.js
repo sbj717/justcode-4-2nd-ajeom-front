@@ -16,11 +16,9 @@ function KeywordToggleGroup(props) {
     }
   }
   return (
-    <>
-      <KeywordButton sw={props.sw} checked={checked} onClick={toggleChecked}>
-        {props.keywordName}
-      </KeywordButton>
-    </>
+    <KeywordButton sw={props.sw} checked={checked} onClick={toggleChecked}>
+      {props.keywordName}
+    </KeywordButton>
   );
 }
 

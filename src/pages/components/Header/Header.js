@@ -5,7 +5,7 @@ import { GrMenu } from 'react-icons/gr';
 import { GoSearch } from 'react-icons/go';
 import GuestNav from '../Nav/GuestNav';
 import MemberNav from '../Nav/MemberNav';
-
+import { BASE_URL } from '../../../config';
 function Header({ navStyle }) {
   const [showNav, setShowNav] = useState('');
   const [userInfo, setUserInfo] = useState({});
@@ -15,7 +15,7 @@ function Header({ navStyle }) {
     const token = localStorage.getItem('token');
     token ? setShowNav('memberNone') : setShowNav('guestNone');
 
-    fetch('http://localhost:8000/user/myProfile', {
+    fetch(`${BASE_URL}/user/myProfile`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', token: token },
     })

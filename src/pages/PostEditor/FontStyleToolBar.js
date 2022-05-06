@@ -36,114 +36,112 @@ function FontStyleToolBar(props, ref) {
   }
 
   return (
-    <>
-      <ToolBarWrapper
-        ref={ref}
-        ToolBarOn={props.ToolBarOn}
-        ToolBarPosition={props.ToolBarPosition}
-      >
-        <ButtonWrapper>
-          <ToolButton
+    <ToolBarWrapper
+      ref={ref}
+      ToolBarOn={props.ToolBarOn}
+      ToolBarPosition={props.ToolBarPosition}
+    >
+      <ButtonWrapper>
+        <ToolButton
+          onClick={() => {
+            formatToggle();
+            setLink(false);
+          }}
+        >
+          <BiText className={style.button} size="20" />
+        </ToolButton>
+        <ToolButton
+          onClick={() => {
+            setLink(false);
+            setFormat(false);
+            document.execCommand('bold');
+          }}
+        >
+          <BiBold className={style.button} size="20" />
+        </ToolButton>
+        <ToolButton
+          onClick={() => {
+            setLink(false);
+            setFormat(false);
+            document.execCommand('underline');
+          }}
+        >
+          <BiUnderline className={style.button} size="20" />
+        </ToolButton>
+        <ToolButton
+          onClick={() => {
+            setLink(false);
+            setFormat(false);
+            document.execCommand('italic');
+          }}
+        >
+          <BiItalic className={style.button} size="20" />
+        </ToolButton>
+        <ToolButton
+          onClick={() => {
+            setFormat(false);
+            linkToggle();
+          }}
+        >
+          <BiLink className={style.button} size="20" />
+        </ToolButton>
+      </ButtonWrapper>
+      {link ? (
+        <LinkWrapper>
+          <FormatButton
             onClick={() => {
-              formatToggle();
-              setLink(false);
+              props.openMyPostLinkSidebar();
             }}
           >
-            <BiText className={style.button} size="20" />
-          </ToolButton>
-          <ToolButton
+            나의 글
+          </FormatButton>
+          <FormatButton
             onClick={() => {
-              setLink(false);
-              setFormat(false);
-              document.execCommand('bold');
+              makeLink();
             }}
           >
-            <BiBold className={style.button} size="20" />
-          </ToolButton>
-          <ToolButton
-            onClick={() => {
-              setLink(false);
-              setFormat(false);
-              document.execCommand('underline');
-            }}
-          >
-            <BiUnderline className={style.button} size="20" />
-          </ToolButton>
-          <ToolButton
-            onClick={() => {
-              setLink(false);
-              setFormat(false);
-              document.execCommand('italic');
-            }}
-          >
-            <BiItalic className={style.button} size="20" />
-          </ToolButton>
-          <ToolButton
-            onClick={() => {
-              setFormat(false);
-              linkToggle();
-            }}
-          >
-            <BiLink className={style.button} size="20" />
-          </ToolButton>
-        </ButtonWrapper>
-        {link ? (
-          <LinkWrapper>
-            <FormatButton
-              onClick={() => {
-                props.openMyPostLinkSidebar();
-              }}
-            >
-              나의 글
-            </FormatButton>
-            <FormatButton
-              onClick={() => {
-                makeLink();
-              }}
-            >
-              외부 URL
-            </FormatButton>
-          </LinkWrapper>
-        ) : null}
+            외부 URL
+          </FormatButton>
+        </LinkWrapper>
+      ) : null}
 
-        {format ? (
-          <FormatWrapper>
-            <FormatButton
-              onClick={async () => {
-                await document.execCommand('formatblock', false, 'h1');
-                props.calToolBarPosition();
-              }}
-            >
-              제목1
-            </FormatButton>
-            <FormatButton
-              onClick={async () => {
-                await document.execCommand('formatblock', false, 'h2');
-                props.calToolBarPosition();
-              }}
-            >
-              제목2
-            </FormatButton>
-            <FormatButton
-              onClick={async () => {
-                await document.execCommand('formatblock', false, 'h3');
-                props.calToolBarPosition();
-              }}
-            >
-              제목3
-            </FormatButton>
-            <FormatButton
-              onClick={async () => {
-                await document.execCommand('formatblock', false, 'p');
-                props.calToolBarPosition();
-              }}
-            >
-              본문
-            </FormatButton>
-          </FormatWrapper>
-        ) : null}
-      </ToolBarWrapper>
-    </>
+      {format ? (
+        <FormatWrapper>
+          <FormatButton
+            onClick={async () => {
+              await document.execCommand('formatblock', false, 'h1');
+              props.calToolBarPosition();
+            }}
+          >
+            제목1
+          </FormatButton>
+          <FormatButton
+            onClick={async () => {
+              await document.execCommand('formatblock', false, 'h2');
+              props.calToolBarPosition();
+            }}
+          >
+            제목2
+          </FormatButton>
+          <FormatButton
+            onClick={async () => {
+              await document.execCommand('formatblock', false, 'h3');
+              props.calToolBarPosition();
+            }}
+          >
+            제목3
+          </FormatButton>
+          <FormatButton
+            onClick={async () => {
+              await document.execCommand('formatblock', false, 'p');
+              props.calToolBarPosition();
+            }}
+          >
+            본문
+          </FormatButton>
+        </FormatWrapper>
+      ) : null}
+    </ToolBarWrapper>
   );
 }
 

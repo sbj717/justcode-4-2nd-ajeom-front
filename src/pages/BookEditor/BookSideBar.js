@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import styled, { css } from 'styled-components';
 import PostCard from './PostCard';
-
+import { BASE_URL } from '../../config';
 function SelectedPost(props) {
   function dragStart(item, index) {
     props.setNowDragged({
@@ -249,7 +249,7 @@ function BookSideBar(props) {
       setLoadingText('위로 스크롤해서 더 보기');
     }, 800);
     setTimeout(() => {
-      fetch(`http://localhost:8000/write?offset=${offset}&limit=${10}`, {
+      fetch(`${BASE_URL}/write?offset=${offset}&limit=${10}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', token: token },
       })

@@ -5,6 +5,7 @@ import BrunchbookBottom from './BrunchbookBottom';
 import { useNavigate } from 'react-router-dom';
 import BookSideBar from './BookSideBar';
 import Header from '../components/Header/Header';
+import { BASE_URL } from '../../config';
 function BookEditor() {
   const navigate = useNavigate();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -35,7 +36,7 @@ function BookEditor() {
 
     const token = localStorage.getItem('token');
 
-    fetch('http://localhost:8000/book', {
+    fetch(`${BASE_URL}/book`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', token: token },
       body: JSON.stringify({
@@ -69,14 +70,14 @@ function BookEditor() {
       />
       <BrunchbookWrapper>
         <BrunchbookTop setBrunchbookTopRef={setBrunchbookTopRef} />
-        <PublishButton mainColor={'#aaaaaa'} onClick={openSideBar}>
+        <PublishButton mainColor="#aaaaaa" onClick={openSideBar}>
           목차 편집
         </PublishButton>
 
         <BrunchbookBottom postList={postList} />
 
         {postList.length > 0 ? (
-          <PublishButton mainColor={'#00c3bd'} onClick={PublishBook}>
+          <PublishButton mainColor="#00c3bd" onClick={PublishBook}>
             발행
           </PublishButton>
         ) : null}
