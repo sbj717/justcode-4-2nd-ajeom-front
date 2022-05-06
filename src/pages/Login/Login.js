@@ -8,7 +8,7 @@ import { KAKAO_AUTH_URL } from '../../../src/config';
 
 const Login = loginModal => {
   const modalRef = useRef(null);
-  const [modal, setModal] = useState(!loginModal);
+  const [modal, setModal] = useState(loginModal);
 
   const clickOutsideModal = async e => {
     if (!modal && (!modalRef.current || !modalRef.current.contains(e.target))) {
