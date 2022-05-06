@@ -93,7 +93,7 @@ function Editor() {
         } else {
           alert('글이 저장되었습니다.');
         }
-        navigate(`/detail/${data.post_id}`);
+        navigate(`/detail/${data.postId}`);
         window.scrollTo(0, 0);
       });
   }
