@@ -40,7 +40,7 @@ function BookEditor() {
       headers: { 'Content-Type': 'application/json', token: token },
       body: JSON.stringify({
         title: BrunchbookTopRef.title.current.textContent,
-        bookcover_url: BrunchbookTopRef.bookcover_url,
+        bookCoverUrl: BrunchbookTopRef.bookcover_url,
         description: BrunchbookTopRef.description.current.innerText,
         postIdList: postIdList,
       }),
@@ -48,6 +48,7 @@ function BookEditor() {
       .then(res => res.json())
       .then(data => {
         alert('브런치북이 발행되었습니다.');
+        console.log(data);
         navigate(`/book/${data.bookId}`);
         window.scrollTo(0, 0);
       });
